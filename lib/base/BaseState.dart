@@ -9,6 +9,9 @@ abstract class BaseState<T> extends State<StatefulWidget>{
 
   Api get api => _api;
 
+  T get mywidget => _mywidget;
+  T _mywidget;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

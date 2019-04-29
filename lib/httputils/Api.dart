@@ -2,9 +2,14 @@ import 'dart:io';
 
 import 'package:confuciusschool/httputils/ApiUrl.dart';
 import 'package:confuciusschool/httputils/CommonService.dart';
+import 'package:confuciusschool/model/AudioInfo.dart';
 import 'package:confuciusschool/model/BaseResponse.dart';
 import 'package:confuciusschool/model/Classification.dart';
+import 'package:confuciusschool/model/CommentInfo.dart';
 import 'package:confuciusschool/model/HomeInfo.dart';
+import 'package:confuciusschool/model/IntroductionInfo.dart';
+import 'package:confuciusschool/model/NewsInfo.dart';
+import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
 
@@ -78,11 +83,75 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void getClassification(String type,Function callback,Function errorCallBack){
+  void getAudioData(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getAudioData,(BaseResponse response){
+      AudioInfo data = AudioInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getClassification(String type,String stype,Function callback,Function errorCallBack){
     params.clear();
     params["type"] = type;
+    params["stype"] = stype;
     request(ApiUrl.getClassification,(BaseResponse response){
       List<Classification> data = getClassificationList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getAudioClassification(String type,String stype,Function callback,Function errorCallBack){
+    params.clear();
+    params["type"] = type;
+    params["stype"] = stype;
+    request(ApiUrl.getAudioClassification,(BaseResponse response){
+      List<Classification> data = getClassificationList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getVideoDetail(String currid,String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["currid"] = currid;
+    params["id"] = id;
+    request(ApiUrl.getVideoDetail,(BaseResponse response){
+      VideoInfo data = VideoInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getVideoIntroduction(String currid,Function callback,Function errorCallBack){
+    params.clear();
+    params["currid"] = currid;
+    request(ApiUrl.getVideoIntroduction,(BaseResponse response){
+      IntroductionInfo data = IntroductionInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getVideoText(String currid,Function callback,Function errorCallBack){
+    params.clear();
+    params["currid"] = currid;
+    request(ApiUrl.getVideoText,(BaseResponse response){
+      callback(response.data["introduce"]);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getComment(String pid,Function callback,Function errorCallBack){
+    params.clear();
+    params["pid"] = pid;
+    request(ApiUrl.getComment,(BaseResponse response){
+      List<CommentInfo> data = getCommentInfoList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putComment(String pid,String content,Function callback,Function errorCallBack){
+    params.clear();
+    params["pid"] = pid;
+    params["content"] = content;
+    request(ApiUrl.putComment,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getNews(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getNews,(BaseResponse response){
+      List<NewsInfo> data = getNewsInfoList(response.data);
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }

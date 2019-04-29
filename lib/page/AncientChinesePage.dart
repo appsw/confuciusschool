@@ -4,6 +4,7 @@ import 'package:confuciusschool/model/HomeInfo.dart';
 import 'package:confuciusschool/page/NewsPage.dart';
 import 'package:confuciusschool/page/SearchPage.dart';
 import 'package:confuciusschool/page/SearchResultListPage.dart';
+import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
@@ -61,6 +62,7 @@ class _AncientChineseState extends BaseState {
       ),
     );
   }
+
   Widget getHead(){
     return Container(
       margin: EdgeInsets.only(top: 20.0),
@@ -101,7 +103,8 @@ class _AncientChineseState extends BaseState {
                 ),
               ),
               onTap: (){
-                NavigatorUtils.push(context, new SearchResultListPage());
+                NavigatorUtils.push(context, new SearchPage());
+
               },
             ),
           ),
@@ -126,86 +129,106 @@ class _AncientChineseState extends BaseState {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Image.asset("images/home01_icon_guowen.png",width: 43.0,height: 43.0,),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("国文",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ),
-                ],
+            child: GestureDetector(
+              onTap: (){
+                NavigatorUtils.push(context, new SearchResultListPage(1));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Image.asset("images/home01_icon_guowen.png",width: 43.0,height: 43.0,),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                      child: Text("国文",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Image.asset("images/home01_icon_guoyia.png",width: 43.0,height: 43.0,),
+            child: GestureDetector(
+                onTap: (){
+                  NavigatorUtils.push(context, new SearchResultListPage(2));
+                },
+                child:Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Image.asset("images/home01_icon_guoyia.png",width: 43.0,height: 43.0,),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                        child: Text("国艺",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: DefaultValue.textSize
+                          ),),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("国艺",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ),
-                ],
-              ),
+                ),
             ),
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Image.asset("images/home01_icon_guoli.png",width: 43.0,height: 43.0,),
+            child: GestureDetector(
+                onTap: (){
+                  NavigatorUtils.push(context, new SearchResultListPage(3));
+                },
+                child:Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Image.asset("images/home01_icon_guoli.png",width: 43.0,height: 43.0,),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                        child: Text("国礼",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: DefaultValue.textSize
+                          ),),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("国礼",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ),
-                ],
-              ),
+                ),
             ),
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Image.asset("images/home01_icon_guoyib.png",width: 43.0,height: 43.0,),
+            child: GestureDetector(
+                onTap: (){
+                  NavigatorUtils.push(context, new SearchResultListPage(4));
+                },
+                child:Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Image.asset("images/home01_icon_guoyib.png",width: 43.0,height: 43.0,),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                        child: Text("国医",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: DefaultValue.textSize
+                          ),),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("国医",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ),
-                ],
-              ),
+                ),
             ),
           ),
         ],
@@ -233,11 +256,16 @@ class _AncientChineseState extends BaseState {
   }
   Widget _swiperBuilder(BuildContext context, int index){
 
-
-    return Image.network(homeInfo.lb[index].img,
-      width: 180.0,
-      height: 400.0,
-      fit: BoxFit.fill,);
+    Lb data = homeInfo.lb[index];
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+      },
+      child: Image.network(homeInfo.lb[index].img,
+        width: 180.0,
+        height: 400.0,
+        fit: BoxFit.fill,),
+    );
   }
   void goBountyTask(int index){
 
@@ -258,7 +286,12 @@ class _AncientChineseState extends BaseState {
             margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
             child: Image.asset("images/home01_tuijian_xiahuaxian.png",width: 255.0,height: 1.0,),
           ),
-          Image.network(homeInfo.jr[0].hcover,height: 150.0,width: MediaQuery.of(context).size.width,fit: BoxFit.fill,)
+          GestureDetector(
+            onTap: (){
+//              NavigatorUtils.push(context, new VideoPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
+            },
+            child: Image.network(homeInfo.jr[0].hcover,height: 150.0,width: MediaQuery.of(context).size.width,fit: BoxFit.fill,),
+          )
         ],
       ),
     );
@@ -318,34 +351,39 @@ class _AncientChineseState extends BaseState {
     );
   }
   Widget getItemContainer(Re data){
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.network(data.hcover,width: 100.0,height: 133.0,fit: BoxFit.fill,),
-          Container(
-            margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-            child: Text(data.name,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0
-              ),),
-          ),
-          Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                Text("${data.clicks}人在学习",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: DefaultValue.smallTextSize
-                  ),)
-              ],
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+      },
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.network(data.hcover,width: 100.0,height: 133.0,fit: BoxFit.fill,),
+            Container(
+              margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+              child: Text(data.name,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0
+                ),),
             ),
-          )
-        ],
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
+                  Text("${data.clicks}人在学习",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.smallTextSize
+                    ),)
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -394,55 +432,60 @@ class _AncientChineseState extends BaseState {
   }
   Widget getRow(BuildContext context,int index){
     Sql data = homeInfo.sql[index];
-    return Container(
-      height: 150.0,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Row(
-        children: <Widget>[
-          Image.network(data.hcover,width: 102.0,height: 133.0,fit: BoxFit.fill,),
-          Container(
-            margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                  child: Text(data.name,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.0
-                    ),),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+      },
+      child: Container(
+        height: 150.0,
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Row(
+          children: <Widget>[
+            Image.network(data.hcover,width: 102.0,height: 133.0,fit: BoxFit.fill,),
+            Container(
+              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                    child: Text(data.words,
+                    child: Text(data.name,
                       style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 11.0
+                          color: Colors.black,
+                          fontSize: 18.0
                       ),),
                   ),
-                ),
-                Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                      Text("${data.clicks}人在学习",
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                      child: Text(data.words,
                         style: TextStyle(
                             color: Colors.grey,
-                            fontSize: DefaultValue.smallTextSize
-                        ),)
-                    ],
+                            fontSize: 11.0
+                        ),),
+                    ),
                   ),
-                )
-              ],
-            ),
-          )
-        ],
+                  Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
+                        Text("${data.clicks}人在学习",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: DefaultValue.smallTextSize
+                          ),)
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -502,27 +545,32 @@ class _AncientChineseState extends BaseState {
     );
   }
   Widget getSubscribeItem(Res data){
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.network(data.hcover,width: 164.0,height: 113.0,fit: BoxFit.fill,),
-          Container(
-            margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
-            child: Text(data.name,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0
-              ),),
-          ),
-          Container(
-            child: Text(data.words,
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: DefaultValue.textSize
-              ),),
-          )
-        ],
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+      },
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.network(data.hcover,width: 164.0,height: 113.0,fit: BoxFit.fill,),
+            Container(
+              margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
+              child: Text(data.name,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0
+                ),),
+            ),
+            Container(
+              child: Text(data.words,
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: DefaultValue.textSize
+                ),),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -571,31 +619,36 @@ class _AncientChineseState extends BaseState {
   }
   Widget getMasterRow(BuildContext context,int index){
     Sql data = homeInfo.sql[index];
-    return Container(
-      height: 190.0,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Image.network(data.hcover,width: MediaQuery.of(context).size.width,height: 113.0,fit: BoxFit.fill,),
-          Container(
-            margin: EdgeInsets.only(top: DefaultValue.topMargin),
-            child: Text(data.name,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0
-              ),),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 4.0),
-            child: Text(data.words,
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 11.0
-              ),),
-          )
-        ],
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+      },
+      child: Container(
+        height: 190.0,
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Image.network(data.hcover,width: MediaQuery.of(context).size.width,height: 113.0,fit: BoxFit.fill,),
+            Container(
+              margin: EdgeInsets.only(top: DefaultValue.topMargin),
+              child: Text(data.name,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0
+                ),),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 4.0),
+              child: Text(data.words,
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 11.0
+                ),),
+            )
+          ],
+        ),
       ),
     );
   }

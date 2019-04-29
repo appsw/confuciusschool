@@ -27,6 +27,9 @@ dependencies:
   flutter_spinkit: ^3.0.0
   flutter_seekbar:
           git: https://github.com/LiuC520/flutter_seekbar.git
+  chewie: ^0.9.7
+  flutter_html: ^0.9.6
+  audioplayers: ^0.11.0
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:confuciusschool/page/IndexPage.dart';
 import 'package:confuciusschool/page/LoginPage.dart';
 import 'package:confuciusschool/page/RegisterPage.dart';
 import 'package:confuciusschool/page/SearchResultListPage.dart';
+import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());

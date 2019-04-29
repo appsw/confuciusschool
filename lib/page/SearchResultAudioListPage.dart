@@ -10,18 +10,18 @@ import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
-class SearchResultListPage extends StatefulWidget {
+
+class SearchResultAudioListPage extends StatefulWidget {
   var tabNumber;
-  SearchResultListPage(this.tabNumber);
+  SearchResultAudioListPage(this.tabNumber);
   @override
-  _SearchResultListPageState createState() => _SearchResultListPageState(tabNumber);
+  _SearchResultAudioListPageState createState() => _SearchResultAudioListPageState(tabNumber);
 }
 
-class _SearchResultListPageState extends BaseState {
-
-  _SearchResultListPageState(this.tabNumber);
+class _SearchResultAudioListPageState extends BaseState {
+  _SearchResultAudioListPageState(this.tabNumber);
   List<Classification> data = [];
-  var tableNames = ["全部","国文","国艺","国礼","国医"];
+  var tableNames = ["全部","睡前故事","名人传记","成语故事","诗词经典"];
   var tabNumber;
   String _selectedValue = "1";
 
@@ -175,7 +175,7 @@ class _SearchResultListPageState extends BaseState {
       type = "";
     else
       type = status.toString();
-    api.getClassification(type,_selectedValue, (data){
+    api.getAudioClassification(type,_selectedValue, (data){
       setState((){
         this.data = data;
       });
@@ -342,7 +342,7 @@ class _SearchResultListPageState extends BaseState {
     final RenderBox button = context.findRenderObject();
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
     final RelativeRect position = RelativeRect.fromLTRB(
-      MediaQuery.of(context).size.width,70.0,0.0,0.0
+        MediaQuery.of(context).size.width,70.0,0.0,0.0
     );
 
     var pop = _popMenu();

@@ -1,13 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'HomeInfo.g.dart';
+part 'AudioInfo.g.dart';
 
 
 @JsonSerializable()
-class HomeInfo extends Object {
+class AudioInfo extends Object {
 
-  @JsonKey(name: 'ds')
-  List<Ds> ds;
+  @JsonKey(name: 'sc')
+  List<Sc> sc;
 
   @JsonKey(name: 'res')
   List<Res> res;
@@ -21,41 +21,44 @@ class HomeInfo extends Object {
   @JsonKey(name: 'jr')
   List<Jr> jr;
 
+  @JsonKey(name: 'arr')
+  List<Arr> arr;
+
   @JsonKey(name: 'lb')
   List<Lb> lb;
 
-  HomeInfo(this.ds,this.res,this.sql,this.re,this.jr,this.lb,);
+  AudioInfo(this.sc,this.res,this.sql,this.re,this.jr,this.arr,this.lb,);
 
-  factory HomeInfo.fromJson(Map<String, dynamic> srcJson) => _$HomeInfoFromJson(srcJson);
+  factory AudioInfo.fromJson(Map<String, dynamic> srcJson) => _$AudioInfoFromJson(srcJson);
 
-  Map<String, dynamic> toJson() => _$HomeInfoToJson(this);
+  Map<String, dynamic> toJson() => _$AudioInfoToJson(this);
 
 }
 
 
 @JsonSerializable()
-class Ds extends Object {
+class Sc extends Object {
 
   @JsonKey(name: 'id')
   int id;
 
-  @JsonKey(name: 'name')
-  String name;
-
   @JsonKey(name: 'currid')
   int currid;
 
-  @JsonKey(name: 'hcover')
-  String hcover;
+  @JsonKey(name: 'name')
+  String name;
+
+  @JsonKey(name: 'hvcover')
+  String hvcover;
 
   @JsonKey(name: 'words')
   String words;
 
-  Ds(this.id,this.name,this.currid,this.hcover,this.words,);
+  Sc(this.id,this.currid,this.name,this.hvcover,this.words,);
 
-  factory Ds.fromJson(Map<String, dynamic> srcJson) => _$DsFromJson(srcJson);
+  factory Sc.fromJson(Map<String, dynamic> srcJson) => _$ScFromJson(srcJson);
 
-  Map<String, dynamic> toJson() => _$DsToJson(this);
+  Map<String, dynamic> toJson() => _$ScToJson(this);
 
 }
 
@@ -66,11 +69,11 @@ class Res extends Object {
   @JsonKey(name: 'id')
   int id;
 
-  @JsonKey(name: 'name')
-  String name;
-
   @JsonKey(name: 'currid')
   int currid;
+
+  @JsonKey(name: 'name')
+  String name;
 
   @JsonKey(name: 'hcover')
   String hcover;
@@ -78,7 +81,7 @@ class Res extends Object {
   @JsonKey(name: 'words')
   String words;
 
-  Res(this.id,this.name,this.currid,this.hcover,this.words,);
+  Res(this.id,this.currid,this.name,this.hcover,this.words,);
 
   factory Res.fromJson(Map<String, dynamic> srcJson) => _$ResFromJson(srcJson);
 
@@ -102,13 +105,13 @@ class Sql extends Object {
   @JsonKey(name: 'hcover')
   String hcover;
 
-  @JsonKey(name: 'words')
-  String words;
-
   @JsonKey(name: 'clicks')
   int clicks;
 
-  Sql(this.id,this.name,this.currid,this.hcover,this.words,this.clicks,);
+  @JsonKey(name: 'words')
+  String words;
+
+  Sql(this.id,this.name,this.currid,this.hcover,this.clicks,this.words,);
 
   factory Sql.fromJson(Map<String, dynamic> srcJson) => _$SqlFromJson(srcJson);
 
@@ -123,11 +126,11 @@ class Re extends Object {
   @JsonKey(name: 'id')
   int id;
 
-  @JsonKey(name: 'name')
-  String name;
-
   @JsonKey(name: 'currid')
   int currid;
+
+  @JsonKey(name: 'name')
+  String name;
 
   @JsonKey(name: 'hcover')
   String hcover;
@@ -135,7 +138,7 @@ class Re extends Object {
   @JsonKey(name: 'clicks')
   int clicks;
 
-  Re(this.id,this.name,this.currid,this.hcover,this.clicks,);
+  Re(this.id,this.currid,this.name,this.hcover,this.clicks,);
 
   factory Re.fromJson(Map<String, dynamic> srcJson) => _$ReFromJson(srcJson);
 
@@ -150,13 +153,16 @@ class Jr extends Object {
   @JsonKey(name: 'id')
   int id;
 
+  @JsonKey(name: 'currid')
+  int currid;
+
   @JsonKey(name: 'hcover')
   String hcover;
 
   @JsonKey(name: 'address')
   String address;
 
-  Jr(this.id,this.hcover,this.address,);
+  Jr(this.id,this.currid,this.hcover,this.address,);
 
   factory Jr.fromJson(Map<String, dynamic> srcJson) => _$JrFromJson(srcJson);
 
@@ -166,10 +172,7 @@ class Jr extends Object {
 
 
 @JsonSerializable()
-class Lb extends Object {
-
-  @JsonKey(name: 'img')
-  String img;
+class Arr extends Object {
 
   @JsonKey(name: 'id')
   int id;
@@ -177,7 +180,40 @@ class Lb extends Object {
   @JsonKey(name: 'currid')
   int currid;
 
-  Lb(this.img,this.id,this.currid,);
+  @JsonKey(name: 'name')
+  String name;
+
+  @JsonKey(name: 'hcover')
+  String hcover;
+
+  @JsonKey(name: 'clicks')
+  int clicks;
+
+  Arr(this.id,this.currid,this.name,this.hcover,this.clicks,);
+
+  factory Arr.fromJson(Map<String, dynamic> srcJson) => _$ArrFromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$ArrToJson(this);
+
+}
+
+
+@JsonSerializable()
+class Lb extends Object {
+
+  @JsonKey(name: 'id')
+  int id;
+
+  @JsonKey(name: 'currid')
+  int currid;
+
+  @JsonKey(name: 'img')
+  String img;
+
+  @JsonKey(name: 'pid')
+  int pid;
+
+  Lb(this.id,this.currid,this.img,this.pid,);
 
   factory Lb.fromJson(Map<String, dynamic> srcJson) => _$LbFromJson(srcJson);
 
