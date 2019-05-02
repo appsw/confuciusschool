@@ -103,7 +103,7 @@ class _AncientChineseState extends BaseState {
                 ),
               ),
               onTap: (){
-                NavigatorUtils.push(context, new SearchPage());
+                NavigatorUtils.push(context, new SearchResultListPage(0));
 
               },
             ),

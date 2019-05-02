@@ -2,6 +2,7 @@ import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
@@ -46,6 +47,20 @@ class VerificationPhonePage extends BasefulWidget{
       margin: EdgeInsets.only(top: 244.0),
       child: FlatButton(
         onPressed: (){
+          String code = codeController.text;
+          String phone = phoneController.text;
+          if(code.isEmpty || phone.isEmpty){
+            ToastUtil.makeToast("请完善内容！");
+            return;
+          }
+          api.changePhone(code,phone,
+                  (msg){
+                ToastUtil.makeToast(msg);
+              },
+                  (msg){
+                ToastUtil.makeToast(msg);
+              }
+          );
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
@@ -128,6 +143,14 @@ class VerificationPhonePage extends BasefulWidget{
 //            ToastUtil.makeToast("请先输入手机号");
 //            return;
 //          }
+          api.changePhoneGetSMS(phonrNumber,
+                  (msg){
+                ToastUtil.makeToast(msg);
+              },
+                  (msg){
+                ToastUtil.makeToast(msg);
+              }
+          );
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
         color: ColorsUtil.LogBtnBg,//按钮的背景颜色
@@ -140,6 +163,18 @@ class VerificationPhonePage extends BasefulWidget{
         ),
       ),
     );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    api.getPhone((phone){
+      setState((){
+        this.phonrNumber = phone;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 
 }

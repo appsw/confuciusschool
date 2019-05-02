@@ -7,15 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 
-class ChangePswdPage extends BasefulWidget{
+class ChangePayPswdPage extends BasefulWidget{
 
   var codeController = TextEditingController();
   var pswdController = TextEditingController();
   var repswdController = TextEditingController();
+  var phone = "";
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
     return PageUtils.getAppBar(context, "修改密码");
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    api.getPhone((phone){
+      setState((){
+        this.phone = phone;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 
   @override
@@ -61,7 +74,7 @@ class ChangePswdPage extends BasefulWidget{
             ToastUtil.makeToast("请完善内容！");
             return;
           }
-          api.changePswd(code,pswd,repswd,
+          api.changePayPswd(code,pswd,repswd,
                   (msg){
                 ToastUtil.makeToast(msg);
               },
@@ -175,12 +188,7 @@ class ChangePswdPage extends BasefulWidget{
       alignment: Alignment.center,
       child: FlatButton(
         onPressed: (){
-//          var phone = phoneController.text;
-//          if(phone.isEmpty){
-//            ToastUtil.makeToast("请先输入手机号");
-//            return;
-//          }
-          api.changePswdGetSMS(
+          api.changePayPswdGetSMS(phone,
                   (msg){
                 ToastUtil.makeToast(msg);
               },

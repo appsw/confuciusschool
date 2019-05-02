@@ -24,6 +24,7 @@ class _SearchResultListPageState extends BaseState {
   var tableNames = ["全部","国文","国艺","国礼","国医"];
   var tabNumber;
   String _selectedValue = "1";
+  final controller = TextEditingController();
 
   @override
   void initData() {
@@ -54,6 +55,7 @@ class _SearchResultListPageState extends BaseState {
   Widget getHead(){
     return Container(
       margin: EdgeInsets.only(top: 20.0),
+      height: 40.0,
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
         children: <Widget>[
@@ -68,8 +70,7 @@ class _SearchResultListPageState extends BaseState {
           ),
           Expanded(
             flex: 1,
-            child: GestureDetector(
-              child: Container(
+            child: Container(
                 height: 28.0,
                 margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
                 decoration: new BoxDecoration(
@@ -83,21 +84,29 @@ class _SearchResultListPageState extends BaseState {
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
                       child: Image.asset("images/home01_search.png"),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Text("请输入关键字、视频名称",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                        height: 20.0,
+                        child: TextField(
+                          controller: controller,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(2.0),
+                            border: InputBorder.none,
+                            hintText: '请输入关键字、视频名称',
+                            prefixStyle: new TextStyle(height: 20.0),
+                            hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
+                          ),
+                          onSubmitted: (text){
+                            getSeachData(text);
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              onTap: (){
-                NavigatorUtils.push(context, new SearchPage());
-              },
-            ),
           ),
           Expanded(
             flex: 0,
@@ -176,6 +185,18 @@ class _SearchResultListPageState extends BaseState {
     else
       type = status.toString();
     api.getClassification(type,_selectedValue, (data){
+      setState((){
+        this.data = data;
+      });
+      LoadingDialog.dismissLoadingDialog(context);
+    }, (msg){
+      LoadingDialog.dismissLoadingDialog(context);
+      ToastUtil.makeToast(msg);
+    });
+  }
+  void getSeachData(String name){
+    LoadingDialog.showLoadingDialog(context);
+    api.getSeachByName(_selectedValue, name, (data){
       setState((){
         this.data = data;
       });
@@ -335,7 +356,10 @@ class _SearchResultListPageState extends BaseState {
     setState(() {
       _selectedValue = value;
     });
-    getData(tabNumber);
+    if(controller.text == null)
+      getData(tabNumber);
+    else
+      getSeachData(controller.text);
   }
 
   _showMenu(BuildContext context) {

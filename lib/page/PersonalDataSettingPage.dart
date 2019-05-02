@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/model/PersonalInfo.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,7 +15,7 @@ import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 class PersonalDataPage extends BasefulWidget{
 
   File headImg;
@@ -23,36 +24,33 @@ class PersonalDataPage extends BasefulWidget{
   var address = "请选择";
   var statusString = "";
   var imgUrl = "";
-//  PersonalData data;
+  PersonalInfo data;
   Api api = new Api();
-  var sex = "3";
+  var sex = 1;
+  var birth = "";
+  var bname;
+  var dname;
+  var ename;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-//    api.getPersonal((PersonalData data){
-//      setState(() {
-//        this.data = data;
-//        nameController.text = data.nickname == null ? "" : data.nickname;
-//        sexController.text = data.sex  == null ? "" : data.sex;
-//        switch( data.sex){
-//          case "男":
-//            sex = "1";
-//            break;
-//          case "男":
-//            sex = "2";
-//            break;
-//          default:
-//            sex = "3";
-//            break;
-//        }
-//        address = data.namePath  == null ? "请选择" :  data.namePath;
-//      });
-//      data.namePath = "";
-//    }, (msg){ToastUtil.makeToast(msg);});
+    api.getPersonal((PersonalInfo data){
+      setState(() {
+        this.data = data;
+        nameController.text = data.nickName == null ? "" : data.nickName;
+        sex = data.sex;
+        birth = data.birth;
+        address = data.bname  == null ? "请选择" :  data.bname.toString() + data.dname.toString() + data.ename.toString() ;
+        bname =  data.bname.toString();
+        dname = data.dname.toString();
+        ename = data.ename.toString();
+      });
+
+    }, (msg){ToastUtil.makeToast(msg);});
   }
   Widget getBody(BuildContext context){
-    return Container(
+    return data == null ? LoadingUtils.getRingLoading() : Container(
       child: Column(children: <Widget>[
         Expanded(flex: 1,child: Container(child: Column(children: <Widget>[
           getHead(),
@@ -64,6 +62,8 @@ class PersonalDataPage extends BasefulWidget{
           getPhone(),
           LinsUtils.getWidthLins(context),
           getSex(),
+          LinsUtils.getWidthLins(context),
+          getBirth(),
           LinsUtils.getWidthLins(context),
           getAddress(),
           LinsUtils.getWidthLins(context),
@@ -102,7 +102,7 @@ class PersonalDataPage extends BasefulWidget{
       child: SizedBox(
           width: 70.0,
           height: 70.0,
-          child: headImg == null ? null == null  ? Image.asset("images/home04_2xiugaiziliao_touxiang.png", fit: BoxFit.cover) :Image.network("", fit: BoxFit.cover) : Image.file(headImg, fit: BoxFit.cover)
+          child: headImg == null ? data.profilePhoto == null  ? Image.asset("images/home04_2xiugaiziliao_touxiang.png", fit: BoxFit.cover) :Image.network(data.profilePhoto, fit: BoxFit.cover) : Image.file(headImg, fit: BoxFit.cover)
       ),
     );
   }
@@ -152,7 +152,7 @@ class PersonalDataPage extends BasefulWidget{
         Expanded(flex: 0,child: Text("推荐码",style: TextStyle(color: Colors.grey),),),
         Expanded(flex: 1,child: GestureDetector(
           child: Container(alignment:Alignment.centerRight,color:Colors.white,child: Text(
-            "123456",style: TextStyle(color: Colors.black),
+            data.invitecode == null ? "" : data.invitecode,style: TextStyle(color: Colors.black),
           ),),
           onTap: (){
             showModalBottomSheet(context: context, builder: (context){
@@ -179,7 +179,7 @@ class PersonalDataPage extends BasefulWidget{
         Expanded(flex: 0,child: Text("手机",style: TextStyle(color: Colors.grey),),),
         Expanded(flex: 1,child: GestureDetector(
           child: Container(alignment:Alignment.centerRight,color:Colors.white,child: Text(
-            "12345631413412",style: TextStyle(color: Colors.black),
+            data.account == null ? "" : data.account,style: TextStyle(color: Colors.black),
           ),),
           onTap: (){
             showModalBottomSheet(context: context, builder: (context){
@@ -200,10 +200,10 @@ class PersonalDataPage extends BasefulWidget{
   Widget getSex(){
     var sexString;
     switch(sex){
-      case "1":
+      case 1:
         sexString = "男";
         break;
-      case "2":
+      case 2:
         sexString = "女";
         break;
       default:
@@ -237,30 +237,74 @@ class PersonalDataPage extends BasefulWidget{
       ],),
     );
   }
+
+  Widget getBirth(){
+    return Container(
+      height: 50.0,
+      color: Colors.white,
+      padding: EdgeInsets.all(DefaultValue.leftMargin),
+      child: Row(children: <Widget>[
+        Expanded(flex: 0,child: Text("出生年月日",style: TextStyle(color: Colors.grey),),),
+        Expanded(flex: 1,child: GestureDetector(
+          child: Container(alignment:Alignment.centerRight,color:Colors.white,child: Text(
+            birth == null ? "" : birth,style: TextStyle(color: Colors.black),
+          ),),
+          onTap: (){
+            DatePicker.showDatePicker(
+                context,
+                showTitleActions: true,
+                locale: 'zh',
+                minYear: 1970,
+                maxYear: 2020,
+                initialYear: 2018,
+                initialMonth: 6,
+                initialDate: 21,
+                cancel: Text('取消'),
+                confirm: Text('确定'),
+                dateFormat: 'yyyy-mm-dd',
+                onChanged:(year, month, date) {
+                  setState((){
+                    birth = year.toString() + "-" + month.toString() + "-" + date.toString();
+                  });
+                },
+            onConfirm: (year, month, date) {
+              setState((){
+                birth = year.toString() + "-" + month.toString() + "-" + date.toString();
+              });
+            },
+            onCancel: () { },
+            );
+          },
+        ),),
+        Expanded(
+          flex: 0,
+          child: Container(
+            child: Image.asset("images/home04_5_1tixinadaoyinhangka_gengduo.png",width: 7.0,height: 12.0,),
+            margin: EdgeInsets.only(left: DefaultValue.rightMargin),
+          ),
+        )
+      ],),
+    );
+  }
   Widget getBottomDialog(){
     return Container(
-      height: 120.0,
+      height: 80.0,
 //      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,),
       child: Column(
         children: <Widget>[
           Expanded(flex: 1,child: GestureDetector(child: getDialogItem(0),onTap: (){
             setState(() {
-              sex = "1";
+              sex = 1;
             });
             Navigator.of(context).pop();
           },)),
           Expanded(flex: 1,child: GestureDetector(child: getDialogItem(1),onTap: (){
             setState(() {
-              sex = "2";
+              sex = 2;
             });
             Navigator.of(context).pop();
           },)),
-          Expanded(flex: 1,child: GestureDetector(child: getDialogItem(2),onTap: (){
-            setState(() {
-              sex = "3";
-            });
-            Navigator.of(context).pop();
-          },)),
+
 
         ],
       ),
@@ -382,18 +426,21 @@ class PersonalDataPage extends BasefulWidget{
         print(province);
         setState(() {
           address = province["name"];
+          bname = province["name"];
         });
       },
       selectCity: (city) {
         print(city);
         setState(() {
           address += city["name"];
+          dname = city["name"];
         });
       },
       selectArea: (area) {
         print(area);
         setState(() {
           address += area["name"];
+          ename = area["name"];
 //          data.namePath = area["code"];
         });
       },

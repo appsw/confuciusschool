@@ -21,4 +21,18 @@ class ApiUrl{
   static final String putComment= "/index/member/addcomment";
   static final String getNews= "/index/govern/news";
   static final String getAudioClassification = "/index/plate/yscreen";
+  static final String getSeachByName = "/index/plate/nseach";
+  static final String getMember = "/index/govern/member";
+  static final String putPayPswd = "/index/Opera/pwd";
+  static final String changePayPswdGetSMS = "/index/Opera/sendCode";
+  static final String changePayPswd = "/index/Opera/upwd";
+  static final String changePswdGetSMS = "/index/plate/passCode";
+  static final String changePswd = "/index/plate/password";
+  static final String changePhoneGetSMS = "/index/plate/sendCode";
+  static final String changePhone= "/index/plate/register";
+  static final String getPhone = "/index/plate/account";
+  static final String getPersonal= "/index/plate/edit";
+  static final String changePersonal= "/index/plate/medit";
+
+
 }

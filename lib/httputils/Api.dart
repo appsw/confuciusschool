@@ -8,7 +8,9 @@ import 'package:confuciusschool/model/Classification.dart';
 import 'package:confuciusschool/model/CommentInfo.dart';
 import 'package:confuciusschool/model/HomeInfo.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
+import 'package:confuciusschool/model/MemberInfo.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
+import 'package:confuciusschool/model/PersonalInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
@@ -99,6 +101,15 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void getSeachByName(String type,String name,Function callback,Function errorCallBack){
+    params.clear();
+    params["type"] = type;
+    params["name"] = name;
+    request(ApiUrl.getSeachByName,(BaseResponse response){
+      List<Classification> data = getClassificationList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
   void getAudioClassification(String type,String stype,Function callback,Function errorCallBack){
     params.clear();
     params["type"] = type;
@@ -153,6 +164,93 @@ class Api extends CommonService{
     request(ApiUrl.getNews,(BaseResponse response){
       List<NewsInfo> data = getNewsInfoList(response.data);
       callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getMember(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getMember,(BaseResponse response){
+      MemberInfo data = MemberInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putPayPswd(String password,String npassword,Function callback,Function errorCallBack){
+    params.clear();
+    params["password"] = password;
+    params["npassword"] = npassword;
+    request(ApiUrl.putPayPswd,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePayPswdGetSMS(String phone,Function callback,Function errorCallBack){
+    params.clear();
+    params["account"] = phone;
+    request(ApiUrl.changePayPswdGetSMS,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePayPswd(String code,String password,String npassword,Function callback,Function errorCallBack){
+    params.clear();
+    params["code"] = code;
+    params["password"] = password;
+    params["npassword"] = npassword;
+    request(ApiUrl.changePayPswd,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePswdGetSMS(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.changePswdGetSMS,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePswd(String code,String password,String password1,Function callback,Function errorCallBack){
+    params.clear();
+    params["code"] = code;
+    params["password"] = password;
+    params["password1"] = password1;
+    request(ApiUrl.changePswd,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePhoneGetSMS(String phone,Function callback,Function errorCallBack){
+    params.clear();
+    params["account"] = phone;
+    request(ApiUrl.changePhoneGetSMS,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePhone(String code,String account,Function callback,Function errorCallBack){
+    params.clear();
+    params["code"] = code;
+    params["account"] = account;
+    request(ApiUrl.changePswd,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getPhone(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getPhone,(BaseResponse response){
+      callback(response.data["account"]);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getPersonal(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getPersonal,(BaseResponse response){
+      PersonalInfo data = PersonalInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changePersonal(String nickName,String profilePhoto,String sex,String birth,String bname,String dname,String ename,Function callback,Function errorCallBack){
+    params.clear();
+    params["nickName"] = nickName;
+    params["profilePhoto"] = profilePhoto;
+    params["sex"] = sex;
+    params["birth"] = birth;
+    params["bname"] = bname;
+    params["dname"] = dname;
+    params["ename"] = ename;
+    request(ApiUrl.changePersonal,(BaseResponse response){
+      callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
 
