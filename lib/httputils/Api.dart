@@ -2,15 +2,22 @@ import 'dart:io';
 
 import 'package:confuciusschool/httputils/ApiUrl.dart';
 import 'package:confuciusschool/httputils/CommonService.dart';
+import 'package:confuciusschool/model/AccountInfo.dart';
 import 'package:confuciusschool/model/AudioInfo.dart';
 import 'package:confuciusschool/model/BaseResponse.dart';
+import 'package:confuciusschool/model/BecomeVipInfo.dart';
 import 'package:confuciusschool/model/Classification.dart';
 import 'package:confuciusschool/model/CommentInfo.dart';
 import 'package:confuciusschool/model/HomeInfo.dart';
+import 'package:confuciusschool/model/IncomeInfo.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
+import 'package:confuciusschool/model/MaterialInfo.dart';
 import 'package:confuciusschool/model/MemberInfo.dart';
+import 'package:confuciusschool/model/MyTeamInfo.dart';
+import 'package:confuciusschool/model/MyTeamMemberInfo.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
 import 'package:confuciusschool/model/PersonalInfo.dart';
+import 'package:confuciusschool/model/SignInShowInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
@@ -253,5 +260,96 @@ class Api extends CommonService{
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void getMyTeam(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getMyTeam,(BaseResponse response){
+      MyTeamInfo data = MyTeamInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getMyTeamMember(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getMyTeamMember,(BaseResponse response){
+      MyTeamMemberInfo data = MyTeamMemberInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getSignInShow(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getSignInShow,(BaseResponse response){
+      SignInShowInfo data = SignInShowInfo.fromJson(response.msg);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void upLoadImg(File file,Function callback,Function errorCallBack){
+    params.clear();
+    params["img"] = file;
+    request(ApiUrl.upLoadImg,(BaseResponse response){
+      callback(response.data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changeSigninImg(File file,Function callback,Function errorCallBack){
+    params.clear();
+    params["img"] = file;
+    request(ApiUrl.changeSigninImg,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void changeSigninText(String words,Function callback,Function errorCallBack){
+    params.clear();
+    params["words"] = words;
+    request(ApiUrl.changeSigninText,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
 
+  void changeBrand(File file,String brand,Function callback,Function errorCallBack){
+    params.clear();
+    params["rimg"] = file;
+    params["brand"] = brand;
+    request(ApiUrl.changeBrand,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void signIn(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.signIn,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getAccount(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getAccount,(BaseResponse response){
+      AccountInfo data = AccountInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getIncomeList(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getIncomeList,(BaseResponse response){
+      List<IncomeInfo> data = getIncomeInfoList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getPutCashList(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getPutCashList,(BaseResponse response){
+      List<IncomeInfo> data = getIncomeInfoList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getBecomeVipInfo(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getBecomeVipInfo,(BaseResponse response){
+      BecomeVipInfo data = BecomeVipInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getMaterialInfo(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getMaterialInfo,(BaseResponse response){
+      List<MaterialInfo> data = getMaterialInfoList(response.data["arr"]);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
 }

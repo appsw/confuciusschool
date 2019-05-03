@@ -28,7 +28,7 @@ class ColorsUtil{
   static const Color AccountHeadBg = Color(0xFFFE5E0D);
   static const Color LabelYellowBg = Color(0xFFFFA820);
   static const Color LabelRedBg = Color(0xFFD30127);
-
+  static const Color SignInBtnBg = Color(0xFFF57540);
 
 
 }

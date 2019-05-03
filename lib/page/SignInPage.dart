@@ -1,15 +1,43 @@
+import 'dart:io';
+
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/dialog/LoadingDialog.dart';
+import 'package:confuciusschool/dialog/SignInDialog.dart';
+import 'package:confuciusschool/model/SignInShowInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
+import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignInPage extends BasefulWidget{
 
   var text = "我是1866366789,在孔子学堂APP学习已坚持1天，受益颇多，邀您一起学习！";
   var textController = TextEditingController();
+  var textBrandController = TextEditingController();
+  SignInShowInfo data;
+  File brandImage;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+  void getData(){
+    api.getSignInShow((SignInShowInfo data){
+      setState((){
+        this.data = data;
+        text = data.sql.words;
+
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+  }
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
@@ -25,7 +53,18 @@ class SignInPage extends BasefulWidget{
       elevation: 0.0,
       actions: <Widget>[
         GestureDetector(
-          onTap: (){},
+          onTap: (){
+            SignInDialog.showLoadingDialog(context,(){
+              print("签到");
+              api.signIn((msg){
+                SignInDialog.dismissLoadingDialog(context);
+                ToastUtil.makeToast(msg);
+
+              }, (msg){
+                ToastUtil.makeToast(msg);
+              });
+            });
+          },
           child: Container(
             child: Row(
               children: <Widget>[
@@ -60,7 +99,7 @@ class SignInPage extends BasefulWidget{
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return SingleChildScrollView(
+    return data == null ? LoadingUtils.getRingLoading() : SingleChildScrollView(
       child: Container(
         child: Column(
           children: <Widget>[
@@ -75,7 +114,9 @@ class SignInPage extends BasefulWidget{
                       children: <Widget>[
                         Expanded(
                           flex: 7,
-                          child: Container(),
+                          child: Container(
+                            child: Image.network(data.sql.img,width: 284.0,height: 284.0,fit: BoxFit.fill,),
+                          ),
                         ),
                         Expanded(
                           flex: 3,
@@ -169,10 +210,10 @@ class SignInPage extends BasefulWidget{
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Image.asset("images/home04_4_1jifendaka_app.png",height: 49.0,width: 49.0,),
+          Image.asset(data.sql.rimg ?? data.sql.rimg,height: 49.0,width: 49.0,),
           Container(
             margin: EdgeInsets.only(top: DefaultValue.topMargin),
-            child: Text("孔子学堂APP",
+            child: Text(data.sql.brand,
               style: TextStyle(
                   color: ColorsUtil.GreyTextColor,
                   fontSize: DefaultValue.smallTextSize
@@ -207,6 +248,33 @@ class SignInPage extends BasefulWidget{
       ),
     );
   }
+  void _selectedImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if(image != null){
+        changeImg(image);
+      }
+    });
+  }
+  void _selectedBrandImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if(image != null){
+        brandImage = image;
+      }
+    });
+  }
+  void changeImg(File image){
+    LoadingDialog.showLoadingDialog(context);
+    api.changeSigninImg(image, (msg){
+      LoadingDialog.dismissLoadingDialog(context);
+      ToastUtil.makeToast(msg);
+      getData();
+    }, (msg){
+      LoadingDialog.dismissLoadingDialog(context);
+      ToastUtil.makeToast(msg);
+    });
+  }
   Widget getBottom(){
     return Container(
       color: Colors.white,
@@ -217,7 +285,7 @@ class SignInPage extends BasefulWidget{
             flex: 1,
             child: GestureDetector(
               onTap: (){
-
+                _selectedImage();
               },
               child: Container(
                 alignment: Alignment.center,
@@ -344,10 +412,36 @@ class SignInPage extends BasefulWidget{
                 prefixStyle: new TextStyle(height: 20.0),
                 hintStyle: new TextStyle(color: ColorsUtil.GreyTextColor,fontSize: DefaultValue.messageTextSize),
               ),
+              onSubmitted: (text){
+                changeSignText(text);
+              },
             ),
           ),
         );
       });
+    });
+  }
+  void changeSignText(String text){
+    LoadingDialog.showLoadingDialog(context);
+      api.changeSigninText(text,(msg){
+        LoadingDialog.dismissLoadingDialog(context);
+        LoadingDialog.dismissLoadingDialog(context);
+        ToastUtil.makeToast(msg);
+        getData();
+      }, (msg){
+        LoadingDialog.dismissLoadingDialog(context);
+        ToastUtil.makeToast(msg);
+      });
+  }
+  void changeBrand(File file,String text){
+    LoadingDialog.showLoadingDialog(context);
+    api.changeBrand(file,text,(msg){
+      LoadingDialog.dismissLoadingDialog(context);
+      ToastUtil.makeToast(msg);
+      getData();
+    }, (msg){
+      LoadingDialog.dismissLoadingDialog(context);
+      ToastUtil.makeToast(msg);
     });
   }
   Widget getEditbrand(){
@@ -365,9 +459,14 @@ class SignInPage extends BasefulWidget{
                     color: Colors.black,
                     fontSize: DefaultValue.textSize
                 ),),
-              Container(
-                margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                child: Image.asset("images/home04_4_3jifendaka_tianjiatupian.png",width: 44.0,height: 44.0,),
+              GestureDetector(
+                child: Container(
+                  margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                  child: Image.asset("images/home04_4_3jifendaka_tianjiatupian.png",width: 44.0,height: 44.0,),
+                ),
+                onTap: (){
+                  _selectedBrandImage();
+                },
               ),
               Container(
                 margin: EdgeInsets.only(top: DefaultValue.topMargin),
@@ -385,7 +484,7 @@ class SignInPage extends BasefulWidget{
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,),
                   child: TextField(
-                    controller: textController,
+                    controller: textBrandController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(2.0),
@@ -407,21 +506,30 @@ class SignInPage extends BasefulWidget{
                           color: Colors.red,
                           fontSize: DefaultValue.textSize
                       ),),
-                    Container(
-                      height: 25.0,
-                      width: 50.0,
-                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      alignment: Alignment.center,
-                      decoration: new BoxDecoration(
-                          color: Colors.red,
-                          borderRadius:  new BorderRadius.all(Radius.circular(13.0))
-                      ),
-                      child: Text("确定",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: DefaultValue.textSize
-                        ),),
+                    GestureDetector(
+                      onTap: (){
+                        if(brandImage == null || textBrandController.text == null){
+                          ToastUtil.makeToast("请完善资料");
+                          return;
+                        }
+                        changeBrand(brandImage, textBrandController.text);
+                      },
+                      child: Container(
+                        height: 25.0,
+                        width: 50.0,
+                        margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                        alignment: Alignment.center,
+                        decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:  new BorderRadius.all(Radius.circular(13.0))
+                        ),
+                        child: Text("保存",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: DefaultValue.textSize
+                          ),),
 
+                      ),
                     )
                   ],
                 ),

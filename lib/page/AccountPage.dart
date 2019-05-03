@@ -1,16 +1,41 @@
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/model/AccountInfo.dart';
 import 'package:confuciusschool/page/AddBankPage.dart';
+import 'package:confuciusschool/page/IncomePage.dart';
 import 'package:confuciusschool/page/PutCashPage.dart';
+import 'package:confuciusschool/page/PutCashRecordPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
+import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+class AccountPage extends StatefulWidget {
+  @override
+  _AccountPageState createState() => _AccountPageState();
+}
 
-class AccountPage extends BasefulWidget{
+class _AccountPageState extends BaseState {
+
+  AccountInfo data;
+  @override
+  void initData() {
+    // TODO: implement initData
+    super.initData();
+    api.getAccount((AccountInfo data){
+      setState(() {
+        this.data = data;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+  }
+
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
@@ -30,7 +55,7 @@ class AccountPage extends BasefulWidget{
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return Container(
+    return data == null ? LoadingUtils.getRingLoading() : Container(
       child: Column(
         children: <Widget>[
           getHead(),
@@ -49,7 +74,7 @@ class AccountPage extends BasefulWidget{
                 ),
                 Expanded(
                   flex: 0,
-                  child: Text("0",
+                  child: Text(data.arr.toString(),
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: DefaultValue.loginBtnSize
@@ -113,7 +138,7 @@ class AccountPage extends BasefulWidget{
           LinsUtils.getWidthLins(context),
           GestureDetector(
             onTap: (){
-
+              NavigatorUtils.push(context, IncomePage());
             },
             child: Container(
               color: Colors.white,
@@ -139,7 +164,7 @@ class AccountPage extends BasefulWidget{
           LinsUtils.getWidthLins(context),
           GestureDetector(
             onTap: (){
-
+              NavigatorUtils.push(context, PutCashRecordPage());
             },
             child: Container(
               color: Colors.white,
@@ -183,13 +208,13 @@ class AccountPage extends BasefulWidget{
             ),),
           Container(
             margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-            child: Text("0.10",
+            child: Text(data.ar.balance,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 41.0
               ),),
           ),
-          Text("累计总收入：0.00",
+          Text("累计总收入：${data.ar.gross}",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: DefaultValue.smallTextSize
@@ -198,5 +223,4 @@ class AccountPage extends BasefulWidget{
       ),
     );
   }
-
 }

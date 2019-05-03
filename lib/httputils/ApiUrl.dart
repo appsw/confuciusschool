@@ -33,6 +33,19 @@ class ApiUrl{
   static final String getPhone = "/index/plate/account";
   static final String getPersonal= "/index/plate/edit";
   static final String changePersonal= "/index/plate/medit";
+  static final String getMyTeam= "/index/govern/myteam";
+  static final String getMyTeamMember= "/index/govern/team";
+  static final String getSignInShow= "/index/Opera/show";
+  static final String changeSigninImg= "/index/Opera/img";
+  static final String changeSigninText= "/index/Opera/words";
+  static final String changeBrand= "/index/Opera/rimg";
+  static final String signIn= "/index/Opera/sign";
+  static final String getAccount= "/index/govern/amount";
+  static final String getIncomeList= "/index/Opera/into";
+  static final String getPutCashList= "/index/Opera/into";
+  static final String getBecomeVipInfo= "/index/govern/vip";
+  static final String getMaterialInfo= "/index/govern/material";
+
 
 
 }

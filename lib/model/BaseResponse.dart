@@ -7,7 +7,7 @@ part 'BaseResponse.g.dart';
 class BaseResponse{
 
   @JsonKey(name: 'msg')
-  String msg;
+  var msg;
 
   @JsonKey(name: 'code')
   int code;

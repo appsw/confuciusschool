@@ -1,6 +1,9 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/MemberInfo.dart';
 import 'package:confuciusschool/page/AccountPage.dart';
+import 'package:confuciusschool/page/BecomeVipPage.dart';
+import 'package:confuciusschool/page/MaterialPage.dart';
+import 'package:confuciusschool/page/MyTeamMemberPage.dart';
 import 'package:confuciusschool/page/MyTeamPage.dart';
 import 'package:confuciusschool/page/NewsPage.dart';
 import 'package:confuciusschool/page/PersonalDataSettingPage.dart';
@@ -140,53 +143,59 @@ class _PersonalPageState extends BaseState {
               ),
             ],
           ),
-          data.isVip == 1 ? getBecomeVip() :Container()
+          getBecomeVip()
+//          data.isVip == 1 ? getBecomeVip() :Container()
     ],
       ),
     );
   }
   Widget getBecomeVip(){
-    return Container(
-      margin: EdgeInsets.only(top: DefaultValue.topMargin),
-      decoration: new BoxDecoration(
-          border: new Border.all(width: 1.0,color:Colors.red ),
-          color: Colors.white,
-          borderRadius:  new BorderRadius.all(Radius.circular(23.0))
-      ),
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new BecomeVipPage());
+      },
       child: Container(
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset("images/home04_invite1.png",width: 27.0,height: 27.0,),
-            Expanded(
-              flex: 1,
-              child: Container(
-                margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                child: Row(
-                  children: <Widget>[
-                    Text("开通VIP，",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                    Text("全年免费听课",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ],
+        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+        decoration: new BoxDecoration(
+            border: new Border.all(width: 1.0,color:Colors.red ),
+            color: Colors.white,
+            borderRadius:  new BorderRadius.all(Radius.circular(23.0))
+        ),
+        child: Container(
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset("images/home04_invite1.png",width: 27.0,height: 27.0,),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                  child: Row(
+                    children: <Widget>[
+                      Text("开通VIP，",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                      Text("全年免费听课",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            Text("立即开通",
-              style: TextStyle(
-                  color: Colors.red,
-                  fontSize: DefaultValue.smallTextSize
-              ),),
+              Text("立即开通",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: DefaultValue.smallTextSize
+                ),),
 
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -348,7 +357,7 @@ class _PersonalPageState extends BaseState {
       onTap: (){
         switch(index){
           case 0:
-            NavigatorUtils.push(context, AuthenticationPage());
+            NavigatorUtils.push(context, MaterialPage());
             break;
           case 1:
 
@@ -415,7 +424,8 @@ class _PersonalPageState extends BaseState {
             flex: 1,
             child: GestureDetector(
               onTap: (){
-                NavigatorUtils.push(context, MyTeamPage());
+//                NavigatorUtils.push(context, MyTeamPage());
+                NavigatorUtils.push(context, new MyTeamMemberPage());
               },
               child: Container(
                 alignment: Alignment.center,
