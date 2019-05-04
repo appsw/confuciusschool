@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:confuciusschool/httputils/ApiUrl.dart';
 import 'package:confuciusschool/httputils/CommonService.dart';
 import 'package:confuciusschool/model/AccountInfo.dart';
+import 'package:confuciusschool/model/ActivityDetailsInfo.dart';
+import 'package:confuciusschool/model/ActivityInfo.dart';
 import 'package:confuciusschool/model/AudioInfo.dart';
 import 'package:confuciusschool/model/BaseResponse.dart';
 import 'package:confuciusschool/model/BecomeVipInfo.dart';
@@ -13,10 +15,13 @@ import 'package:confuciusschool/model/IncomeInfo.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
 import 'package:confuciusschool/model/MaterialInfo.dart';
 import 'package:confuciusschool/model/MemberInfo.dart';
+import 'package:confuciusschool/model/MyCollectionInfo.dart';
+import 'package:confuciusschool/model/MyPointsInfo.dart';
 import 'package:confuciusschool/model/MyTeamInfo.dart';
 import 'package:confuciusschool/model/MyTeamMemberInfo.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
 import 'package:confuciusschool/model/PersonalInfo.dart';
+import 'package:confuciusschool/model/ShopInfo.dart';
 import 'package:confuciusschool/model/SignInShowInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/utils/Constant.dart';
@@ -352,4 +357,55 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void getShopInfo(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getShopInfo,(BaseResponse response){
+      ShopInfo data = ShopInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getMyPoints(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getMyPoints,(BaseResponse response){
+      MyPointsInfo data = MyPointsInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putFeed(String details,Function callback,Function errorCallBack){
+    params.clear();
+    params["details"] = details;
+    request(ApiUrl.putFeed,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getActivities(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getActivities,(BaseResponse response){
+      ActivityInfo data = ActivityInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getActivitiesDetails(String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    request(ApiUrl.getActivitiesDetails,(BaseResponse response){
+      ActivityDetailsInfo data = ActivityDetailsInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getSettingData(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getSettingData,(BaseResponse response){
+      callback(response.data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getMyCollection(String type,Function callback,Function errorCallBack){
+    params.clear();
+    params["type"] = type;
+    request(ApiUrl.getMyCollection,(BaseResponse response){
+      List<Classification> data = getClassificationList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+
 }

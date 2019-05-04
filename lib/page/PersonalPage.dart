@@ -1,13 +1,18 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/MemberInfo.dart';
 import 'package:confuciusschool/page/AccountPage.dart';
+import 'package:confuciusschool/page/ActivityCenterPage.dart';
 import 'package:confuciusschool/page/BecomeVipPage.dart';
+import 'package:confuciusschool/page/FeedbackPage.dart';
 import 'package:confuciusschool/page/MaterialPage.dart';
+import 'package:confuciusschool/page/MyCollectionPage.dart';
+import 'package:confuciusschool/page/MyPointsPage.dart';
 import 'package:confuciusschool/page/MyTeamMemberPage.dart';
 import 'package:confuciusschool/page/MyTeamPage.dart';
 import 'package:confuciusschool/page/NewsPage.dart';
 import 'package:confuciusschool/page/PersonalDataSettingPage.dart';
 import 'package:confuciusschool/page/SettingPage.dart';
+import 'package:confuciusschool/page/ShopPage.dart';
 import 'package:confuciusschool/page/SignInPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
@@ -342,6 +347,8 @@ class _PersonalPageState extends BaseState {
           getTitle(4),
           LinsUtils.getWidthLins(context),
           getTitle(5),
+          LinsUtils.getWidthLins(context),
+          getTitle(6),
         ],
       ),
     );
@@ -363,16 +370,19 @@ class _PersonalPageState extends BaseState {
 
             break;
           case 2:
-
+            NavigatorUtils.push(context, ShopPage());
             break;
           case 3:
-
+            NavigatorUtils.push(context, MyPointsPage());
             break;
           case 4:
-            NavigatorUtils.push(context, CustomPage());
+            NavigatorUtils.push(context, MyCollectionPage());
             break;
           case 5:
-            NavigatorUtils.push(context, LoginPage());
+            NavigatorUtils.push(context, FeedbackPage());
+            break;
+          case 6:
+            NavigatorUtils.push(context, ActivityCenterPage());
             break;
 
         }

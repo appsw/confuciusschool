@@ -1,22 +1,61 @@
+import 'dart:async';
+
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/page/AboutPage.dart';
 import 'package:confuciusschool/page/ChangePhonePage.dart';
 import 'package:confuciusschool/page/ChangePswdPage.dart';
+import 'package:confuciusschool/page/LoginPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 
 class SettingPage extends BasefulWidget{
+
+  Timer _timer;
+  var Size = 12;
+  bool is4G = false;
+  var code = "1.0";
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
     return PageUtils.getAppBar(context, "设置");
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    api.getSettingData((code){
+      setState((){
+        this.code = code;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+  }
 
+  void Clean(){
+    LoadingDialog.showLoadingDialog(context);
+    _timer = new Timer.periodic(const Duration(seconds: 2), (timer){
+      LoadingDialog.dismissLoadingDialog(context);
+      setState(() {
+        Size = 0;
+        stopTime();
+      });
+    });
+  }
+  void stopTime() {
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    _timer = null;
+  }
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
@@ -50,7 +89,9 @@ class SettingPage extends BasefulWidget{
           ),
           GestureDetector(
             onTap: (){
-
+              setState((){
+                is4G = !is4G;
+              });
             },
             child: Container(
                       color: Colors.white,
@@ -67,7 +108,7 @@ class SettingPage extends BasefulWidget{
                       ),
                       Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Image.asset("images/home04_1shezhi_handle.png",width: 51.0,height: 31.0,),
+                      child: Image.asset(is4G ? "images/home04_1shezhi_handle.png" : "images/home04_1shezhi_handle.png",width: 51.0,height: 31.0,),
                       ),
                       ],
                       ),
@@ -75,7 +116,7 @@ class SettingPage extends BasefulWidget{
           ),
           GestureDetector(
             onTap: (){
-
+              Clean();
             },
             child: Container(
     color: Colors.white,
@@ -92,7 +133,7 @@ class SettingPage extends BasefulWidget{
     ),
     Container(
     margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-    child: Text("4.98MB",
+    child: Text("${Size}MB",
     style: TextStyle(
     color: Colors.black,
     fontSize: 15.0
@@ -175,7 +216,7 @@ class SettingPage extends BasefulWidget{
                   ),
                   Container(
                     margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                    child: Text("1.0",
+                    child: Text("${code}",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 15.0
@@ -197,6 +238,11 @@ class SettingPage extends BasefulWidget{
               margin: EdgeInsets.only(top: 100.0),
               child: FlatButton(
                 onPressed: (){
+                  SharedPreferencesUtil.clearAll().then((logout){
+                    if(logout){
+                      NavigatorUtils.pushAndRemoveUntil(context, LoginPage());
+                    }
+                  });
                   print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
                 },
                 color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色

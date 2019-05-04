@@ -45,7 +45,12 @@ class ApiUrl{
   static final String getPutCashList= "/index/Opera/into";
   static final String getBecomeVipInfo= "/index/govern/vip";
   static final String getMaterialInfo= "/index/govern/material";
-
-
+  static final String getShopInfo= "/index/govern/supermarket";
+  static final String getMyPoints= "/index/plate/point";
+  static final String putFeed= "/index/plate/feed";
+  static final String getActivities= "/index/Opera/activities";
+  static final String getActivitiesDetails= "/index/Opera/details";
+  static final String getSettingData= "/index/plate/set";
+  static final String getMyCollection= "/index/plate/collection";
 
 }
