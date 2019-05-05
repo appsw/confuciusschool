@@ -23,6 +23,7 @@ class _SearchResultAudioListPageState extends BaseState {
   List<Classification> data = [];
   var tableNames = ["全部","睡前故事","名人传记","成语故事","诗词经典"];
   var tabNumber;
+  final controller = TextEditingController();
   String _selectedValue = "1";
 
   @override
@@ -83,13 +84,25 @@ class _SearchResultAudioListPageState extends BaseState {
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
                       child: Image.asset("images/home01_search.png"),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Text("请输入关键字、视频名称",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                        height: 20.0,
+                        child: TextField(
+                          controller: controller,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(2.0),
+                            border: InputBorder.none,
+                            hintText: '请输入关键字、视频名称',
+                            prefixStyle: new TextStyle(height: 20.0),
+                            hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
+                          ),
+                          onSubmitted: (text){
+                            getSeachData(text);
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -124,6 +137,18 @@ class _SearchResultAudioListPageState extends BaseState {
         ],
       ),
     );
+  }
+  void getSeachData(String name){
+    LoadingDialog.showLoadingDialog(context);
+    api.getSeachAudioByName(_selectedValue, name, (data){
+      setState((){
+        this.data = data;
+      });
+      LoadingDialog.dismissLoadingDialog(context);
+    }, (msg){
+      LoadingDialog.dismissLoadingDialog(context);
+      ToastUtil.makeToast(msg);
+    });
   }
   Widget getTables(BuildContext context){
     return Container(

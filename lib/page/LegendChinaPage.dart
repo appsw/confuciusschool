@@ -106,7 +106,7 @@ class _LegendChinaPageState extends BaseState {
                 ),
               ),
               onTap: (){
-                NavigatorUtils.push(context, new SearchPage());
+                NavigatorUtils.push(context, new SearchResultAudioListPage(0));
 
               },
             ),

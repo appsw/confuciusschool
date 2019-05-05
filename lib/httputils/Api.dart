@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:confuciusschool/httputils/ApiUrl.dart';
 import 'package:confuciusschool/httputils/CommonService.dart';
+import 'package:confuciusschool/model/AboutInfo.dart';
 import 'package:confuciusschool/model/AccountInfo.dart';
 import 'package:confuciusschool/model/ActivityDetailsInfo.dart';
 import 'package:confuciusschool/model/ActivityInfo.dart';
@@ -10,6 +11,7 @@ import 'package:confuciusschool/model/BaseResponse.dart';
 import 'package:confuciusschool/model/BecomeVipInfo.dart';
 import 'package:confuciusschool/model/Classification.dart';
 import 'package:confuciusschool/model/CommentInfo.dart';
+import 'package:confuciusschool/model/EntrepreneurshipInfo.dart';
 import 'package:confuciusschool/model/HomeInfo.dart';
 import 'package:confuciusschool/model/IncomeInfo.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
@@ -114,6 +116,15 @@ class Api extends CommonService{
     },method: POST,errorCallBack: errorCallBack);
   }
   void getSeachByName(String type,String name,Function callback,Function errorCallBack){
+    params.clear();
+    params["type"] = type;
+    params["name"] = name;
+    request(ApiUrl.getSeachByName,(BaseResponse response){
+      List<Classification> data = getClassificationList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getSeachAudioByName(String type,String name,Function callback,Function errorCallBack){
     params.clear();
     params["type"] = type;
     params["name"] = name;
@@ -404,6 +415,27 @@ class Api extends CommonService{
     params["type"] = type;
     request(ApiUrl.getMyCollection,(BaseResponse response){
       List<Classification> data = getClassificationList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getAbout(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getAbout,(BaseResponse response){
+      AboutInfo data = AboutInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getEntrepreneurship(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getEntrepreneurship,(BaseResponse response){
+      EntrepreneurshipInfo data = EntrepreneurshipInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getAgent(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getAgent,(BaseResponse response){
+      EntrepreneurshipInfo data = EntrepreneurshipInfo.fromJson(response.data);
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }

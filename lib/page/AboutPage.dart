@@ -1,8 +1,26 @@
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/model/AboutInfo.dart';
+import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class AboutPage extends BasefulWidget{
+  AboutInfo data;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    api.getAbout((data){
+      setState((){
+        this.data = data;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+  }
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
@@ -12,7 +30,79 @@ class AboutPage extends BasefulWidget{
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return null;
+    return data == null ? LoadingUtils.getRingLoading() : Container(
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: 313.0,
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Image.asset("images/home04_1_1guanyuwomen_logo.png",width: 100.0,height: 100.0,),
+                  Text("APP",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: DefaultValue.titleTextSize
+                  ),),
+                  Text("APP是深受赚客一族喜爱的手机赚钱平台，这里汇聚了全网最多最全的赚钱任务，让你足不出户轻松赚钱。跟着APP一起享受高品质赚钱生活。",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: DefaultValue.titleTextSize
+                    ),),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.center,
+              child: Container(
+                height:160.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("客服QQ：${data.wechatqq}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                    Text("客服微信：${data.wechatCode}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                    Text("商务合作QQ：${data.qq}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                    Text("商务合作微信：${data.wechat}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                    Text("${data.tel}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
 }

@@ -20,7 +20,7 @@ class IndexPage extends BasefulWidget{
   var _bottomTitles = ["国学+","中国故事","","一起创业", "个人中心"];
   // 底部导航栏未选中时的图片
   var _bottomIconNor = [
-    "images/home01_icon_guoxue_xuanzhong.png",
+    "images/home_guoxue_unchecked.png",
     "images/home01_icon_zhongguogushi.png",
     "images/home01_icon_guangpan.png",
     "images/home01_icon_yiqichuangye.png",
@@ -120,8 +120,8 @@ class IndexPage extends BasefulWidget{
   //添加图片的点击事件
   void onBigImgTap() {
     setState(() {
-      this.currentBottomIndex = 2;
-      this.bigImg = 'images/home01_icon_guangpan.png';
+//      this.currentBottomIndex = 2;
+//      this.bigImg = 'images/home01_icon_guangpan.png';
     });
   }
 

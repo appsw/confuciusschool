@@ -52,5 +52,11 @@ class ApiUrl{
   static final String getActivitiesDetails= "/index/Opera/details";
   static final String getSettingData= "/index/plate/set";
   static final String getMyCollection= "/index/plate/collection";
+  static final String getAbout= "/index/Opera/about";
+  static final String getSeachAudioByName = "/index/plate/yseach";
+  static final String getEntrepreneurship = "/index/plate/create";
+  static final String getAgent = "/index/plate/dcreate";
+
+
 
 }
