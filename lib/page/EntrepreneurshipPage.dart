@@ -26,7 +26,7 @@ class _EntrepreneurshipPageState extends BaseState {
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       aspectRatio: 3 / 2,
-      autoPlay: true,
+      autoPlay: false,
       looping: true,
     );
 

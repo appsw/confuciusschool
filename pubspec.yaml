@@ -23,7 +23,7 @@ dependencies:
   dio: ^2.0.0
   json_annotation: ^2.0.0
   flutter_swiper: ^1.0.6
-  image_picker: ^0.4.10
+  image_picker: ^0.6.0+2
   flutter_spinkit: ^3.0.0
   flutter_seekbar:
           git: https://github.com/LiuC520/flutter_seekbar.git
@@ -31,6 +31,7 @@ dependencies:
   flutter_html: ^0.9.6
   audioplayers: ^0.11.0
   flutter_cupertino_date_picker: ^0.4.0
+  audio_service: ^0.2.0
 
 dev_dependencies:
   flutter_test:

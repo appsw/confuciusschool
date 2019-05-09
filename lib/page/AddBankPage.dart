@@ -1,10 +1,13 @@
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/dialog/BankChoseDialog.dart';
+import 'package:confuciusschool/model/BankInfo.dart';
 import 'package:confuciusschool/page/VerificationPhoneAddBankPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
@@ -12,8 +15,22 @@ import 'package:flutter/widgets.dart';
 class AddBankPage extends BasefulWidget{
 
   var nameController = TextEditingController();
+  var banknameController = TextEditingController();
   var bankCardController = TextEditingController();
   bool isOther = false;
+  List<BankInfo> data;
+  var bankName = "选择银行";
+  BankInfo chosebank;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    api.getBankList((data){
+      setState((){
+        this.data = data;
+      });
+    }, (){});
+  }
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
@@ -71,8 +88,20 @@ class AddBankPage extends BasefulWidget{
           LinsUtils.getWidthLins(context),
           GestureDetector(
             onTap: (){
-              setState((){
-                isOther = !isOther;
+
+              BankChoseDialog.showBottomDialog(context, data, (BankInfo bank){
+                chosebank = bank;
+                if(bank.bankId == 14){
+                  setState((){
+                    bankName = "其他银行";
+                    isOther = true;
+                  });
+                }else{
+                  setState((){
+                    bankName = bank.bankName;
+                    isOther = false;
+                  });
+                }
               });
             },
             child: Container(
@@ -82,7 +111,7 @@ class AddBankPage extends BasefulWidget{
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Text("选择银行",
+                    child: Text("$bankName",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: DefaultValue.loginBtnSize
@@ -115,7 +144,7 @@ class AddBankPage extends BasefulWidget{
                         child: Container(
                           margin: EdgeInsets.only(left: DefaultValue.leftMargin),
                           child: TextField(
-                            controller: nameController,
+                            controller: banknameController,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(2.0),
@@ -174,7 +203,8 @@ class AddBankPage extends BasefulWidget{
       margin: EdgeInsets.only(top: 140.0),
       child: FlatButton(
         onPressed: (){
-            NavigatorUtils.push(context, VerificationPhoneAddBankPage());
+          addBank();
+//            NavigatorUtils.push(context, VerificationPhoneAddBankPage());
           },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
@@ -186,6 +216,35 @@ class AddBankPage extends BasefulWidget{
         ),
       ),
     );
+  }
+  void addBank(){
+    var name = nameController.text;
+    var bankname = banknameController.text;
+    var carnum = bankCardController.text;
+    if(name.isEmpty || carnum.isEmpty){
+      ToastUtil.makeToast("请完善信息！");
+      return;
+    }
+    if(chosebank.bankName == "其他银行"){
+      if(bankname .isEmpty){
+        ToastUtil.makeToast("请完善信息！");
+        return;
+      }
+      api.addBank(chosebank.bankId.toString(), bankname, name, carnum, (msg){
+        ToastUtil.makeToast(msg);
+        Navigator.pop(context);
+      }, (msg){
+        ToastUtil.makeToast(msg);
+      });
+    }else{
+      api.addBank(chosebank.bankId.toString(), chosebank.bankName, name, carnum, (msg){
+        ToastUtil.makeToast(msg);
+        Navigator.pop(context);
+      }, (msg){
+        ToastUtil.makeToast(msg);
+      });
+    }
+
   }
 
 }

@@ -148,8 +148,8 @@ class _PersonalPageState extends BaseState {
               ),
             ],
           ),
-          getBecomeVip()
-//          data.isVip == 1 ? getBecomeVip() :Container()
+//          getBecomeVip()
+          data.isVip == 1 ? getBecomeVip() :Container()
     ],
       ),
     );

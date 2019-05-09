@@ -3,6 +3,7 @@ import 'package:confuciusschool/model/BecomeVipInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
+import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _BecomeVipPageState extends BaseState {
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return Container(
+    return data == null ? LoadingUtils.getRingLoading : Container(
       color: ColorsUtil.GreyDialogBg,
       child: SingleChildScrollView(
         child: Column(
@@ -61,7 +62,7 @@ class _BecomeVipPageState extends BaseState {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Text(data.re.account,
+          Text(data.account,
           style: TextStyle(
             color: Colors.black,
             fontSize: DefaultValue.textSize
@@ -91,7 +92,7 @@ class _BecomeVipPageState extends BaseState {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text("¥${data.re2}/年",
+                Text("¥${data.vip}/年",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.textSize
@@ -114,7 +115,7 @@ class _BecomeVipPageState extends BaseState {
                       color: Colors.black,
                       fontSize: DefaultValue.textSize
                   ),),
-                Text("${data.re2}元",
+                Text("${data.vip}元",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.textSize
@@ -171,7 +172,7 @@ class _BecomeVipPageState extends BaseState {
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
         color: ColorsUtil.LogBtnBg,//按钮的背景颜色
-        padding: EdgeInsets.only(top:10.0,bottom: 10.0,left: 136.0,right: 136.0),//按钮距离里面内容的内边距
+        padding: EdgeInsets.only(top:10.0,bottom: 10.0,left: 100.0,right: 100.0),//按钮距离里面内容的内边距
         child: new Text('确定付款',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题
@@ -201,14 +202,14 @@ class _BecomeVipPageState extends BaseState {
           ListView.builder(
               shrinkWrap: true,
               itemBuilder: getRow,
-              itemCount: data.re4.length,
+              itemCount: data.detail.length,
               scrollDirection: Axis.vertical)
         ],
       ),
     );
   }
   Widget getRow(BuildContext context,int index){
-    Re4 re4 = data.re4[index];
+    Detail re4 = data.detail[index];
     return Container(
       height: 70.0,
       child: Column(

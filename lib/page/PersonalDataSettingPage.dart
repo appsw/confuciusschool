@@ -371,7 +371,7 @@ class PersonalDataPage extends BasefulWidget{
       child: FlatButton(
         onPressed: (){
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
-//          upDataImg();
+          upDataImg();
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
@@ -384,41 +384,40 @@ class PersonalDataPage extends BasefulWidget{
       ),
     );
   }
-//  void upDataImg(){
-//
-//    var nichname = nameController.text;
-//
-//    if(nichname.isEmpty && sex.isEmpty && address .isEmpty){
-//      ToastUtil.makeToast("请完善信息");
-//      return;
-//    }
-//    showDialog(context: context,
-//        builder: (context){return LoadingDialog();});
-//    data.nickname = nichname;
-//    data.sex = sex;
-//
-//    if(headImg != null){
-//      api.upLoadImg(headImg, (url){
-//        imgUrl = url;
-//        submitData();
-//      }, (msg){
-//        Navigator.of(context).pop();
-//        ToastUtil.makeToast(msg);
-//      });
-//    }else{
-//      submitData();
-//    }
-//
-//  }
-//  void submitData(){
-//    api.submitPersonal(imgUrl, data.nickname, data.sex, data.namePath, (msg){
-//      Navigator.of(context).pop();
-//      ToastUtil.makeToast(msg);
-//    }, (msg){
-//      Navigator.of(context).pop();
-//      ToastUtil.makeToast(msg);
-//    });
-//  }
+  void upDataImg(){
+
+    var nichname = nameController.text;
+
+    if(nichname.isEmpty  && address .isEmpty){
+      ToastUtil.makeToast("请完善信息");
+      return;
+    }
+    LoadingDialog.showLoadingDialog(context);
+    data.nickName = nichname;
+    data.sex = sex;
+
+    if(headImg != null){
+      api.upLoadImg(headImg, (url){
+        imgUrl = url;
+        submitData();
+      }, (msg){
+        Navigator.of(context).pop();
+        ToastUtil.makeToast(msg);
+      });
+    }else{
+      submitData();
+    }
+
+  }
+  void submitData(){
+    api.submitPersonal( data.nickName,imgUrl, data.sex.toString(),birth, bname,dname,ename, (msg){
+      Navigator.of(context).pop();
+      ToastUtil.makeToast(msg);
+    }, (msg){
+      Navigator.of(context).pop();
+      ToastUtil.makeToast(msg);
+    });
+  }
   void packAddress(){
     CityPicker.showCityPicker(
       context,

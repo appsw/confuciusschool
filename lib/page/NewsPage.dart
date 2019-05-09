@@ -63,7 +63,7 @@ class _NewsPageState extends BaseState {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(newsInfo.ititle,
+          Text("${newsInfo.ititle}",
           style: TextStyle(
             color: Colors.black,
             fontSize: DefaultValue.titleTextSize
@@ -75,7 +75,7 @@ class _NewsPageState extends BaseState {
               children: <Widget>[
                 Expanded(
                   flex: 1,
-                  child: Text(newsInfo.ititle,
+                  child: Text("${newsInfo.ititle}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: DefaultValue.textSize

@@ -2,6 +2,7 @@ import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/model/Classification.dart';
+import 'package:confuciusschool/page/AudioPlayPage.dart';
 import 'package:confuciusschool/page/SearchPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
@@ -223,83 +224,88 @@ class _SearchResultAudioListPageState extends BaseState {
     );
   }
   Widget getRow(BuildContext context,int index){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Image.network(data[index].fcover,width: 150.0,height: 105.0,fit: BoxFit.fill,),
-          Container(
-            height: 145.0,
-            margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    getLabel(data[index].level),
-                    Text(data[index].name.length > 8 ? data[index].name.substring(0,8): data[index].name,
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new AudioPlayPage(data[index].currid.toString(),data[index].id.toString()));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Image.network(data[index].fcover,width: 120.0,height: 105.0,fit: BoxFit.fill,),
+            Container(
+              height: 145.0,
+              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      getLabel(data[index].level),
+                      Text(data[index].name.length > 8 ? data[index].name.substring(0,8): data[index].name,
+                        maxLines: 1,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),)
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                    child: Text(data[index].words == null? "" : data[index].words,
                       maxLines: 1,
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                      ),)
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                  child: Text(data[index].words == null? "" : data[index].words,
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                  child: Text("讲师：${data[index].lecturer}",
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: DefaultValue.textSize
-                    ),),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                  width: 200.0,
-                  child: Row(
-                    children: <Widget>[
-                      Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                          child: Text("${data[index].clicks}人在学习",
+                          color: Colors.grey,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                    child: Text("讲师：${data[index].lecturer}",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                    width: 200.0,
+                    child: Row(
+                      children: <Widget>[
+                        Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                            child: Text("${data[index].clicks}人在学习",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: DefaultValue.smallTextSize
+                              ),),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: DefaultValue.rightMargin),
+                          child: Text(data[index].createTime,
                             style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: DefaultValue.smallTextSize
                             ),),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: DefaultValue.rightMargin),
-                        child: Text(data[index].createTime,
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.smallTextSize
-                          ),),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

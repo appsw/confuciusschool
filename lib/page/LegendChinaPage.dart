@@ -50,6 +50,8 @@ class _LegendChinaPageState extends BaseState {
       controller: controller,
       child: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             getHead(),
             getSwiperBody(),
@@ -403,7 +405,7 @@ class _LegendChinaPageState extends BaseState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 100.0,height: 133.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 100.0,height: 130.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
@@ -494,7 +496,7 @@ class _LegendChinaPageState extends BaseState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 100.0,height: 133.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 100.0,height: 130.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
@@ -733,10 +735,14 @@ class _LegendChinaPageState extends BaseState {
       color: Colors.white,
       margin: EdgeInsets.only(top: DefaultValue.topMargin),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
                 Expanded(
@@ -792,7 +798,7 @@ class _LegendChinaPageState extends BaseState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 164.0,height: 113.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 164.0,height: 110.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
               child: Text(data.name,

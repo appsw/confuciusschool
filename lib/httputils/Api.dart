@@ -7,6 +7,7 @@ import 'package:confuciusschool/model/AccountInfo.dart';
 import 'package:confuciusschool/model/ActivityDetailsInfo.dart';
 import 'package:confuciusschool/model/ActivityInfo.dart';
 import 'package:confuciusschool/model/AudioInfo.dart';
+import 'package:confuciusschool/model/BankInfo.dart';
 import 'package:confuciusschool/model/BaseResponse.dart';
 import 'package:confuciusschool/model/BecomeVipInfo.dart';
 import 'package:confuciusschool/model/Classification.dart';
@@ -23,6 +24,7 @@ import 'package:confuciusschool/model/MyTeamInfo.dart';
 import 'package:confuciusschool/model/MyTeamMemberInfo.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
 import 'package:confuciusschool/model/PersonalInfo.dart';
+import 'package:confuciusschool/model/PutCashDataInfo.dart';
 import 'package:confuciusschool/model/ShopInfo.dart';
 import 'package:confuciusschool/model/SignInShowInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
@@ -437,6 +439,51 @@ class Api extends CommonService{
     request(ApiUrl.getAgent,(BaseResponse response){
       EntrepreneurshipInfo data = EntrepreneurshipInfo.fromJson(response.data);
       callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getPutCashData(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getPutCashData,(BaseResponse response){
+      PutCashDataInfo data = PutCashDataInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getBankList(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getBankInfoList,(BaseResponse response){
+      List<BankInfo>  data = getBankInfoList(response.msg);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void addBank(String deposit,String bankName,String name,String banknum,Function callback,Function errorCallBack){
+    params.clear();
+    params["deposit"] = deposit;
+    params["bankName"] = bankName;
+    params["name"] = name;
+    params["banknum"] = banknum;
+    request(ApiUrl.addBank,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putCash(String number,String password,Function callback,Function errorCallBack){
+    params.clear();
+    params["number"] = number;
+    params["password"] = password;
+    request(ApiUrl.putCash,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void submitPersonal(String nickName,String profilePhoto,String sex,String birth,String bname,String dname,String ename,Function callback,Function errorCallBack){
+    params.clear();
+    params["nickName"] = nickName;
+    params["profilePhoto"] = profilePhoto;
+    params["sex"] = sex;
+    params["birth"] = birth;
+    params["bname"] = bname;
+    params["dname"] = dname;
+    params["ename"] = ename;
+    request(ApiUrl.submitPersonal,(BaseResponse response){
+      callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
 

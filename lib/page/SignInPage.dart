@@ -109,7 +109,7 @@ class SignInPage extends BasefulWidget{
                 children: <Widget>[
                   Image.asset("images/home04_4_1jifendaka_img1.png",),
                   Container(
-                    height: 500,
+                    height: 420,
                     child: Column(
                       children: <Widget>[
                         Expanded(
@@ -123,6 +123,8 @@ class SignInPage extends BasefulWidget{
                           child: Container(
                             padding: EdgeInsets.only(left: 26.0,right: 26.0),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text("$text",
                                   style: TextStyle(

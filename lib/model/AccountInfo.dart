@@ -5,13 +5,19 @@ part 'AccountInfo.g.dart';
 @JsonSerializable()
 class AccountInfo extends Object {
 
-  @JsonKey(name: 'ar')
-  Ar ar;
+  @JsonKey(name: 'balance')
+  String balance;
+
+  @JsonKey(name: 'gross')
+  String gross;
+
+  @JsonKey(name: 'isAgent')
+  int isAgent;
 
   @JsonKey(name: 'arr')
   int arr;
 
-  AccountInfo(this.ar,this.arr,);
+  AccountInfo(this.balance,this.gross,this.isAgent,this.arr,);
 
   factory AccountInfo.fromJson(Map<String, dynamic> srcJson) => _$AccountInfoFromJson(srcJson);
 
@@ -20,21 +26,5 @@ class AccountInfo extends Object {
 }
 
 
-@JsonSerializable()
-class Ar extends Object {
-
-  @JsonKey(name: 'balance')
-  String balance;
-
-  @JsonKey(name: 'gross')
-  String gross;
-
-  Ar(this.balance,this.gross,);
-
-  factory Ar.fromJson(Map<String, dynamic> srcJson) => _$ArFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$ArToJson(this);
-
-}
 
 

@@ -9,7 +9,7 @@ class ApiUrl{
   static final String GetTask = "/Home/task/index";
   static final String AcceptTask = "/Home/task/receive";
   static final String getMyTask = "/Home/task/status";
-  static final String upLoadImg = "/Home/Tool/commonUpload";
+  static final String upLoadImg = "/index/tool/uploadImage";
   static final String SubmitTask = "/Home/task/sub";
   static final String getHomeData = "/index/plate/show";
   static final String getClassification = "/index/plate/screen";
@@ -56,6 +56,11 @@ class ApiUrl{
   static final String getSeachAudioByName = "/index/plate/yseach";
   static final String getEntrepreneurship = "/index/plate/create";
   static final String getAgent = "/index/plate/dcreate";
+  static final String getPutCashData= "/index/Opera/showcash";
+  static final String getBankInfoList= "/index/member/bank";
+  static final String addBank= "/index/member/addbank";
+  static final String putCash= "/index/Opera/cash";
+  static final String submitPersonal= "/index/plate/medit";
 
 
 

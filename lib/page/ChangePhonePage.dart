@@ -1,17 +1,37 @@
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/page/VerificationPhonePage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
-class ChangePhonePage extends BasefulWidget{
+class ChangePhonePage extends StatefulWidget {
+  @override
+  _ChangePhonePageState createState() => _ChangePhonePageState();
+}
+
+class _ChangePhonePageState extends BaseState {
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
     return PageUtils.getAppBar(context, "更换绑定手机");
+  }
+  var phonrNumber = "133****1234";
+  @override
+  void initData() {
+    // TODO: implement initData
+    super.initData();
+    api.getPhone((phone){
+      setState((){
+        this.phonrNumber = phone;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 
   @override
@@ -38,7 +58,7 @@ class ChangePhonePage extends BasefulWidget{
                       color: Colors.black,
                       fontSize: DefaultValue.loginBtnSize
                   ),),
-                Text("133****1234",
+                Text("${phonrNumber}",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.loginBtnSize
@@ -60,7 +80,7 @@ class ChangePhonePage extends BasefulWidget{
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
-        padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
+        padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 100.0,right: 100.0),//按钮距离里面内容的内边距
         child: new Text('更换绑定手机号',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题
@@ -70,5 +90,4 @@ class ChangePhonePage extends BasefulWidget{
       ),
     );
   }
-
 }

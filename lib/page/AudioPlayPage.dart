@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:confuciusschool/anims/record_anim.dart';
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
@@ -35,10 +37,14 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
   final _commonTween = new Tween<double>(begin: 0.0, end: 1.0);
   final GlobalKey<PlayerState> musicPlayerKey = new GlobalKey();
   var mp3Url = 'http://music.163.com/song/media/outer/url?id=451703096.mp3';
+
+
+
   @override
   void initData() {
     // TODO: implement initData
     super.initData();
+
     controller_record = new AnimationController(
         duration: const Duration(milliseconds: 15000), vsync: this);
     animation_record =
@@ -461,9 +467,9 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                 onNext: () {},
                 onCompleted: () {},
                 onPlaying: (isPlaying) {
+
                   if (isPlaying) {
                     controller_record.forward();
-
                   } else {
                     controller_record.stop(canceled: false);
 

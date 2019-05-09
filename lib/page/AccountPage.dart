@@ -208,13 +208,13 @@ class _AccountPageState extends BaseState {
             ),),
           Container(
             margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-            child: Text(data.ar.balance,
+            child: Text(data.balance,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 41.0
               ),),
           ),
-          Text("累计总收入：${data.ar.gross}",
+          Text("累计总收入：${data.gross}",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: DefaultValue.smallTextSize
