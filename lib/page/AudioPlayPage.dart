@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:confuciusschool/anims/record_anim.dart';
 import 'package:confuciusschool/base/BaseState.dart';
+import 'package:confuciusschool/dialog/BeComeVipDialog.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
+import 'package:confuciusschool/page/BecomeVipPage.dart';
 import 'package:confuciusschool/page/CommentPage.dart';
 import 'package:confuciusschool/page/player_page.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
@@ -56,11 +58,17 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
         controller_record.forward();
       }
     });
-    api.getVideoDetail(currid, id, (data){
+    api.getVideoDetail(currid, id, (VideoInfo data){
       setState(() {
+//        mp3Url = data.re.address;
         this.data = data;
 
       });
+      if(this.data.type != 1){
+        BeComeVipDialog.showLoadingDialog(context,(){
+          NavigatorUtils.push(context, new BecomeVipPage());
+        });
+      }
 
     }, (msg){
       ToastUtil.makeToast(msg);
@@ -103,9 +111,14 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
     );
   }
   Widget getBottomTitle(){
-    return Container(
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Image.asset("images/home02_1_1tinggushi_guanggao.png",width: MediaQuery.of(context).size.width,),
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Image.asset("images/home02_1_1tinggushi_guanggao.png",width: MediaQuery.of(context).size.width,),
+      ),
+      onTap: (){
+        NavigatorUtils.push(context, new BecomeVipPage());
+      },
     );
   }
   Widget getBottomBody(){

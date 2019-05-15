@@ -9,18 +9,18 @@ import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CommentPage extends StatefulWidget {
+class EntrepreneurCommentPage extends StatefulWidget {
   var id;
-  CommentPage(this.id);
+  EntrepreneurCommentPage(this.id);
   @override
-  _CommentPageState createState() => _CommentPageState(id);
+  _EntrepreneurCommentPageState createState() => _EntrepreneurCommentPageState(id);
 }
 
-class _CommentPageState extends BaseState {
+class _EntrepreneurCommentPageState extends BaseState {
 
   List<CommentInfo> data;
   var id;
-  _CommentPageState(this.id);
+  _EntrepreneurCommentPageState(this.id);
   var isEdit = true;
   final controller = TextEditingController();
   bool isShowRelePlay = false;
@@ -30,7 +30,7 @@ class _CommentPageState extends BaseState {
   void initData() {
     // TODO: implement initData
     super.initData();
-    api.getComment(id, (data){
+    api.getEntrepreneurComment(id, (data){
       setState(() {
         this.data = data;
       });
@@ -144,7 +144,7 @@ class _CommentPageState extends BaseState {
                                     commentInfo.status = "1";
                                   });
                                 }
-                                api.getCommentZan(commentInfo.id.toString(), status, (msg){
+                                api.getEntrepreneurCommentZan(commentInfo.id.toString(), status, (msg){
                                   ToastUtil.makeToast(msg);
                                 }, (msg){
                                   ToastUtil.makeToast(msg);
@@ -260,13 +260,13 @@ class _CommentPageState extends BaseState {
         ),
         child: TextField(
           controller: controller,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(2.0),
-              border: InputBorder.none,
-              hintText: '$hintText',
-              prefixStyle: new TextStyle(height: 20.0),
-              hintStyle: new TextStyle(color: ColorsUtil.LogEditBg,fontSize: DefaultValue.messageTextSize),
-            ),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(2.0),
+            border: InputBorder.none,
+            hintText: '$hintText',
+            prefixStyle: new TextStyle(height: 20.0),
+            hintStyle: new TextStyle(color: ColorsUtil.LogEditBg,fontSize: DefaultValue.messageTextSize),
+          ),
           onSubmitted: (text){
             LoadingDialog.showLoadingDialog(context);
             if(isShowRelePlay){
@@ -280,7 +280,7 @@ class _CommentPageState extends BaseState {
     );
   }
   void putComment(var text){
-    api.putComment(id, text, (msg){
+    api.putEntrepreneurComment(id, text, (msg){
       LoadingDialog.dismissLoadingDialog(context);
       ToastUtil.makeToast(msg);
       Navigator.pop(context);
@@ -290,7 +290,7 @@ class _CommentPageState extends BaseState {
     });
   }
   void getCommentReplay(var text){
-    api.getCommentReplay(id,commentId,commentId, text, (msg){
+    api.getEntrepreneurCommentReplay(id,commentId,commentId, text, (msg){
       LoadingDialog.dismissLoadingDialog(context);
       ToastUtil.makeToast(msg);
       Navigator.pop(context);

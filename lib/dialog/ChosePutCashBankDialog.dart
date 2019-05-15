@@ -64,7 +64,7 @@ class ChosePutCashBankDialog{
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(bank.bankName,
+                  Text("${bank.bankName}",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: DefaultValue.titleTextSize

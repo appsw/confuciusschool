@@ -19,7 +19,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  fluttertoast: ^2.1.0
+  fluttertoast: ^3.0.4
   dio: ^2.0.0
   json_annotation: ^2.0.0
   flutter_swiper: ^1.0.6
@@ -32,6 +32,8 @@ dependencies:
   audioplayers: ^0.11.0
   flutter_cupertino_date_picker: ^0.4.0
   audio_service: ^0.2.0
+  image_picker_saver:
+    git: https://github.com/cnhefang/image_picker_saver.git
 
 dev_dependencies:
   flutter_test:

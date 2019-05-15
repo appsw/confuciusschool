@@ -4,6 +4,7 @@ import 'package:confuciusschool/model/HomeInfo.dart';
 import 'package:confuciusschool/page/NewsPage.dart';
 import 'package:confuciusschool/page/SearchPage.dart';
 import 'package:confuciusschool/page/SearchResultListPage.dart';
+import 'package:confuciusschool/page/SignInPage.dart';
 import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
@@ -72,7 +73,12 @@ class _AncientChineseState extends BaseState {
         children: <Widget>[
           Expanded(
             flex: 0,
-            child: Image.asset("images/home01_qiandao.png"),
+            child: GestureDetector(
+              child: Image.asset("images/home01_qiandao.png"),
+              onTap: (){
+                NavigatorUtils.push(context, SignInPage());
+              },
+            )
           ),
           Expanded(
             flex: 1,

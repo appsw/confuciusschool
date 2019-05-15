@@ -14,7 +14,7 @@ class AccountInfo extends Object {
   @JsonKey(name: 'isAgent')
   int isAgent;
 
-  @JsonKey(name: 'arr')
+  @JsonKey(name: 'sale')
   int arr;
 
   AccountInfo(this.balance,this.gross,this.isAgent,this.arr,);

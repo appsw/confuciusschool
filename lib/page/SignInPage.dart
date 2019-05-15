@@ -4,6 +4,7 @@ import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/dialog/SignInDialog.dart';
 import 'package:confuciusschool/model/SignInShowInfo.dart';
+import 'package:confuciusschool/model/SigninInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
@@ -20,12 +21,15 @@ class SignInPage extends BasefulWidget{
   var textController = TextEditingController();
   var textBrandController = TextEditingController();
   SignInShowInfo data;
+  SigninInfo signinInfo;
   File brandImage;
+  var num = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
+    getDialogData();
   }
   void getData(){
     api.getSignInShow((SignInShowInfo data){
@@ -54,16 +58,7 @@ class SignInPage extends BasefulWidget{
       actions: <Widget>[
         GestureDetector(
           onTap: (){
-            SignInDialog.showLoadingDialog(context,(){
-              print("签到");
-              api.signIn((msg){
-                SignInDialog.dismissLoadingDialog(context);
-                ToastUtil.makeToast(msg);
 
-              }, (msg){
-                ToastUtil.makeToast(msg);
-              });
-            });
           },
           child: Container(
             child: Row(
@@ -77,7 +72,7 @@ class SignInPage extends BasefulWidget{
                       color: ColorsUtil.SigninTitleBg,
                       borderRadius:  new BorderRadius.only(topLeft: Radius.circular(0.0),topRight: Radius.circular(5.0),bottomLeft: Radius.circular(5.0),bottomRight: Radius.circular(0.0))
                   ),
-                  child: Text("连签1天",
+                  child: Text("连签${num}天",
                     style: TextStyle(
                         color: Colors.white,
                       fontSize: DefaultValue.smallTextSize
@@ -94,6 +89,26 @@ class SignInPage extends BasefulWidget{
         )
       ],
     );
+  }
+  void getDialogData(){
+    api.getSigninInfo((data){
+      setState((){
+        this.signinInfo = data;
+        num = signinInfo.weekday;
+      });
+      SignInDialog.showLoadingDialog(context,(){
+        print("签到");
+        api.signIn((msg){
+          SignInDialog.dismissLoadingDialog(context);
+          ToastUtil.makeToast(msg);
+          getData();
+        }, (msg){
+          ToastUtil.makeToast(msg);
+        });
+      },signinInfo);
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 
   @override
@@ -212,7 +227,7 @@ class SignInPage extends BasefulWidget{
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Image.asset(data.sql.rimg ?? data.sql.rimg,height: 49.0,width: 49.0,),
+          Image.network(data.sql.rimg,height: 49.0,width: 49.0,),
           Container(
             margin: EdgeInsets.only(top: DefaultValue.topMargin),
             child: Text(data.sql.brand,
@@ -268,14 +283,22 @@ class SignInPage extends BasefulWidget{
   }
   void changeImg(File image){
     LoadingDialog.showLoadingDialog(context);
-    api.changeSigninImg(image, (msg){
-      LoadingDialog.dismissLoadingDialog(context);
-      ToastUtil.makeToast(msg);
-      getData();
-    }, (msg){
-      LoadingDialog.dismissLoadingDialog(context);
-      ToastUtil.makeToast(msg);
-    });
+    if(image != null){
+      api.upLoadImg(image, (url){
+        api.changeSigninImg(url, (msg){
+          LoadingDialog.dismissLoadingDialog(context);
+          ToastUtil.makeToast(msg);
+          getData();
+        }, (msg){
+          LoadingDialog.dismissLoadingDialog(context);
+          ToastUtil.makeToast(msg);
+        });
+      }, (msg){
+        Navigator.of(context).pop();
+        ToastUtil.makeToast(msg);
+      });
+    }
+
   }
   Widget getBottom(){
     return Container(
@@ -437,14 +460,22 @@ class SignInPage extends BasefulWidget{
   }
   void changeBrand(File file,String text){
     LoadingDialog.showLoadingDialog(context);
-    api.changeBrand(file,text,(msg){
-      LoadingDialog.dismissLoadingDialog(context);
-      ToastUtil.makeToast(msg);
-      getData();
-    }, (msg){
-      LoadingDialog.dismissLoadingDialog(context);
-      ToastUtil.makeToast(msg);
-    });
+    if(file != null){
+      api.upLoadImg(file, (url){
+        api.changeBrand(url,text,(msg){
+          LoadingDialog.dismissLoadingDialog(context);
+          ToastUtil.makeToast(msg);
+          getData();
+        }, (msg){
+          LoadingDialog.dismissLoadingDialog(context);
+          ToastUtil.makeToast(msg);
+        });
+      }, (msg){
+        Navigator.of(context).pop();
+        ToastUtil.makeToast(msg);
+      });
+    }
+
   }
   Widget getEditbrand(){
     showModalBottomSheet(context: context, builder: (BuildContext context){
@@ -464,7 +495,7 @@ class SignInPage extends BasefulWidget{
               GestureDetector(
                 child: Container(
                   margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                  child: Image.asset("images/home04_4_3jifendaka_tianjiatupian.png",width: 44.0,height: 44.0,),
+                  child: brandImage == null ? Image.asset("images/home04_4_3jifendaka_tianjiatupian.png",width: 44.0,height: 44.0,) : Image.file(brandImage,width: 44.0,height: 44.0,),
                 ),
                 onTap: (){
                   _selectedBrandImage();

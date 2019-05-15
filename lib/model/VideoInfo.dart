@@ -6,13 +6,22 @@ part 'VideoInfo.g.dart';
 @JsonSerializable()
 class VideoInfo extends Object {
 
+  @JsonKey(name: 'status')
+  int status;
+
+  @JsonKey(name: 'state')
+  int state;
+
   @JsonKey(name: 're')
   Re re;
 
   @JsonKey(name: 'sql')
   List<Sql> sql;
 
-  VideoInfo(this.re,this.sql,);
+  @JsonKey(name: 'type')
+  int type;
+
+  VideoInfo(this.status,this.state,this.re,this.sql,this.type,);
 
   factory VideoInfo.fromJson(Map<String, dynamic> srcJson) => _$VideoInfoFromJson(srcJson);
 
@@ -23,6 +32,9 @@ class VideoInfo extends Object {
 
 @JsonSerializable()
 class Re extends Object {
+
+  @JsonKey(name: 'duration')
+  String duration;
 
   @JsonKey(name: 'fabulous')
   int fabulous;
@@ -42,7 +54,7 @@ class Re extends Object {
   @JsonKey(name: 'address')
   String address;
 
-  Re(this.fabulous,this.collection,this.id,this.comment,this.vcover,this.address,);
+  Re(this.duration,this.fabulous,this.collection,this.id,this.comment,this.vcover,this.address,);
 
   factory Re.fromJson(Map<String, dynamic> srcJson) => _$ReFromJson(srcJson);
 
@@ -69,7 +81,13 @@ class Sql extends Object {
   @JsonKey(name: 'level')
   int level;
 
-  Sql(this.name,this.createTime,this.clicks,this.duration,this.level);
+  @JsonKey(name: 'id')
+  int id;
+
+  @JsonKey(name: 'currid')
+  int currid;
+
+  Sql(this.name,this.createTime,this.clicks,this.duration,this.level,this.id,this.currid,);
 
   factory Sql.fromJson(Map<String, dynamic> srcJson) => _$SqlFromJson(srcJson);
 

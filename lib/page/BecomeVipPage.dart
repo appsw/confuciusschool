@@ -40,7 +40,7 @@ class _BecomeVipPageState extends BaseState {
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return data == null ? LoadingUtils.getRingLoading : Container(
+    return data == null ? LoadingUtils.getRingLoading() : Container(
       color: ColorsUtil.GreyDialogBg,
       child: SingleChildScrollView(
         child: Column(

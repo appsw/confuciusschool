@@ -1,9 +1,12 @@
 import 'package:chewie/chewie.dart';
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/model/EntrepreneurialTitleInfo.dart';
 import 'package:confuciusschool/model/EntrepreneurshipInfo.dart';
+import 'package:confuciusschool/page/EntrepreneurCommentPage.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
+import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -20,6 +23,8 @@ class _EntrepreneurshipPageState extends BaseState {
   ChewieController chewieController;
   var playerWidget;
   EntrepreneurshipInfo data;
+  EntrepreneurialTitleInfo entrepreneurialTitleInfo;
+  ScrollController scrollController = new ScrollController();
   void initVideo(String url){
     videoPlayerController = VideoPlayerController.network(url);
 
@@ -38,11 +43,34 @@ class _EntrepreneurshipPageState extends BaseState {
   void initData() {
     // TODO: implement initData
     super.initData();
-    getEntreneurship();
+    getEntreneurTitle();
+  }
+  void getEntreneurTitle(){
+    api.getEntrepreneurialTitle((data){
+      setState(() {
+        this.entrepreneurialTitleInfo = data;
+
+      });
+      getEntreneurInfo(entrepreneurialTitleInfo.sql[tabNumber].id.toString());
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 
   void getEntreneurship(){
     api.getEntrepreneurship((data){
+      setState(() {
+        this.data = data;
+
+      });
+      if(data != null)
+        initVideo(data.re.address);
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+  }
+  void getEntreneurInfo(String id){
+    api.getEntrepreneurInfo(id,(data){
       setState(() {
         this.data = data;
 
@@ -74,29 +102,33 @@ class _EntrepreneurshipPageState extends BaseState {
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return data == null ? LoadingUtils.getRingLoading() : Container(
-      child: Column(
-        children: <Widget>[
-          getTables(context),
-          getVideo(),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("目录",style: TextStyle(color:Colors.red),),
-                Container(
-                  color: Colors.red,
-                  width: 40.0,
-                  height: 1.0,
-                  margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                )
-              ],
+    return data == null ? LoadingUtils.getRingLoading() : SingleChildScrollView(
+      controller: scrollController,
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            getTables(context),
+            getVideo(),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("目录",style: TextStyle(color:Colors.red),),
+                  Container(
+                    color: Colors.red,
+                    width: 40.0,
+                    height: 1.0,
+                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                  )
+                ],
+              ),
+              padding: EdgeInsets.only(top: DefaultValue.topMargin,left: DefaultValue.leftMargin),
             ),
-            padding: EdgeInsets.only(top: DefaultValue.topMargin,left: DefaultValue.leftMargin),
-          ),
-          getCatalog()
-        ],
+            getCatalog(),
+            getComment()
+          ],
+        ),
       ),
     );
   }
@@ -106,6 +138,7 @@ class _EntrepreneurshipPageState extends BaseState {
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
+          controller: scrollController,
           itemBuilder: getRow,
           itemCount: data.res.length,
           scrollDirection: Axis.vertical),
@@ -193,6 +226,9 @@ class _EntrepreneurshipPageState extends BaseState {
         children: <Widget>[
           Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
           Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
+          Expanded(flex: 1,child: GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
+          Expanded(flex: 1,child:  GestureDetector(child: getTab(3),onTap: (){onClickTable(3);},),),
+
         ],
       ),
     );
@@ -202,7 +238,7 @@ class _EntrepreneurshipPageState extends BaseState {
       alignment: Alignment.center,
       child: Column(
         children: <Widget>[
-          Text(tableNames[tabNo],style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black),),
+          Text(entrepreneurialTitleInfo.sql[tabNo].name,style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black),),
           getLins(context, tabNo,40.0)
         ],
       ),
@@ -223,12 +259,44 @@ class _EntrepreneurshipPageState extends BaseState {
       tabNumber = tabNo;
 
     });
-    if(tabNo == 0){
-      getAgent();
-    }else{
-      getEntreneurship();
-    }
+    getEntreneurInfo(entrepreneurialTitleInfo.sql[tabNo].id.toString());
+//    if(tabNo == 0){
+//      getAgent();
+//    }else{
+//      getEntreneurship();
+//    }
+  }
+  Widget getComment(){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 120.0,
+      alignment: Alignment.centerRight,
+      color: Colors.white,
+      child: Container(
+        width: 36.0,
+        height: 100.0,
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            GestureDetector(
+              child: Image.asset("images/home03_dianzan.png",width: 18.0,height: 20.0,),
+              onTap: (){
 
-
+              },
+            ),
+            Text("点赞"),
+            GestureDetector(
+              child: Image.asset("images/home03_pinglun.png",width: 18.0,height: 20.0,),
+              onTap: (){
+                NavigatorUtils.push(context, new EntrepreneurCommentPage(data.re.id.toString()));
+              },
+            ),
+            Text("评论"),
+          ],
+        ),
+      ),
+    );
   }
 }

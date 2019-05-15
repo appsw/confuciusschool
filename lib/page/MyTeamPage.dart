@@ -56,7 +56,7 @@ class _MyTeamPageState extends BaseState{
                   width: 100.0,height: 100.0,
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(top: 20.0),
-                  child: Text("总人数${data.data.arr3}",style:
+                  child: Text("总人数${data.sum}",style:
                   TextStyle(
                       color: Colors.white,
                       fontSize: DefaultValue.textSize
@@ -78,7 +78,7 @@ class _MyTeamPageState extends BaseState{
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("${data.data.arr4}",style:
+                        Text("${data.isused}",style:
                         TextStyle(
                             color: Colors.black,
                             fontSize: DefaultValue.textSize
@@ -99,7 +99,7 @@ class _MyTeamPageState extends BaseState{
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("${data.data.arr5}",style:
+                        Text("${data.notused}",style:
                         TextStyle(
                             color: Colors.black,
                             fontSize: DefaultValue.textSize

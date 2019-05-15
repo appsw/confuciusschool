@@ -1,4 +1,8 @@
+import 'package:confuciusschool/page/ForgetPswdPage.dart';
+import 'package:confuciusschool/page/IndexPage.dart';
+import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
+import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,6 +12,8 @@ import 'package:confuciusschool/page/RegisterPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
+
+import 'ChangePswdPage.dart';
 
 class CodeLoginPage extends BasefulWidget{
   var username = "";
@@ -40,7 +46,7 @@ class CodeLoginPage extends BasefulWidget{
               getCode(),
               getLoginBtn(),
               getForgetPswdText(),
-              getAgreement(),
+//              getAgreement(),
               getThreeText(),
               getThreeImg()
             ],
@@ -116,6 +122,11 @@ class CodeLoginPage extends BasefulWidget{
           }
           api.codeLogin(phone, code, (msg){
             ToastUtil.makeToast(msg);
+            SharedPreferencesUtil.saveString(Constant.ISLOGIN,"1",(bool result){
+              if(result){
+                NavigatorUtils.pushAndRemoveUntil(context, new IndexPage());
+              }
+            });
           },(msg){
             ToastUtil.makeToast(msg);
           } );
@@ -165,7 +176,7 @@ class CodeLoginPage extends BasefulWidget{
               ),),
           ),
             onTap: (){
-              NavigatorUtils.push(context, new RegisterPage());
+              NavigatorUtils.push(context, new ForgetPswdPage());
             },),
         ),
       ],
@@ -304,7 +315,7 @@ class CodeLoginPage extends BasefulWidget{
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
         color: ColorsUtil.LogBtnBg,//按钮的背景颜色
-        padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 13.0,right: 13.0),//按钮距离里面内容的内边距
+        padding: EdgeInsets.only(top:4.0,bottom: 4.0,left: 13.0,right: 13.0),//按钮距离里面内容的内边距
         child: new Text('获取验证码',style: TextStyle(fontSize: DefaultValue.smallTextSize),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题

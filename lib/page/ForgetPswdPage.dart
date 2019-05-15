@@ -1,34 +1,25 @@
-import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 
-class ChangePayPswdPage extends BasefulWidget{
+class ForgetPswdPage extends StatefulWidget {
+  @override
+  _ForgetPswdPageState createState() => _ForgetPswdPageState();
+}
 
+class _ForgetPswdPageState extends BaseState {
+
+  var phoneController = TextEditingController();
   var codeController = TextEditingController();
   var pswdController = TextEditingController();
   var repswdController = TextEditingController();
-  var phone = "";
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
-    return PageUtils.getAppBar(context, "修改密码");
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    api.getPhone((phone){
-      setState((){
-        this.phone = phone;
-      });
-    }, (msg){
-      ToastUtil.makeToast(msg);
-    });
+    return PageUtils.getAppBar(context, "忘记密码");
   }
 
   @override
@@ -37,23 +28,7 @@ class ChangePayPswdPage extends BasefulWidget{
     return Container(
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 20.0,bottom: 20.0),
-            child: Row(
-              children: <Widget>[
-                Text("您的绑定手机为：",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.loginBtnSize
-                  ),),
-                Text("$phone",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.loginBtnSize
-                  ),),
-              ],
-            ),
-          ),
+          getPhone(),
           getCode(),
           getPswd(),
           getRePswd(),
@@ -67,16 +42,22 @@ class ChangePayPswdPage extends BasefulWidget{
       margin: EdgeInsets.only(top: 200.0),
       child: FlatButton(
         onPressed: (){
+          String phone = phoneController.text;
           String code = codeController.text;
           String pswd = pswdController.text;
           String repswd = repswdController.text;
-          if(code.isEmpty || pswd.isEmpty || repswd.isEmpty){
+          if(code.isEmpty || pswd.isEmpty || repswd.isEmpty || phone.isEmpty){
             ToastUtil.makeToast("请完善内容！");
             return;
           }
-          api.changePayPswd(code,pswd,repswd,
+          if(pswd.isEmpty != repswd.isEmpty){
+            ToastUtil.makeToast("两次密码不一致！");
+            return;
+          }
+          api.ForgetPswd(phone,code,pswd,
                   (msg){
                 ToastUtil.makeToast(msg);
+                Navigator.pop(context);
               },
                   (msg){
                 ToastUtil.makeToast(msg);
@@ -99,6 +80,7 @@ class ChangePayPswdPage extends BasefulWidget{
     return Container(
       height: 54.0,
       color: Colors.white,
+      margin: EdgeInsets.only(top: 11.0),
       width: MediaQuery.of(context).size.width,
 //      margin: EdgeInsets.only(top: 20.0),
       child: Row(
@@ -126,6 +108,34 @@ class ChangePayPswdPage extends BasefulWidget{
       padding:const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 10.0) ,
     );
   }
+  Widget getPhone(){
+    return Container(
+      height: 54.0,
+      color: Colors.white,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.only(top: 11.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: TextField(
+              controller: phoneController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(2.0),
+                border: InputBorder.none,
+                hintText: '请输入手机号',
+                prefixStyle: new TextStyle(height: 20.0),
+                hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
+              ),
+            ),
+          ),
+
+        ],
+      ),
+      padding:const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 10.0) ,
+    );
+  }
   Widget getPswd(){
     return Container(
       height: 54.0,
@@ -138,7 +148,8 @@ class ChangePayPswdPage extends BasefulWidget{
             flex: 1,
             child: TextField(
               controller: pswdController,
-              keyboardType: TextInputType.number,
+              obscureText: true,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,
@@ -166,7 +177,8 @@ class ChangePayPswdPage extends BasefulWidget{
             flex: 1,
             child: TextField(
               controller: repswdController,
-              keyboardType: TextInputType.number,
+              obscureText: true,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,
@@ -188,7 +200,12 @@ class ChangePayPswdPage extends BasefulWidget{
       alignment: Alignment.center,
       child: FlatButton(
         onPressed: (){
-          api.changePayPswdGetSMS(phone,
+          var phone = phoneController.text;
+          if(phone.isEmpty){
+            ToastUtil.makeToast("请先输入手机号");
+            return;
+          }
+          api.SendSms(phone,"4",
                   (msg){
                 ToastUtil.makeToast(msg);
               },
@@ -209,5 +226,4 @@ class ChangePayPswdPage extends BasefulWidget{
       ),
     );
   }
-
 }

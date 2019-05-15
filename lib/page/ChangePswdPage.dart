@@ -12,10 +12,23 @@ class ChangePswdPage extends BasefulWidget{
   var codeController = TextEditingController();
   var pswdController = TextEditingController();
   var repswdController = TextEditingController();
+  var phone = "";
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
     return PageUtils.getAppBar(context, "修改密码");
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    api.getPhone((phone){
+      setState((){
+        this.phone = phone;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 
   @override
@@ -33,7 +46,7 @@ class ChangePswdPage extends BasefulWidget{
                       color: Colors.black,
                       fontSize: DefaultValue.loginBtnSize
                   ),),
-                Text("133****1234",
+                Text("${phone}",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.loginBtnSize
@@ -64,6 +77,7 @@ class ChangePswdPage extends BasefulWidget{
           api.changePswd(code,pswd,repswd,
                   (msg){
                 ToastUtil.makeToast(msg);
+                Navigator.pop(context);
               },
                   (msg){
                 ToastUtil.makeToast(msg);
@@ -126,6 +140,7 @@ class ChangePswdPage extends BasefulWidget{
             child: TextField(
               controller: pswdController,
               keyboardType: TextInputType.number,
+              obscureText: true,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,
@@ -154,6 +169,7 @@ class ChangePswdPage extends BasefulWidget{
             child: TextField(
               controller: repswdController,
               keyboardType: TextInputType.number,
+              obscureText: true,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,

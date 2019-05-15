@@ -95,7 +95,7 @@ class _SearchResultAudioListPageState extends BaseState {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(2.0),
                             border: InputBorder.none,
-                            hintText: '请输入关键字、视频名称',
+                            hintText: '请输入关键字、音频名称',
                             prefixStyle: new TextStyle(height: 20.0),
                             hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
                           ),
@@ -267,7 +267,7 @@ class _SearchResultAudioListPageState extends BaseState {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("讲师：${data[index].lecturer}",
+                    child: Text("课程：${data[index].lecturer}",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: DefaultValue.textSize

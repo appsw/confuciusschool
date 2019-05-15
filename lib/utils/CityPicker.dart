@@ -13,7 +13,7 @@ class CityPicker {
         ChangeData selectCity,
         ChangeData selectArea,
       }) {
-    rootBundle.loadString('data/province.json').then((v) {
+    rootBundle.loadString('data/region.json').then((v) {
       List data = json.decode(v);
       Navigator.push(
         context,

@@ -1,45 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'MaterialInfo.dart';
+part of 'CourseInfo.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MaterialInfo _$MaterialInfoFromJson(Map<String, dynamic> json) {
-  return MaterialInfo(
-      json['iid'] as int,
+CourseInfo _$CourseInfoFromJson(Map<String, dynamic> json) {
+  return CourseInfo(
+      json['id'] as int,
       json['name'] as String,
       json['photo'] as String,
       json['zed'] as String,
-      json['id'] as int,
-      json['mname'] as String,
+      json['userid'] as int,
+      json['cname'] as String,
+      json['words'] as String,
       json['type'] as int,
-      (json['video'] as List)?.map((e) => e as String)?.toList(),
-      json['describe'] as String,
+      json['pid'] as int,
       json['createTime'] as String,
       json['updateTime'] as String,
       json['fnum'] as int,
-      json['photos'] as String,
+      json['img'] as String,
       json['time'] as String,
-      json['status'] as int);
+      json['status'] as int,
+      json['currid'] as int);
 }
 
-Map<String, dynamic> _$MaterialInfoToJson(MaterialInfo instance) =>
+Map<String, dynamic> _$CourseInfoToJson(CourseInfo instance) =>
     <String, dynamic>{
-      'iid': instance.iid,
+      'id': instance.id,
       'name': instance.name,
       'photo': instance.photo,
       'zed': instance.zed,
-      'id': instance.id,
-      'mname': instance.mname,
+      'userid': instance.userid,
+      'cname': instance.cname,
+      'words': instance.words,
       'type': instance.type,
-      'video': instance.video,
-      'describe': instance.describe,
+      'pid': instance.pid,
       'createTime': instance.createTime,
       'updateTime': instance.updateTime,
       'fnum': instance.fnum,
-      'photos': instance.photos,
+      'img': instance.img,
       'time': instance.time,
-      'status': instance.status
+      'status': instance.status,
+      'currid': instance.currid
     };

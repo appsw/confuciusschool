@@ -19,6 +19,9 @@ class CommentInfo extends Object {
   @JsonKey(name: 'nickName')
   String nickName;
 
+  @JsonKey(name: 'status')
+  String status;
+
   @JsonKey(name: 'profilePhoto')
   String profilePhoto;
 
@@ -37,7 +40,7 @@ class CommentInfo extends Object {
   @JsonKey(name: 'replay')
   List<Replay> replay;
 
-  CommentInfo(this.id,this.nickName,this.profilePhoto,this.content,this.zanCount,this.createTime,this.type,this.replay,);
+  CommentInfo(this.id,this.nickName,this.status,this.profilePhoto,this.content,this.zanCount,this.createTime,this.type,this.replay,);
 
   factory CommentInfo.fromJson(Map<String, dynamic> srcJson) => _$CommentInfoFromJson(srcJson);
 
@@ -55,10 +58,10 @@ class Replay extends Object {
   @JsonKey(name: 'profilePhoto')
   String profilePhoto;
 
-  @JsonKey(name: 'deatil')
-  String deatil;
+  @JsonKey(name: 'content')
+  String content;
 
-  Replay(this.nickName,this.profilePhoto,this.deatil,);
+  Replay(this.nickName,this.profilePhoto,this.content,);
 
   factory Replay.fromJson(Map<String, dynamic> srcJson) => _$ReplayFromJson(srcJson);
 

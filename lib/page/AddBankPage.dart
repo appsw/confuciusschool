@@ -1,3 +1,4 @@
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/dialog/BankChoseDialog.dart';
 import 'package:confuciusschool/model/BankInfo.dart';
@@ -11,9 +12,12 @@ import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+class AddBankPage extends StatefulWidget {
+  @override
+  _AddBankPageState createState() => _AddBankPageState();
+}
 
-class AddBankPage extends BasefulWidget{
-
+class _AddBankPageState extends BaseState {
   var nameController = TextEditingController();
   var banknameController = TextEditingController();
   var bankCardController = TextEditingController();
@@ -22,9 +26,9 @@ class AddBankPage extends BasefulWidget{
   var bankName = "选择银行";
   BankInfo chosebank;
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  void initData() {
+    // TODO: implement initData
+    super.initData();
     api.getBankList((data){
       setState((){
         this.data = data;
@@ -127,43 +131,43 @@ class AddBankPage extends BasefulWidget{
           ),
           LinsUtils.getWidthLins(context),
           isOther ?
-            Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 20.0,bottom: 20.0),
-                  color: Colors.white,
-                  child: Row(
-                    children: <Widget>[
-                      Text("银行名称",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: DefaultValue.loginBtnSize
-                        ),),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                          child: TextField(
-                            controller: banknameController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(2.0),
-                              border: InputBorder.none,
-                              hintText: '请手动输入银行名称',
-                              prefixStyle: new TextStyle(height: 20.0),
-                              hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
-                            ),
+          Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 20.0,bottom: 20.0),
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Text("银行名称",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.loginBtnSize
+                      ),),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                        child: TextField(
+                          controller: banknameController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(2.0),
+                            border: InputBorder.none,
+                            hintText: '请手动输入银行名称',
+                            prefixStyle: new TextStyle(height: 20.0),
+                            hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                LinsUtils.getWidthLins(context),
-              ],
-            )
-          :
-              Container(),
+              ),
+              LinsUtils.getWidthLins(context),
+            ],
+          )
+              :
+          Container(),
           Container(
             padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 20.0,bottom: 20.0),
             color: Colors.white,
@@ -205,7 +209,7 @@ class AddBankPage extends BasefulWidget{
         onPressed: (){
           addBank();
 //            NavigatorUtils.push(context, VerificationPhoneAddBankPage());
-          },
+        },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
         child: new Text('确定添加',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
@@ -222,6 +226,10 @@ class AddBankPage extends BasefulWidget{
     var bankname = banknameController.text;
     var carnum = bankCardController.text;
     if(name.isEmpty || carnum.isEmpty){
+      ToastUtil.makeToast("请完善信息！");
+      return;
+    }
+    if(bankName == "选择银行"){
       ToastUtil.makeToast("请完善信息！");
       return;
     }
@@ -246,5 +254,4 @@ class AddBankPage extends BasefulWidget{
     }
 
   }
-
 }

@@ -41,6 +41,7 @@ class _FeedbackPageState extends BaseState {
       height: 100.0,
       child: TextField(
         controller: controller,
+        maxLines: 9,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(2.0),

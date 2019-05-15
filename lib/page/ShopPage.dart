@@ -1,8 +1,11 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/dialog/ShopPayDialog.dart';
+import 'package:confuciusschool/model/MyPointsInfo.dart';
 import 'package:confuciusschool/model/ShopInfo.dart';
+import 'package:confuciusschool/page/MyBuyPage.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
+import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +19,18 @@ class ShopPage extends StatefulWidget {
 class _ShopPageState extends BaseState{
 
   ShopInfo data;
+  var points = "0";
   @override
   void initData() {
     // TODO: implement initData
     super.initData();
+    api.getMyPoints((MyPointsInfo data){
+      setState(() {
+        points = data.re;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
     api.getShopInfo((data){
       setState(() {
         this.data = data;
@@ -32,7 +43,36 @@ class _ShopPageState extends BaseState{
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
-    return PageUtils.getAppBar(context, "智慧超市");
+    return
+    AppBar(
+      title: Text("智慧超市",
+        style: TextStyle(
+            color: Colors.black
+        ),),
+      centerTitle: true,
+      brightness: Brightness.light,
+      backgroundColor: Colors.white,
+      leading: PageUtils.getBackWidge(context),
+      elevation: 0.0,
+      actions: <Widget>[getAction()],
+    );
+  }
+  Widget getAction(){
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new MyBuyPage());
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 60.0,
+        margin: EdgeInsets.only(right: DefaultValue.rightMargin),
+        child: Text("我的已购",
+        style: TextStyle(
+          fontSize: DefaultValue.textSize,
+          color: Colors.black
+        ),),
+      ),
+    );
   }
 
   @override
@@ -99,7 +139,7 @@ class _ShopPageState extends BaseState{
     Ress ress = data.ress[index];
     return GestureDetector(
       onTap: (){
-        ShopPayDialog.showLoadingDialog(context, ress.name, "${ress.integral}积分 或 ¥${ress.money}", "100", (int type){
+        ShopPayDialog.showLoadingDialog(context, ress.name, "${ress.integral}积分 或 ¥${ress.money}", points, (int type){
           print(type);
         });
       },

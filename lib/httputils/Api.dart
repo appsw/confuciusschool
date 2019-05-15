@@ -12,12 +12,15 @@ import 'package:confuciusschool/model/BaseResponse.dart';
 import 'package:confuciusschool/model/BecomeVipInfo.dart';
 import 'package:confuciusschool/model/Classification.dart';
 import 'package:confuciusschool/model/CommentInfo.dart';
+import 'package:confuciusschool/model/CourseInfo.dart';
+import 'package:confuciusschool/model/EntrepreneurialTitleInfo.dart';
 import 'package:confuciusschool/model/EntrepreneurshipInfo.dart';
 import 'package:confuciusschool/model/HomeInfo.dart';
 import 'package:confuciusschool/model/IncomeInfo.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
 import 'package:confuciusschool/model/MaterialInfo.dart';
 import 'package:confuciusschool/model/MemberInfo.dart';
+import 'package:confuciusschool/model/MyBuyInfo.dart';
 import 'package:confuciusschool/model/MyCollectionInfo.dart';
 import 'package:confuciusschool/model/MyPointsInfo.dart';
 import 'package:confuciusschool/model/MyTeamInfo.dart';
@@ -27,6 +30,7 @@ import 'package:confuciusschool/model/PersonalInfo.dart';
 import 'package:confuciusschool/model/PutCashDataInfo.dart';
 import 'package:confuciusschool/model/ShopInfo.dart';
 import 'package:confuciusschool/model/SignInShowInfo.dart';
+import 'package:confuciusschool/model/SigninInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
@@ -70,20 +74,20 @@ class Api extends CommonService{
   }
   void Register(String phone,String password,String code,String invitecode,Function callback,Function errorCallBack){
     params.clear();
-    params["phone"] = phone;
+    params["account"] = phone;
     params["password"] = password;
     params["code"] = code;
     params["invitecode"] = invitecode;
     request(ApiUrl.Register,(BaseResponse response){
-      callback(response.data);
+      callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void ForgetPswd(String phone,String password,String code,Function callback,Function errorCallBack){
+  void ForgetPswd(String account,String password,String code,Function callback,Function errorCallBack){
     params.clear();
-    params["phone"] = phone;
+    params["account"] = account;
     params["password"] = password;
     params["code"] = code;
-    request(ApiUrl.ForgetPswd,(BaseResponse response){
+    request(ApiUrl.forgetPasswd,(BaseResponse response){
       callback(response.data);
     },method: POST,errorCallBack: errorCallBack);
   }
@@ -295,7 +299,7 @@ class Api extends CommonService{
   void getSignInShow(Function callback,Function errorCallBack){
     params.clear();
     request(ApiUrl.getSignInShow,(BaseResponse response){
-      SignInShowInfo data = SignInShowInfo.fromJson(response.msg);
+      SignInShowInfo data = SignInShowInfo.fromJson(response.data);
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
@@ -306,7 +310,7 @@ class Api extends CommonService{
       callback(response.data);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void changeSigninImg(File file,Function callback,Function errorCallBack){
+  void changeSigninImg(var file,Function callback,Function errorCallBack){
     params.clear();
     params["img"] = file;
     request(ApiUrl.changeSigninImg,(BaseResponse response){
@@ -321,7 +325,7 @@ class Api extends CommonService{
     },method: POST,errorCallBack: errorCallBack);
   }
 
-  void changeBrand(File file,String brand,Function callback,Function errorCallBack){
+  void changeBrand(var file,String brand,Function callback,Function errorCallBack){
     params.clear();
     params["rimg"] = file;
     params["brand"] = brand;
@@ -363,10 +367,19 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void getMaterialInfo(Function callback,Function errorCallBack){
+  void getMaterialInfo(String name,Function callback,Function errorCallBack){
     params.clear();
+    params["mname"] = name;
     request(ApiUrl.getMaterialInfo,(BaseResponse response){
       List<MaterialInfo> data = getMaterialInfoList(response.data["arr"]);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getCourseInfo(String name,Function callback,Function errorCallBack){
+    params.clear();
+    params["cname"] = name;
+    request(ApiUrl.getCourseInfo,(BaseResponse response){
+      List<CourseInfo> data = getCourseInfoList(response.data["arr1"]);
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
@@ -479,12 +492,116 @@ class Api extends CommonService{
     params["profilePhoto"] = profilePhoto;
     params["sex"] = sex;
     params["birth"] = birth;
-    params["bname"] = bname;
-    params["dname"] = dname;
-    params["ename"] = ename;
+    params["bid"] = bname;
+    params["did"] = dname;
+    params["eid"] = ename;
     request(ApiUrl.submitPersonal,(BaseResponse response){
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
-
+  void getSigninInfo(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getSigninInfo,(BaseResponse response){
+      SigninInfo data = SigninInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getMyBuy(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getMyBuy,(BaseResponse response){
+      List<MyBuyInfo>  data = getMyBuyInfoList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putGovernGood(String mid,String type,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["mid"] = mid;
+    params["type"] = type;
+    params["status"] = status;
+    request(ApiUrl.putGovernGood,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putGovernGoods(String mid,String type,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["mid"] = mid;
+    params["type"] = type;
+    params["status"] = status;
+    request(ApiUrl.putGovernGoods,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getExtension(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getExtension,(BaseResponse response){
+      callback(response.data["one"]);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getEntrepreneurialTitle(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getEntrepreneurialTitle,(BaseResponse response){
+      EntrepreneurialTitleInfo data = EntrepreneurialTitleInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getEntrepreneurInfo(String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    request(ApiUrl.getEntrepreneurship,(BaseResponse response){
+      EntrepreneurshipInfo data = EntrepreneurshipInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getCommentZan(String id,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    params["status"] = status;
+    request(ApiUrl.getCommentZan,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getCommentReplay(String pid,String fid,String cid,String content,Function callback,Function errorCallBack){
+    params.clear();
+    params["pid"] = pid;
+    params["fid"] = fid;
+    params["cid"] = cid;
+    params["content"] = content;
+    request(ApiUrl.getCommentReplay,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getEntrepreneurComment(String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    request(ApiUrl.getEntrepreneurComment,(BaseResponse response){
+      List<CommentInfo> data = getCommentInfoList(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getEntrepreneurCommentZan(String id,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    params["status"] = status;
+    request(ApiUrl.getCommentZan,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void putEntrepreneurComment(String pid,String content,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = pid;
+    params["content"] = content;
+    request(ApiUrl.putEntrepreneurComment,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getEntrepreneurCommentReplay(String pid,String fid,String cid,String content,Function callback,Function errorCallBack){
+    params.clear();
+    params["pid"] = pid;
+    params["fid"] = fid;
+    params["cid"] = cid;
+    params["content"] = content;
+    request(ApiUrl.getEntrepreneurCommentReplay,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
 }

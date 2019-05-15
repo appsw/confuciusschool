@@ -1,10 +1,12 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
+import 'package:confuciusschool/page/NewsDetailPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
+import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
@@ -55,38 +57,43 @@ class _NewsPageState extends BaseState {
   }
   Widget getRow(BuildContext context,int index){
     NewsInfo newsInfo = data[index];
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      margin: EdgeInsets.only(top: DefaultValue.topMargin),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Text("${newsInfo.ititle}",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: DefaultValue.titleTextSize
-          ),),
-          LinsUtils.getWidthLins(context),
-          Container(
-            margin:EdgeInsets.only(top: 5.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Text("${newsInfo.ititle}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),),
-                ),
-                Image.asset("images/home01_all_gengduo.png",width: 9.0,height: 15.0,)
-              ],
-            ),
-          )
-        ],
+    return GestureDetector(
+      child: Container(
+        color: Colors.white,
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text("${newsInfo.ititle}",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: DefaultValue.titleTextSize
+              ),),
+            LinsUtils.getWidthLins(context),
+            Container(
+              margin:EdgeInsets.only(top: 5.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Text("${newsInfo.about}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.textSize
+                      ),),
+                  ),
+                  Image.asset("images/home01_all_gengduo.png",width: 9.0,height: 15.0,)
+                ],
+              ),
+            )
+          ],
+        ),
       ),
+      onTap: (){
+        NavigatorUtils.push(context, new NewsDetailPage(newsInfo));
+      },
     );
   }
 

@@ -7,21 +7,18 @@ part of 'ActivityDetailsInfo.dart';
 // **************************************************************************
 
 ActivityDetailsInfo _$ActivityDetailsInfoFromJson(Map<String, dynamic> json) {
-  return ActivityDetailsInfo(json['sql'] == null
-      ? null
-      : Sql.fromJson(json['sql'] as Map<String, dynamic>));
+  return ActivityDetailsInfo(
+      json['id'] as int,
+      json['title'] as String,
+      json['explain'] as String,
+      json['img'] as String,
+      json['uedtext'] as String);
 }
 
 Map<String, dynamic> _$ActivityDetailsInfoToJson(
         ActivityDetailsInfo instance) =>
-    <String, dynamic>{'sql': instance.sql};
-
-Sql _$SqlFromJson(Map<String, dynamic> json) {
-  return Sql(json['title'] as String, json['explain'] as String,
-      json['img'] as String, json['uedtext'] as String);
-}
-
-Map<String, dynamic> _$SqlToJson(Sql instance) => <String, dynamic>{
+    <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'explain': instance.explain,
       'img': instance.img,

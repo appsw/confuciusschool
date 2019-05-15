@@ -1,5 +1,7 @@
 import 'package:confuciusschool/httputils/Api.dart';
+import 'package:confuciusschool/page/ChangePswdPage.dart';
 import 'package:confuciusschool/page/CodeLoginPage.dart';
+import 'package:confuciusschool/page/ForgetPswdPage.dart';
 import 'package:confuciusschool/page/IndexPage.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
@@ -49,7 +51,7 @@ class LoginPage extends BasefulWidget{
               getPswd(),
               getLoginBtn(),
               getForgetPswdText(),
-              getAgreement(),
+//              getAgreement(),
               getThreeText(),
               getThreeImg()
             ],
@@ -96,6 +98,7 @@ class LoginPage extends BasefulWidget{
       child: TextField(
         controller: pswdController,
         keyboardType: TextInputType.text,
+        obscureText: true,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(2.0),
           border: InputBorder.none,
@@ -125,7 +128,11 @@ class LoginPage extends BasefulWidget{
           }
           api.Login(username, pswd, (msg){
             ToastUtil.makeToast(msg);
-            NavigatorUtils.push(context, new IndexPage());
+            SharedPreferencesUtil.saveString(Constant.ISLOGIN,"1",(bool result){
+              if(result){
+                NavigatorUtils.pushAndRemoveUntil(context, new IndexPage());
+              }
+            });
           }, (msg){
             ToastUtil.makeToast(msg);
           });
@@ -175,7 +182,7 @@ class LoginPage extends BasefulWidget{
               ),),
           ),
           onTap: (){
-            NavigatorUtils.push(context, new RegisterPage());
+            NavigatorUtils.push(context, new ForgetPswdPage());
           },),
         ),
       ],

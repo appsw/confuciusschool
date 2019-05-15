@@ -31,7 +31,7 @@ class Classification extends Object {
   @JsonKey(name: 'level')
   int level;
 
-  @JsonKey(name: 'lecturer')
+  @JsonKey(name: 'cuname')
   String lecturer;
 
   @JsonKey(name: 'createTime')

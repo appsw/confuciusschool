@@ -263,7 +263,7 @@ class _SearchResultListPageState extends BaseState {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("讲师：${data[index].lecturer}",
+                    child: Text("课程：${data[index].lecturer}",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: DefaultValue.textSize

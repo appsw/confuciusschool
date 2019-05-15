@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/dialog/LoadingDialog.dart';
+import 'package:confuciusschool/model/CourseInfo.dart';
 import 'package:confuciusschool/model/MaterialInfo.dart';
+import 'package:confuciusschool/page/AudioPlayPage.dart';
+import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
@@ -15,15 +18,14 @@ import 'package:flutter/services.dart';
 import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' show get;
-
-class MaterialPage extends StatefulWidget {
+class ExcellentCoursePage extends StatefulWidget {
   @override
-  _MaterialPageState createState() => _MaterialPageState();
+  _ExcellentCoursePageState createState() => _ExcellentCoursePageState();
 }
 
-class _MaterialPageState extends BaseState{
+class _ExcellentCoursePageState extends BaseState {
 
-  List<MaterialInfo> data;
+  List<CourseInfo> data;
   var controllerScroll = new ScrollController();
   final controller = TextEditingController();
   @override
@@ -32,8 +34,8 @@ class _MaterialPageState extends BaseState{
     super.initData();
     getData("");
   }
-  void getData(name){
-    api.getMaterialInfo(name,(data){
+  getData(String name){
+    api.getCourseInfo(name,(data){
       setState(() {
         this.data = data;
       });
@@ -41,10 +43,11 @@ class _MaterialPageState extends BaseState{
       ToastUtil.makeToast(msg);
     });
   }
+
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
-    return PageUtils.getAppBar(context, "经典素材");
+    return PageUtils.getAppBar(context, "精品课程");
   }
 
   @override
@@ -72,22 +75,59 @@ class _MaterialPageState extends BaseState{
     );
   }
   Widget getRow(BuildContext context,int index){
-    MaterialInfo materialInfo = data[index];
+    CourseInfo courseInfo = data[index];
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          getPersonal(materialInfo),
-          getWords(materialInfo.mname),
-          getSubscribe(materialInfo.video),
-          getTime(materialInfo.time),
-          getBtn(materialInfo),
+          getPersonal(courseInfo),
+          getWords(courseInfo.words),
+          getCourse(courseInfo),
+          getTime(courseInfo.time),
+          getBtn(courseInfo),
           LinsUtils.getWidthLins(context,height: 10.0)
         ],
       ),
     );
   }
-  Widget getBtn(MaterialInfo materialInfo){
+  Widget getCourse(CourseInfo materialInfo){
+    return GestureDetector(
+      onTap: (){
+        if(materialInfo.type == 1){
+          NavigatorUtils.push(context, new VideoPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+        }else{
+          NavigatorUtils.push(context, new AudioPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        color: ColorsUtil.GreyDialogBg,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.network(materialInfo.img,width: 40.0,height: 40.0,),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text("${materialInfo.cname}",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: DefaultValue.textSize
+                  ),),
+                Text("${materialInfo.cname}",
+                  maxLines: 1,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: DefaultValue.smallTextSize
+                  ),),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget getBtn(CourseInfo materialInfo){
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(top: DefaultValue.topMargin),
@@ -103,7 +143,7 @@ class _MaterialPageState extends BaseState{
                 }else{
                   state = "1";
                 }
-                api.putGovernGood(materialInfo.id.toString(), materialInfo.type.toString(), state, (msg){
+                api.putGovernGoods(materialInfo.id.toString(), materialInfo.type.toString(), state, (msg){
                   ToastUtil.makeToast(msg);
                 }, (msg){
                   ToastUtil.makeToast(msg);
@@ -134,35 +174,7 @@ class _MaterialPageState extends BaseState{
             flex: 1,
             child: GestureDetector(
               onTap: (){
-                for(int i = 0;i< materialInfo.video.length;i++){
-                  saveImg(materialInfo.video[i],i,materialInfo.video.length);
-                }
-              },
-              child:Container(
-                alignment: Alignment.center,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Image.asset("images/home04_8jingdiansucai_xiazai.png",width: 20.0,height: 20.0,),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                      child: Text("下载",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: GestureDetector(
-              onTap: (){
-                copy(materialInfo.mname);
+                copy(materialInfo.words);
               },
               child:Container(
                 alignment: Alignment.center,
@@ -189,7 +201,7 @@ class _MaterialPageState extends BaseState{
             child: GestureDetector(
               onTap: (){
 
-               },
+              },
               child:Container(
                 alignment: Alignment.center,
                 child: Column(
@@ -214,7 +226,7 @@ class _MaterialPageState extends BaseState{
       ),
     );
   }
-  
+
   Widget getWords(var text){
     return Container(
       padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
@@ -246,7 +258,7 @@ class _MaterialPageState extends BaseState{
     );
   }
 
-  Widget getPersonal(MaterialInfo materialInfo){
+  Widget getPersonal(CourseInfo materialInfo){
     return Container(
       child: Row(
         children: <Widget>[
@@ -258,10 +270,10 @@ class _MaterialPageState extends BaseState{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(materialInfo.name,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: DefaultValue.titleTextSize
-                ),),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: DefaultValue.titleTextSize
+                  ),),
                 Text(materialInfo.zed,
                   style: TextStyle(
                       color: Colors.grey,
@@ -412,5 +424,4 @@ class _MaterialPageState extends BaseState{
       ),
     );
   }
-
 }

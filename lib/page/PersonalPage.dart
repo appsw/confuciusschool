@@ -1,8 +1,11 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/MemberInfo.dart';
+import 'package:confuciusschool/model/MyPointsInfo.dart';
 import 'package:confuciusschool/page/AccountPage.dart';
 import 'package:confuciusschool/page/ActivityCenterPage.dart';
 import 'package:confuciusschool/page/BecomeVipPage.dart';
+import 'package:confuciusschool/page/ExcellentCoursePage.dart';
+import 'package:confuciusschool/page/ExtensionPage.dart';
 import 'package:confuciusschool/page/FeedbackPage.dart';
 import 'package:confuciusschool/page/MaterialPage.dart';
 import 'package:confuciusschool/page/MyCollectionPage.dart';
@@ -37,6 +40,7 @@ class _PersonalPageState extends BaseState {
   List Names  = ["朋友圈必发素材","朋友圈必发课程","智慧超市","我的积分","我的收藏","建议反馈","活动中心"];
   var Icons = ["images/home04_sucai.png","images/home04_kecheng.png","images/home04_chaoshi.png","images/home04_wodejifen.png","images/home04_wodeshoucang.png","images/home04_fankui.png","images/home04_huodongzhongxin.png"];
   Listinfo data;
+  var points = "0";
   Widget getBG(){
     return Container(
       child: Column(
@@ -68,89 +72,94 @@ class _PersonalPageState extends BaseState {
     );
   }
   Widget getInvitation(){
-    return Container(
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
-      margin: EdgeInsets.only(top: DefaultValue.topMargin),
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.only(right: 5.0),
-                  decoration: new BoxDecoration(
-                      border: new Border.all(width: 1.0,color:Colors.red ),
-                      color: Colors.white,
-                      borderRadius:  new BorderRadius.all(Radius.circular(26.0))
-                  ),
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new ExtensionPage());
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
+        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
                   child: Container(
-                    padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset("images/home04_invite1.png",width: 27.0,height: 27.0,),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text("邀请好友免费体验",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: DefaultValue.textSize
-                              ),),
-                            Text("立得10积分",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: DefaultValue.smallTextSize
-                              ),),
-                          ],
-                        )
-                      ],
+                    margin: EdgeInsets.only(right: 5.0),
+                    decoration: new BoxDecoration(
+                        border: new Border.all(width: 1.0,color:Colors.red ),
+                        color: Colors.white,
+                        borderRadius:  new BorderRadius.all(Radius.circular(26.0))
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset("images/home04_invite1.png",width: 27.0,height: 27.0,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("邀请好友免费体验",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: DefaultValue.textSize
+                                ),),
+                              Text("立得10积分",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: DefaultValue.smallTextSize
+                                ),),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.only(left: 5.0),
-                  decoration: new BoxDecoration(
-                      border: new Border.all(width: 1.0,color:ColorsUtil.PersionalYellow ),
-                      color: ColorsUtil.PersionalYellow,
-                      borderRadius:  new BorderRadius.all(Radius.circular(26.0))
-                  ),
+                Expanded(
+                  flex: 1,
                   child: Container(
-                    padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset("images/home04_yaoqinghaoyou.png",width: 27.0,height: 27.0,),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text("邀请好友付费加入",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: DefaultValue.textSize
-                              ),),
-                            Text("立得50元",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: DefaultValue.smallTextSize
-                              ),),
-                          ],
-                        )
-                      ],
+                    margin: EdgeInsets.only(left: 5.0),
+                    decoration: new BoxDecoration(
+                        border: new Border.all(width: 1.0,color:ColorsUtil.PersionalYellow ),
+                        color: ColorsUtil.PersionalYellow,
+                        borderRadius:  new BorderRadius.all(Radius.circular(26.0))
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset("images/home04_yaoqinghaoyou.png",width: 27.0,height: 27.0,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("邀请好友付费加入",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: DefaultValue.textSize
+                                ),),
+                              Text("立得50元",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: DefaultValue.smallTextSize
+                                ),),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 //          getBecomeVip()
-          data.isVip == 1 ? getBecomeVip() :Container()
-    ],
+            data.isVip == 2 ? Container() : getBecomeVip()
+          ],
+        ),
       ),
     );
   }
@@ -171,7 +180,7 @@ class _PersonalPageState extends BaseState {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset("images/home04_invite1.png",width: 27.0,height: 27.0,),
+              Image.asset("images/home04_vip.png",width: 27.0,height: 27.0,),
               Expanded(
                 flex: 1,
                 child: Container(
@@ -214,6 +223,10 @@ class _PersonalPageState extends BaseState {
       ),
     );
   }
+  void EditData () async {
+    var result = await Navigator.of(context).push(new MaterialPageRoute(builder: (context){return new PersonalDataPage();}));
+    getData();
+  }
 
   Widget getHead(){
     return Container(
@@ -244,7 +257,7 @@ class _PersonalPageState extends BaseState {
                             child: Image.asset("images/home04_bianji.png",width: 14.0,height: 14.0,),
                           ),
                           onTap: (){
-                            NavigatorUtils.push(context, PersonalDataPage());
+                            EditData();
                           },
                         )
                       ],
@@ -261,7 +274,8 @@ class _PersonalPageState extends BaseState {
                             borderRadius:  new BorderRadius.all(Radius.circular(10.0))
                         ),
 //                  alignment: Alignment.center,
-                        child: Text("推广大使",
+                        //身份1、普通会员 2.VIP3.代理
+                        child: Text(data.isVip == 1 ? "普通会员" : data.isVip == 2 ? "VIP3" : "代理",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: DefaultValue.smallTextSize
@@ -359,6 +373,7 @@ class _PersonalPageState extends BaseState {
       child: Row(children: <Widget>[
         Expanded(flex: 0,child: Image.asset(Icons[index],width: 19.0,height: 22.0,),),
         Expanded(flex: 1,child: Container(margin: EdgeInsets.only(left:  DefaultValue.leftMargin),child: Text(Names[index]),),),
+        index == 3 ? Expanded(flex: 0,child: Text(" ${points}  "),) : Container(),
         Expanded(flex: 0,child: Image.asset("images/home04_5_1tixinadaoyinhangka_gengduo.png",width: 12.0,height: 13.0,),)
       ],),),
       onTap: (){
@@ -367,7 +382,7 @@ class _PersonalPageState extends BaseState {
             NavigatorUtils.push(context, MaterialPage());
             break;
           case 1:
-
+            NavigatorUtils.push(context, ExcellentCoursePage());
             break;
           case 2:
             NavigatorUtils.push(context, ShopPage());
@@ -434,8 +449,8 @@ class _PersonalPageState extends BaseState {
             flex: 1,
             child: GestureDetector(
               onTap: (){
-//                NavigatorUtils.push(context, MyTeamPage());
-                NavigatorUtils.push(context, new MyTeamMemberPage());
+                NavigatorUtils.push(context, MyTeamPage());
+//                NavigatorUtils.push(context, new MyTeamMemberPage());
               },
               child: Container(
                 alignment: Alignment.center,
@@ -530,6 +545,17 @@ class _PersonalPageState extends BaseState {
   void initData() {
     // TODO: implement initData
     super.initData();
+    getData();
+    api.getMyPoints((MyPointsInfo data){
+      setState(() {
+        points = data.re;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+
+  }
+  void getData(){
     api.getMember((MemberInfo data){
       setState(() {
         this.data = data.listinfo;

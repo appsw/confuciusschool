@@ -10,6 +10,7 @@ CommentInfo _$CommentInfoFromJson(Map<String, dynamic> json) {
   return CommentInfo(
       json['id'] as int,
       json['nickName'] as String,
+      json['status'] as String,
       json['profilePhoto'] as String,
       json['content'] as String,
       json['zan_count'] as int,
@@ -25,6 +26,7 @@ Map<String, dynamic> _$CommentInfoToJson(CommentInfo instance) =>
     <String, dynamic>{
       'id': instance.id,
       'nickName': instance.nickName,
+      'status': instance.status,
       'profilePhoto': instance.profilePhoto,
       'content': instance.content,
       'zan_count': instance.zanCount,
@@ -35,11 +37,11 @@ Map<String, dynamic> _$CommentInfoToJson(CommentInfo instance) =>
 
 Replay _$ReplayFromJson(Map<String, dynamic> json) {
   return Replay(json['nickName'] as String, json['profilePhoto'] as String,
-      json['deatil'] as String);
+      json['content'] as String);
 }
 
 Map<String, dynamic> _$ReplayToJson(Replay instance) => <String, dynamic>{
       'nickName': instance.nickName,
       'profilePhoto': instance.profilePhoto,
-      'deatil': instance.deatil
+      'content': instance.content
     };

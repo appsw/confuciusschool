@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/model/PersonalInfo.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
@@ -16,8 +17,12 @@ import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-class PersonalDataPage extends BasefulWidget{
+class PersonalDataPage extends StatefulWidget {
+  @override
+  _PersonalDataPageState createState() => _PersonalDataPageState();
+}
 
+class _PersonalDataPageState extends BaseState {
   File headImg;
   var nameController = TextEditingController();
   var sexController = TextEditingController();
@@ -38,6 +43,7 @@ class PersonalDataPage extends BasefulWidget{
     api.getPersonal((PersonalInfo data){
       setState(() {
         this.data = data;
+        imgUrl = data.profilePhoto;
         nameController.text = data.nickName == null ? "" : data.nickName;
         sex = data.sex;
         birth = data.birth;
@@ -155,9 +161,9 @@ class PersonalDataPage extends BasefulWidget{
             data.invitecode == null ? "" : data.invitecode,style: TextStyle(color: Colors.black),
           ),),
           onTap: (){
-            showModalBottomSheet(context: context, builder: (context){
-              return getBottomDialog();
-            });
+//            showModalBottomSheet(context: context, builder: (context){
+//              return getBottomDialog();
+//            });
           },
         ),),
         Expanded(
@@ -182,9 +188,9 @@ class PersonalDataPage extends BasefulWidget{
             data.account == null ? "" : data.account,style: TextStyle(color: Colors.black),
           ),),
           onTap: (){
-            showModalBottomSheet(context: context, builder: (context){
-              return getBottomDialog();
-            });
+//            showModalBottomSheet(context: context, builder: (context){
+//              return getBottomDialog();
+//            });
           },
         ),),
         Expanded(
@@ -207,7 +213,7 @@ class PersonalDataPage extends BasefulWidget{
         sexString = "女";
         break;
       default:
-        sexString = "保密";
+        sexString = "请选择";
         break;
 
     }
@@ -251,28 +257,28 @@ class PersonalDataPage extends BasefulWidget{
           ),),
           onTap: (){
             DatePicker.showDatePicker(
-                context,
-                showTitleActions: true,
-                locale: 'zh',
-                minYear: 1970,
-                maxYear: 2020,
-                initialYear: 2018,
-                initialMonth: 6,
-                initialDate: 21,
-                cancel: Text('取消'),
-                confirm: Text('确定'),
-                dateFormat: 'yyyy-mm-dd',
-                onChanged:(year, month, date) {
-                  setState((){
-                    birth = year.toString() + "-" + month.toString() + "-" + date.toString();
-                  });
-                },
-            onConfirm: (year, month, date) {
-              setState((){
-                birth = year.toString() + "-" + month.toString() + "-" + date.toString();
-              });
-            },
-            onCancel: () { },
+              context,
+              showTitleActions: true,
+              locale: 'zh',
+              minYear: 1970,
+              maxYear: 2020,
+              initialYear: 2018,
+              initialMonth: 6,
+              initialDate: 21,
+              cancel: Text('取消'),
+              confirm: Text('确定'),
+              dateFormat: 'yyyy-mm-dd',
+              onChanged:(year, month, date) {
+                setState((){
+                  birth = year.toString() + "-" + month.toString() + "-" + date.toString();
+                });
+              },
+              onConfirm: (year, month, date) {
+                setState((){
+                  birth = year.toString() + "-" + month.toString() + "-" + date.toString();
+                });
+              },
+              onCancel: () { },
             );
           },
         ),),
@@ -425,21 +431,21 @@ class PersonalDataPage extends BasefulWidget{
         print(province);
         setState(() {
           address = province["name"];
-          bname = province["name"];
+          bname = province["id"];
         });
       },
       selectCity: (city) {
         print(city);
         setState(() {
           address += city["name"];
-          dname = city["name"];
+          dname = city["id"];
         });
       },
       selectArea: (area) {
         print(area);
         setState(() {
           address += area["name"];
-          ename = area["name"];
+          ename = area["id"];
 //          data.namePath = area["code"];
         });
       },

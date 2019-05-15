@@ -23,6 +23,7 @@ class RegisterPage extends BasefulWidget{
       child: SingleChildScrollView(
         child: Container(
           alignment: Alignment.topCenter,
+          margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
           decoration: new BoxDecoration(
             image: new DecorationImage(
               image: new AssetImage("images/01_denglu_bj.png"),
@@ -130,7 +131,8 @@ class RegisterPage extends BasefulWidget{
       margin: EdgeInsets.only(top: 20.0),
       child: TextField(
         controller: pswdController,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
+        obscureText: true,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(2.0),
           border: InputBorder.none,
@@ -217,7 +219,7 @@ class RegisterPage extends BasefulWidget{
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(2.0),
           border: InputBorder.none,
-          hintText: '推荐人账号(选填)',
+          hintText: '推荐人推广码(选填)',
           prefixStyle: new TextStyle(height: 20.0),
           hintStyle: new TextStyle(color: ColorsUtil.LogEditBg,fontSize: DefaultValue.messageTextSize),
         ),
@@ -262,7 +264,8 @@ class RegisterPage extends BasefulWidget{
         ),
       ),
       onTap: (){
-        NavigatorUtils.push(context, new RegisterPage());
+//        NavigatorUtils.push(context, new RegisterPage());
+
       },
     );
   }
@@ -272,19 +275,21 @@ class RegisterPage extends BasefulWidget{
       child: FlatButton(
         onPressed: (){
           var phone = phoneController.text;
-          var nick = nickController.text;
+
           var pswd= pswdController.text;
-          var repswd= repswdController.text;
+
           var code = codeController.text;
           var recommen = recommenController.text;
-          if(phone.isEmpty || nick.isEmpty || pswd.isEmpty || repswd.isEmpty || code.isEmpty){
+          if(phone.isEmpty || pswd.isEmpty || code.isEmpty){
             ToastUtil.makeToast("请完善信息！");
             return;
           }
-          if(pswd != repswd){
-            ToastUtil.makeToast("两次输入密码不一致！");
-            return;
-          }
+          api.Register(phone, pswd, code, recommen, (msg){
+            ToastUtil.makeToast(msg);
+            Navigator.pop(context);
+          }, (msg){
+            ToastUtil.makeToast(msg);
+          });
 
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
@@ -318,7 +323,7 @@ class RegisterPage extends BasefulWidget{
           print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
         },
         color: ColorsUtil.LogBtnBg,//按钮的背景颜色
-        padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 13.0,right: 13.0),//按钮距离里面内容的内边距
+        padding: EdgeInsets.only(top:4.0,bottom: 4.0,left: 13.0,right: 13.0),//按钮距离里面内容的内边距
         child: new Text('获取验证码',style: TextStyle(fontSize: DefaultValue.smallTextSize),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题

@@ -1,3 +1,4 @@
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/page/AncientChinesePage.dart';
 import 'package:confuciusschool/page/EntrepreneurshipPage.dart';
 import 'package:confuciusschool/page/LegendChinaPage.dart';
@@ -14,7 +15,12 @@ import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
 
-class IndexPage extends BasefulWidget{
+class IndexPage extends StatefulWidget {
+  @override
+  _IndexPageState createState() => _IndexPageState();
+}
+
+class _IndexPageState extends BaseState {
 
   // 底部导航栏的文字 ， 给appBar 共用一下。
   var _bottomTitles = ["国学+","中国故事","","一起创业", "个人中心"];
@@ -107,8 +113,8 @@ class IndexPage extends BasefulWidget{
   String getBottomIconPath(int i) =>
       currentBottomIndex == i ? _bottomIconChecked[i] : _bottomIconNor[i];
   void checkIsLogin(BuildContext context){
-    SharedPreferencesUtil.getString(Constant.TOKEN).then((s){
-      if (s == null){
+    SharedPreferencesUtil.getString(Constant.ISLOGIN).then((s){
+      if (s == null  || s != "1"){
         NavigatorUtils.pushAndRemoveUntil(context, LoginPage());
 //        Navigator.pushAndRemoveUntil(
 //            context,

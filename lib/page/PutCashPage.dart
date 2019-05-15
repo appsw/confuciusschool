@@ -1,6 +1,8 @@
+import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/dialog/ChosePutCashBankDialog.dart';
 import 'package:confuciusschool/model/PutCashDataInfo.dart';
+import 'package:confuciusschool/page/AddBankPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
@@ -10,17 +12,27 @@ import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+class PutCashPage extends StatefulWidget {
+  @override
+  _PutCashPageState createState() => _PutCashPageState();
+}
 
-class PutCashPage extends BasefulWidget{
-
+class _PutCashPageState extends BaseState {
   var cashController = TextEditingController();
   var pswdController = TextEditingController();
   PutCashDataInfo data;
   Bank bank;
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  void initData() {
+    // TODO: implement initData
+    super.initData();
+    getData();
+  }
+  void AddBank () async {
+    var result = await Navigator.of(context).push(new MaterialPageRoute(builder: (context){return new AddBankPage();}));
+    getData();
+  }
+  void getData(){
     api.getPutCashData((PutCashDataInfo data){
       setState((){
         this.data = data;
@@ -30,6 +42,7 @@ class PutCashPage extends BasefulWidget{
       });
     }, (msg){
       ToastUtil.makeToast(msg);
+      AddBank();
     });
   }
   @override
@@ -45,12 +58,12 @@ class PutCashPage extends BasefulWidget{
       child: Column(
         children: <Widget>[
           data.bank.length == 0 ?
-              Container(
-                height: 60.0,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                child: Text("请先添加银行卡"),
-              ) :
+          Container(
+            height: 60.0,
+            width: MediaQuery.of(context).size.width,
+            alignment: Alignment.center,
+            child: Text("请先添加银行卡"),
+          ) :
           GestureDetector(
             onTap: (){
               ChosePutCashBankDialog.showBottomDialog(context, data.bank, (bank){
@@ -132,7 +145,7 @@ class PutCashPage extends BasefulWidget{
             color: Colors.white,
             child: Row(
               children: <Widget>[
-                Text("支付密码",
+                Text("提现密码",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.loginBtnSize
@@ -182,7 +195,14 @@ class PutCashPage extends BasefulWidget{
               ],
             ),
           ),
-          getBtn()
+          getBtn(),
+          Container(
+            margin: EdgeInsets.only(top: DefaultValue.topMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+            child: Text("默认提现密码为123456,如果忘记提现密码请到 设置 - 更改提现密码 页面更改.",
+            style: TextStyle(
+              color: Colors.grey
+            ),),
+          )
         ],
       ),
     );
@@ -217,5 +237,4 @@ class PutCashPage extends BasefulWidget{
       ),
     );
   }
-
 }

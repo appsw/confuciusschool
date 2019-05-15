@@ -1,6 +1,6 @@
 class ApiUrl{
   static final String BaseUrl = "http://cedu.qwangluo.net/";
-  static final String Register = "/Home/Register/register";
+  static final String Register = "/index/register/register";
   static final String ForgetPswd = "/Home/Register/forgetPasswd";
   static final String Login = "/index/login/login";
   static final String codeLogin = "/index/login/verification";
@@ -45,6 +45,7 @@ class ApiUrl{
   static final String getPutCashList= "/index/Opera/into";
   static final String getBecomeVipInfo= "/index/govern/vip";
   static final String getMaterialInfo= "/index/govern/material";
+  static final String getCourseInfo= "/index/govern/course";
   static final String getShopInfo= "/index/govern/supermarket";
   static final String getMyPoints= "/index/plate/point";
   static final String putFeed= "/index/plate/feed";
@@ -61,7 +62,18 @@ class ApiUrl{
   static final String addBank= "/index/member/addbank";
   static final String putCash= "/index/Opera/cash";
   static final String submitPersonal= "/index/plate/medit";
-
-
+  static final String forgetPasswd= "/index/login/forgetPasswd";
+  static final String getSigninInfo= "/index/Opera/showsig";
+  static final String getMyBuy= "/index/govern/buy";
+  static final String putGovernGood= "/index/govern/good";
+  static final String putGovernGoods= "/index/govern/goods";
+  static final String getExtension= "/index/plate/sum";
+  static final String getEntrepreneurialTitle= "/index/plate/create";
+  static final String getCommentZan= "/index/member/zan";
+  static final String getCommentReplay= "/index/member/replay";
+  static final String getEntrepreneurComment= "/index/plate/comment";
+  static final String getEntrepreneurCommentZan= "/index/plate/zan";
+  static final String putEntrepreneurComment= "/index/plate/addcomment";
+  static final String getEntrepreneurCommentReplay= "/index/plate/replay";
 
 }

@@ -8,7 +8,7 @@ part of 'AccountInfo.dart';
 
 AccountInfo _$AccountInfoFromJson(Map<String, dynamic> json) {
   return AccountInfo(json['balance'] as String, json['gross'] as String,
-      json['isAgent'] as int, json['arr'] as int);
+      json['isAgent'] as int, json['sale'] as int);
 }
 
 Map<String, dynamic> _$AccountInfoToJson(AccountInfo instance) =>
@@ -16,5 +16,5 @@ Map<String, dynamic> _$AccountInfoToJson(AccountInfo instance) =>
       'balance': instance.balance,
       'gross': instance.gross,
       'isAgent': instance.isAgent,
-      'arr': instance.arr
+      'sale': instance.arr
     };

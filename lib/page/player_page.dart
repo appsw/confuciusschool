@@ -1,28 +1,6 @@
-import 'dart:async';
-import 'dart:isolate';
-import 'dart:ui';
-
-import 'package:audio_service/audio_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:flutter/material.dart';
-MediaControl playControl = MediaControl(
-  androidIcon: 'mipmap/home02_3tinggushituwen_zanting',
-  label: 'Play',
-  action: MediaAction.play,
-);
-MediaControl pauseControl = MediaControl(
-  androidIcon: 'mipmap/zanting',
-  label: 'Pause',
-  action: MediaAction.pause,
-);
-MediaControl stopControl = MediaControl(
-  androidIcon: 'mipmap/tingzhi',
-  label: 'Stop',
-  action: MediaAction.stop,
-);
-
-
 class Player extends StatefulWidget {
   /// [AudioPlayer] 播放地址
   final String audioUrl;
@@ -69,26 +47,23 @@ class Player extends StatefulWidget {
   }
 }
 
-class PlayerState extends State<Player> with WidgetsBindingObserver{
+class PlayerState extends State<Player> {
+  AudioPlayer audioPlayer;
   bool isPlaying = false;
   Duration duration;
   Duration position;
   double sliderValue;
-  PlaybackState _state;
-  StreamSubscription _playbackStateSubscription;
-  Completer _completer = Completer();
-  IsolateNameServer isolateNameServer;
 
   @override
   void initState() {
     super.initState();
-    ReceivePort receivePort = new ReceivePort();
-    SendPort sendPort = receivePort.sendPort;
-    IsolateNameServer.registerPortWithName(sendPort, "audio");
-    receivePort.listen((data){
-      print(data);
-      if(data["type"] == 1){
-        Duration duration = data["value"];
+    print("audioUrl:" + widget.audioUrl);
+
+    audioPlayer = new AudioPlayer();
+    audioPlayer
+      ..completionHandler = widget.onCompleted
+      ..errorHandler = widget.onError
+      ..durationHandler = ((duration) {
         setState(() {
           this.duration = duration;
 
@@ -96,101 +71,30 @@ class PlayerState extends State<Player> with WidgetsBindingObserver{
             this.sliderValue = (position.inSeconds / duration.inSeconds);
           }
         });
-      }else if(data["type"] == 2){
-        Duration position = data["value"];
+      })
+      ..positionHandler = ((position) {
         setState(() {
           this.position = position;
+
 
           if (duration != null) {
             this.sliderValue = (position.inSeconds / duration.inSeconds);
           }
         });
-      }else if(data["type"] == 3){
-        bool playing = data["value"];
-        OnPlayStateChange(playing);
-      }
-    });
-
-    WidgetsBinding.instance.addObserver(this);
-
-    connect();
-//    audioPlayer.play(widget.audioUrl,volume: 0.0);
-//    audioPlayer.stop();
-//    AudioService.start(
-//      backgroundTask: _backgroundAudioPlayerTask,
-//      resumeOnClick: true,
-//      androidNotificationChannelName: 'Audio Service Demo',
-//      notificationColor: 0xFF2196f3,
-//      androidNotificationIcon: 'mipmap/ic_launcher',
-//    );
-    InitService();
-//    setState(() {
-//      isPlaying = true;
-//      widget.onPlaying(isPlaying);
-//    });
-  }
-  void InitService() async {
-    bool success = await AudioService.start(
-      backgroundTask: _backgroundAudioPlayerTask,
-      resumeOnClick: true,
-      androidNotificationChannelName: 'Audio Service Demo',
-      notificationColor: 0xFF2196f3,
-      androidNotificationIcon: 'mipmap/ic_launcher',
-    );
-    if (success) {
-      AudioService.customAction('url', widget.audioUrl);
-    }
-  }
-
-  @override
-  void dispose() {
-
-    disconnect();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        connect();
-        break;
-      case AppLifecycleState.paused:
-        disconnect();
-        break;
-      default:
-        break;
-    }
-  }
-
-  void connect() async {
-    await AudioService.connect();
-    if (_playbackStateSubscription == null) {
-      _playbackStateSubscription = AudioService.playbackStateStream
-          .listen((PlaybackState playbackState) {
-        setState(() {
-          _state = playbackState;
-        });
       });
-    }
-  }
-
-  void disconnect() {
-    if (_playbackStateSubscription != null) {
-      _playbackStateSubscription.cancel();
-      _playbackStateSubscription = null;
-    }
-    AudioService.disconnect();
   }
 
   @override
   void deactivate() {
-
+    audioPlayer.stop();
     super.deactivate();
   }
 
-
+  @override
+  void dispose() {
+    audioPlayer.release();
+    super.dispose();
+  }
 
   String _formatDuration(Duration d) {
     int minute = d.inMinutes;
@@ -228,11 +132,7 @@ class PlayerState extends State<Player> with WidgetsBindingObserver{
               if (duration != null) {
                 int seconds = (duration.inSeconds * newValue).round();
                 print("audioPlayer.seek: $seconds");
-                SendPort sendPort1 = IsolateNameServer.lookupPortByName("audio1");
-                var data = Map();
-                data["type"] = 2;
-                data["value"] = seconds;
-                sendPort1.send(data);
+                audioPlayer.seek(new Duration(seconds: seconds));
               }
             },
             value: sliderValue ?? 0.0,
@@ -277,7 +177,19 @@ class PlayerState extends State<Player> with WidgetsBindingObserver{
             ),
             new IconButton(
               onPressed: () {
-                onPlayBtn();
+                if (isPlaying)
+                  audioPlayer.pause();
+                else {
+                  audioPlayer.play(
+                    widget.audioUrl,
+                    isLocal: widget.isLocal,
+                    volume: widget.volume,
+                  );
+                }
+                setState(() {
+                  isPlaying = !isPlaying;
+                  widget.onPlaying(isPlaying);
+                });
               },
               padding: const EdgeInsets.all(0.0),
               icon: new Icon(
@@ -307,163 +219,4 @@ class PlayerState extends State<Player> with WidgetsBindingObserver{
       ),
     ];
   }
-  void onPlayBtn(){
-    if (isPlaying) {
-      AudioService.pause();
-    } else {
-      if(AudioServiceBackground.state.basicState == BasicPlaybackState.stopped){
-        AudioService.start(
-          backgroundTask: _backgroundAudioPlayerTask,
-          resumeOnClick: true,
-          androidNotificationChannelName: 'Audio Service Demo',
-          notificationColor: 0xFF2196f3,
-          androidNotificationIcon: 'mipmap/ic_launcher',
-        );
-      }else{
-        AudioService.play();
-      }
-    }
-    setState(() {
-      isPlaying = !isPlaying;
-      widget.onPlaying(isPlaying);
-    });
-  }
-  void OnPlayStateChange(bool playing){
-    if(playing){
-      setState(() {
-        isPlaying = true;
-        widget.onPlaying(isPlaying);
-      });
-    }else{
-      setState(() {
-        isPlaying = false;
-        widget.onPlaying(isPlaying);
-      });
-    }
-
-  }
-
-}
-
-void _backgroundAudioPlayerTask() async {
-  CustomAudioPlayer player = new CustomAudioPlayer();
-  AudioServiceBackground.run(
-    onStart: player.run,
-    onPlay: player.play,
-    onPause: player.pause,
-    onStop: player.stop,
-    onClick: (MediaButton button) => player.playPause(),
-    onCustomAction: (String name, dynamic arguments) {
-      switch (name) {
-        case "url":
-          String url = arguments;
-          player.streamUri = url;
-        break;
-      }
-    },
-  );
-}
-
-class CustomAudioPlayer {
-  String _streamUri;
-  AudioPlayer _audioPlayer = new AudioPlayer();
-  Completer _completer = Completer();
-  SendPort sendPort = IsolateNameServer.lookupPortByName("audio");
-
-  set streamUri(String value) {
-    _streamUri = value;
-  }
-
-  Future<void> run() async {
-
-    MediaItem mediaItem = MediaItem(
-        id: 'audio_1',
-        album: 'Sample Album',
-        title: 'Sample Title',
-        artist: 'Sample Artist');
-
-    AudioServiceBackground.setMediaItem(mediaItem);
-    var data = Map();
-    _audioPlayer
-    ..durationHandler = ((duration) {
-      data["type"] = 1;
-      data["value"] = duration;
-      sendPort.send(data);
-    })
-    ..positionHandler = ((position) {
-      data["type"] = 2;
-      data["value"] = position;
-      sendPort.send(data);
-    });
-    ReceivePort receivePort = new ReceivePort();
-    SendPort sendPort1 = receivePort.sendPort;
-    IsolateNameServer.registerPortWithName(sendPort1, "audio1");
-    receivePort.listen((data){
-      switch(data["type"]){
-        case 1:
-          streamUri = data;
-          break;
-        case 2:
-          _audioPlayer.seek(new Duration(seconds: data));
-          break;
-      }
-
-    });
-
-    var playerStateSubscription = _audioPlayer.onPlayerStateChanged
-        .where((state) => state == AudioPlayerState.COMPLETED)
-        .listen((state) {
-      stop();
-    });
-//    play();
-    await _completer.future;
-    playerStateSubscription.cancel();
-  }
-
-  void playPause() {
-
-    if (AudioServiceBackground.state.basicState == BasicPlaybackState.playing){
-      pause();
-
-    }
-    else{
-      play();
-
-    }
-
-  }
-
-  void play() {
-    _audioPlayer.play(_streamUri);
-    AudioServiceBackground.setState(
-      controls: [pauseControl, stopControl],
-      basicState: BasicPlaybackState.playing,
-    );
-    var data = Map();
-    data["type"] = 3;
-    data["value"] = true;
-    sendPort.send(data);
-  }
-
-  void pause() {
-    _audioPlayer.pause();
-    AudioServiceBackground.setState(
-      controls: [playControl, stopControl],
-      basicState: BasicPlaybackState.paused,
-    );
-    var data = Map();
-    data["type"] = 3;
-    data["value"] = false;
-    sendPort.send(data);
-  }
-
-  void stop() {
-    _audioPlayer.stop();
-    AudioServiceBackground.setState(
-      controls: [],
-      basicState: BasicPlaybackState.stopped,
-    );
-    _completer.complete();
-  }
-
 }

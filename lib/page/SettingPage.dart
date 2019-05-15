@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/page/AboutPage.dart';
+import 'package:confuciusschool/page/ChangePayPswdPage.dart';
 import 'package:confuciusschool/page/ChangePhonePage.dart';
 import 'package:confuciusschool/page/ChangePswdPage.dart';
 import 'package:confuciusschool/page/LoginPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
+import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
@@ -174,6 +176,31 @@ class SettingPage extends BasefulWidget{
           ),
           GestureDetector(
             onTap: (){
+              NavigatorUtils.push(context, ChangePayPswdPage());
+            },
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Text("修改提现密码",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15.0
+                      ),),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                    child: Image.asset("images/home04_5_1tixinadaoyinhangka_gengduo.png",width: 7.0,height: 12.0,),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: (){
               NavigatorUtils.push(context, ChangePhonePage());
             },
             child: Container(
@@ -238,12 +265,7 @@ class SettingPage extends BasefulWidget{
               margin: EdgeInsets.only(top: 100.0),
               child: FlatButton(
                 onPressed: (){
-                  SharedPreferencesUtil.clearAll().then((logout){
-                    if(logout){
-                      NavigatorUtils.pushAndRemoveUntil(context, LoginPage());
-                    }
-                  });
-                  print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
+                  LogOut();
                 },
                 color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
                 padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
@@ -260,6 +282,21 @@ class SettingPage extends BasefulWidget{
         ],
       ),
     );
+  }
+  void LogOut(){
+    SharedPreferencesUtil.saveString(Constant.ISLOGIN,"2",(bool result){
+      if(result){
+        NavigatorUtils.pushAndRemoveUntil(context, new LoginPage());
+      }
+    });
+//    SharedPreferencesUtil.clearAll().then((s){
+//      if (s){
+//        Navigator.pushAndRemoveUntil(
+//            context,
+//            MaterialPageRoute(
+//                builder: (context) => LoginPage()),(route) => route == null);
+//      }
+//    });
   }
 
 }

@@ -1,6 +1,7 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/ActivityDetailsInfo.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
@@ -38,24 +39,24 @@ class _ActivityDetailsPageState extends BaseState {
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return SingleChildScrollView(
+    return data == null ? LoadingUtils.getRingLoading() : SingleChildScrollView(
       child: Container(
         color: Colors.white,
         padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("${data.sql.title}",
+            Text("${data.title}",
               style: TextStyle(
                   color: Colors.red,
                   fontSize: DefaultValue.titleTextSize
               ),),
-            Text("${data.sql.explain}",
+            Text("${data.explain}",
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: DefaultValue.textSize
               ),),
-            Image.network("${data.sql.img}",width: MediaQuery.of(context).size.width,)
+            Image.network("${data.img}",width: MediaQuery.of(context).size.width,)
           ],
         ),
       ),

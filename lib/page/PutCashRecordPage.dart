@@ -29,7 +29,7 @@ class _PutCashRecordPageState extends BaseState {
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
-    return PageUtils.getAppBar(context, "收入明细");
+    return PageUtils.getAppBar(context, "提现记录");
   }
 
   @override

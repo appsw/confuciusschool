@@ -5,6 +5,8 @@ class PageUtils{
   static Widget getBackWidge(BuildContext context){
     return GestureDetector(
       child: Container(
+        width: 30.0,
+        height: 30.0,
         alignment: Alignment.center,
         child: Image.asset("images/all_back.png",height: 18.0,width: 10.0,fit: BoxFit.fill,),
       ),

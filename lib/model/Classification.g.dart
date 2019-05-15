@@ -14,7 +14,7 @@ Classification _$ClassificationFromJson(Map<String, dynamic> json) {
       json['fcover'] as String,
       json['clicks'] as int,
       json['level'] as int,
-      json['lecturer'] as String,
+      json['cuname'] as String,
       json['createTime'] as String,
       json['words'] as String);
 }
@@ -27,7 +27,7 @@ Map<String, dynamic> _$ClassificationToJson(Classification instance) =>
       'fcover': instance.fcover,
       'clicks': instance.clicks,
       'level': instance.level,
-      'lecturer': instance.lecturer,
+      'cuname': instance.lecturer,
       'createTime': instance.createTime,
       'words': instance.words
     };

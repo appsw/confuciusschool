@@ -1,6 +1,8 @@
 import 'package:confuciusschool/base/BaseState.dart';
+import 'package:confuciusschool/dialog/BeComeVipDialog.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
+import 'package:confuciusschool/page/BecomeVipPage.dart';
 import 'package:confuciusschool/page/CommentPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
@@ -60,6 +62,11 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
       });
       if(data != null)
       initVideo(data.re.address);
+      if(this.data.type != 1){
+        BeComeVipDialog.showLoadingDialog(context,(){
+          NavigatorUtils.push(context, new BecomeVipPage());
+        });
+      }
     }, (msg){
       ToastUtil.makeToast(msg);
     });

@@ -1,3 +1,4 @@
+import 'package:confuciusschool/model/SigninInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +6,9 @@ import 'package:flutter/material.dart';
 class SignInDialog extends Dialog{
   var names = ["第一天","第二天","第三天","第四天","第五天","第六天","第七天"];
   var nums = ["+5","+5","+10","+5","+5","+5","+10",];
+  SigninInfo signinInfo;
   Function signin;
-  SignInDialog(this.signin);
+  SignInDialog(this.signin,this.signinInfo);
   @override
   Widget build(BuildContext context) {
     return new Material( //创建透明层
@@ -50,11 +52,11 @@ class SignInDialog extends Dialog{
                                     color: Colors.white,
                                     fontSize: 18.0
                                   ),),
-                                  Text("连签7天，共领取55积分(价值11元)",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10.0
-                                    ),),
+//                                  Text("连签7天，共领取55积分(价值11元)",
+//                                    style: TextStyle(
+//                                        color: Colors.white,
+//                                        fontSize: 10.0
+//                                    ),),
                                 ],
                               ),
                             ),
@@ -110,26 +112,26 @@ class SignInDialog extends Dialog{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("连签规则",
+                                  Text("${signinInfo.rule.explain}",
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 12.0
                                     ),),
-                                  Text("1.连续签到第3天获得10积分，第七天获得20积分，其余每天获得5积分",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12.0
-                                    ),),
-                                  Text("2.签到中断需要重新计算连签天数",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12.0
-                                    ),),
-                                  Text("3.积分用途：可下载积分文档和观看视频",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12.0
-                                    ),),
+//                                  Text("1.连续签到第3天获得10积分，第七天获得20积分，其余每天获得5积分",
+//                                    style: TextStyle(
+//                                        color: Colors.grey,
+//                                        fontSize: 12.0
+//                                    ),),
+//                                  Text("2.签到中断需要重新计算连签天数",
+//                                    style: TextStyle(
+//                                        color: Colors.grey,
+//                                        fontSize: 12.0
+//                                    ),),
+//                                  Text("3.积分用途：可下载积分文档和观看视频",
+//                                    style: TextStyle(
+//                                        color: Colors.grey,
+//                                        fontSize: 12.0
+//                                    ),),
                                 ],
                               ),
                             ),
@@ -147,6 +149,30 @@ class SignInDialog extends Dialog{
     );
   }
   Widget getDay(int index){
+    var num = "0";
+    switch(index){
+      case 0:
+        num = signinInfo.one;
+        break;
+      case 1:
+        num = signinInfo.two;
+        break;
+      case 2:
+        num = signinInfo.three;
+        break;
+      case 3:
+        num = signinInfo.four;
+        break;
+      case 4:
+        num = signinInfo.five;
+        break;
+      case 5:
+        num = signinInfo.six;
+        break;
+      case 6:
+        num = signinInfo.seven;
+        break;
+    }
     return Container(
       height: 80.0,
       child: Column(
@@ -157,8 +183,8 @@ class SignInDialog extends Dialog{
             color: Colors.black,
             fontSize: DefaultValue.textSize
           ),),
-          Image.asset("images/home04_4jifendakaqiandao_jinbi.png",width: 15.0,height: 15.0,),
-          Text(nums[index],
+          signinInfo.weekday > index ? Image.asset("images/home04_4jifendakaqiandao_jinbi.png",width: 15.0,height: 15.0,) : Image.asset("images/home04_4jifendakaqiandao_jinbi2.png",width: 15.0,height: 15.0,),
+          Text("+${num}",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: DefaultValue.textSize
@@ -167,11 +193,11 @@ class SignInDialog extends Dialog{
       ),
     );
   }
-  static void showLoadingDialog(BuildContext context,Function signin){
+  static void showLoadingDialog(BuildContext context,Function signin,SigninInfo signinInfo){
     showDialog(context: context,
         barrierDismissible: false,
         builder:(context){
-          return new SignInDialog(signin);
+          return new SignInDialog(signin,signinInfo);
         } );
   }
   static void dismissLoadingDialog(BuildContext context){
