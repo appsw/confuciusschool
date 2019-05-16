@@ -115,7 +115,6 @@ class _LegendChinaPageState extends BaseState {
               ),
               onTap: (){
                 NavigatorUtils.push(context, new SearchResultAudioListPage(0));
-
               },
             ),
           ),
@@ -306,7 +305,6 @@ class _LegendChinaPageState extends BaseState {
   }
   void goBountyTask(int index){
 
-
   }
   Widget getRecommend(){
     return Container(
@@ -314,30 +312,35 @@ class _LegendChinaPageState extends BaseState {
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Column(
         children: <Widget>[
-      Container(
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-      child: Row(
-        children: <Widget>[
-          LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
-          Expanded(
-            flex: 1,
+          GestureDetector(
             child: Container(
-              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-              child: Text("每日推荐",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: DefaultValue.titleTextSize
-                ),),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              child: Row(
+                children: <Widget>[
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      child: Text("每日推荐",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),),
+                    ),
+                  ),
+                  Text("更多 >",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.textSize
+                    ),)
+                ],
+              ),
             ),
+            onTap: (){
+              NavigatorUtils.push(context, new SearchResultAudioListPage(0));
+            },
           ),
-          Text("更多 >",
-            style: TextStyle(
-                color: Colors.grey,
-                fontSize: DefaultValue.textSize
-            ),)
-        ],
-      ),
-    ),
           GestureDetector(
             onTap: (){
 //              NavigatorUtils.push(context, new VideoPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
@@ -353,30 +356,36 @@ class _LegendChinaPageState extends BaseState {
       color: Colors.white,
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-            child: Row(
-              children: <Widget>[
-                LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                    child: Text("免费体验",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                      ),),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              child: Row(
+                children: <Widget>[
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      child: Text("免费体验",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),),
+                    ),
                   ),
-                ),
-                Text("更多 >",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: DefaultValue.textSize
-                  ),)
-              ],
+                  Text("更多 >",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.textSize
+                    ),)
+                ],
+              ),
             ),
-          ),
+            onTap: (){
+              NavigatorUtils.push(context, new SearchResultAudioListPage(0));
+            },
+          )
+          ,
           Container(
             height: 260.0,
             child: GridView.builder(
@@ -415,6 +424,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
+                maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0
@@ -427,6 +437,7 @@ class _LegendChinaPageState extends BaseState {
                 children: <Widget>[
                   Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
                   Text("${data.clicks}人在学习",
+                    maxLines: 1,
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: DefaultValue.smallTextSize
@@ -444,30 +455,36 @@ class _LegendChinaPageState extends BaseState {
       color: Colors.white,
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-            child: Row(
-              children: <Widget>[
-                LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                    child: Text("睡前故事",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                      ),),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              child: Row(
+                children: <Widget>[
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      child: Text("睡前故事",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),),
+                    ),
                   ),
-                ),
-                Text("更多 >",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: DefaultValue.textSize
-                  ),)
-              ],
+                  Text("更多 >",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.textSize
+                    ),)
+                ],
+              ),
             ),
-          ),
+            onTap: (){
+              NavigatorUtils.push(context, new SearchResultAudioListPage(0));
+            },
+          )
+          ,
           Container(
             height: 260.0,
             child: GridView.builder(
@@ -506,6 +523,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
+                maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0
@@ -518,6 +536,7 @@ class _LegendChinaPageState extends BaseState {
                 children: <Widget>[
                   Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
                   Text("${data.clicks}人在学习",
+                    maxLines: 1,
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: DefaultValue.smallTextSize
@@ -537,30 +556,36 @@ class _LegendChinaPageState extends BaseState {
       margin: EdgeInsets.only(top: DefaultValue.topMargin),
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-            child: Row(
-              children: <Widget>[
-                LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                    child: Text("名人传记",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                      ),),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              child: Row(
+                children: <Widget>[
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      child: Text("名人传记",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),),
+                    ),
                   ),
-                ),
-                Text("更多 >",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: DefaultValue.textSize
-                  ),)
-              ],
+                  Text("更多 >",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.textSize
+                    ),)
+                ],
+              ),
             ),
-          ),
+            onTap: (){
+              NavigatorUtils.push(context, new SearchResultAudioListPage(0));
+            },
+          )
+          ,
           Container(
             height: 480.0,
             child: ListView.builder(
@@ -595,6 +620,7 @@ class _LegendChinaPageState extends BaseState {
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                     child: Text(data.name,
+                      maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.0
@@ -605,6 +631,7 @@ class _LegendChinaPageState extends BaseState {
                     child: Container(
                       margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                       child: Text(data.words,
+                        maxLines: 1,
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: 11.0
@@ -618,6 +645,7 @@ class _LegendChinaPageState extends BaseState {
                       children: <Widget>[
                         Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
                         Text("${data.clicks}人在学习",
+                          maxLines: 1,
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: DefaultValue.smallTextSize
@@ -639,29 +667,34 @@ class _LegendChinaPageState extends BaseState {
       margin: EdgeInsets.only(top: DefaultValue.topMargin),
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-            child: Row(
-              children: <Widget>[
-                LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                    child: Text("诗词经典",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                      ),),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              child: Row(
+                children: <Widget>[
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      child: Text("诗词经典",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),),
+                    ),
                   ),
-                ),
-                Text("更多 >",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: DefaultValue.textSize
-                  ),)
-              ],
+                  Text("更多 >",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.textSize
+                    ),)
+                ],
+              ),
             ),
+            onTap: (){
+              NavigatorUtils.push(context, new SearchResultAudioListPage(0));
+            },
           ),
           Container(
             height: 480.0,
@@ -697,6 +730,7 @@ class _LegendChinaPageState extends BaseState {
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                     child: Text(data.name,
+                      maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.0
@@ -707,6 +741,7 @@ class _LegendChinaPageState extends BaseState {
                     child: Container(
                       margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                       child: Text(data.words,
+                        maxLines: 1,
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: 11.0
@@ -720,6 +755,7 @@ class _LegendChinaPageState extends BaseState {
                       children: <Widget>[
                         Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
                         Text("${data.id}人在学习",
+                          maxLines: 1,
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: DefaultValue.smallTextSize
@@ -744,31 +780,36 @@ class _LegendChinaPageState extends BaseState {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                    child: Text("成语故事",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                      ),),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      child: Text("成语故事",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.titleTextSize
+                        ),),
+                    ),
                   ),
-                ),
-                Text("更多 >",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: DefaultValue.textSize
-                  ),)
-              ],
+                  Text("更多 >",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: DefaultValue.textSize
+                    ),)
+                ],
+              ),
             ),
+            onTap: (){
+              NavigatorUtils.push(context, new SearchResultAudioListPage(0));
+            },
           ),
           Container(
             height: 410.0,
@@ -808,6 +849,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
               child: Text(data.name,
+                maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0
@@ -815,6 +857,7 @@ class _LegendChinaPageState extends BaseState {
             ),
             Container(
               child: Text(data.words,
+                maxLines: 1,
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: DefaultValue.textSize
@@ -885,6 +928,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin),
               child: Text(data.name,
+                maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0
@@ -893,6 +937,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: 4.0),
               child: Text(data.words,
+                maxLines: 1,
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 11.0

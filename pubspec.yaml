@@ -34,6 +34,7 @@ dependencies:
   audio_service: ^0.2.0
   image_picker_saver:
     git: https://github.com/cnhefang/image_picker_saver.git
+  webview_flutter: ^0.3.7+1
 
 dev_dependencies:
   flutter_test:

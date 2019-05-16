@@ -58,6 +58,10 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
         controller_record.forward();
       }
     });
+    getData(id, currid);
+
+  }
+  void getData(var id,var currid){
     api.getVideoDetail(currid, id, (VideoInfo data){
       setState(() {
 //        mp3Url = data.re.address;
@@ -168,70 +172,76 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
   }
   Widget getRow(BuildContext context,int index){
     Sql sql = data.sql[index];
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(sql.name,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: DefaultValue.titleTextSize
-                          ),),
-                        getLabel(sql.level)
-                      ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.pop(context);
+        NavigatorUtils.push(context, new AudioPlayPage(sql.currid.toString(), sql.id.toString()));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(sql.name,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: DefaultValue.titleTextSize
+                            ),),
+                          getLabel(sql.level)
+                        ],
+                      ),
                     ),
-                  ),
-                  Text("时长${sql.duration}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),)
-                ],
+                    Text("时长${sql.duration}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.textSize
+                      ),)
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 0,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text("${sql.clicks}人已学习",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.textSize
-                          ),),
-                      ],
+            Expanded(
+              flex: 0,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text("${sql.clicks}人已学习",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text("${sql.createTime}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),)
-                ],
+                    Text("${sql.createTime}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.textSize
+                      ),)
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

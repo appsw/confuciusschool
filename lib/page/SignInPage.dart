@@ -5,10 +5,12 @@ import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/dialog/SignInDialog.dart';
 import 'package:confuciusschool/model/SignInShowInfo.dart';
 import 'package:confuciusschool/model/SigninInfo.dart';
+import 'package:confuciusschool/page/WebViewPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
+import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
@@ -241,26 +243,31 @@ class SignInPage extends BasefulWidget{
     );
   }
   Widget getJiang(){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.centerRight,
-      child: new ClipOval(
-        child: SizedBox(
-            width: 60.0,
-            height: 60.0,
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  Image.asset("images/home04_4_1jifendaka_choujiang.png",width: 39.0,height: 36.0,),
-                  Text("抽奖",
-                    style: TextStyle(
-                        color: ColorsUtil.GreyTextColor,
-                        fontSize: DefaultValue.smallTextSize
-                    ),)
-                ],
-              ),
-            )
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new WebViewPage());
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.centerRight,
+        child: new ClipOval(
+          child: SizedBox(
+              width: 60.0,
+              height: 60.0,
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Image.asset("images/home04_4_1jifendaka_choujiang.png",width: 39.0,height: 36.0,),
+                    Text("抽奖",
+                      style: TextStyle(
+                          color: ColorsUtil.GreyTextColor,
+                          fontSize: DefaultValue.smallTextSize
+                      ),)
+                  ],
+                ),
+              )
+          ),
         ),
       ),
     );

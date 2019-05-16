@@ -431,21 +431,21 @@ class _PersonalDataPageState extends BaseState {
         print(province);
         setState(() {
           address = province["name"];
-          bname = province["id"];
+          bname = province["code"].toString();
         });
       },
       selectCity: (city) {
         print(city);
         setState(() {
           address += city["name"];
-          dname = city["id"];
+          dname = city["code"].toString();
         });
       },
       selectArea: (area) {
         print(area);
         setState(() {
           address += area["name"];
-          ename = area["id"];
+          ename = area["code"].toString();
 //          data.namePath = area["code"];
         });
       },

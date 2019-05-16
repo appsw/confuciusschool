@@ -5,9 +5,12 @@ import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/page/BecomeVipPage.dart';
 import 'package:confuciusschool/page/CommentPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
+import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
+import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,6 +31,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   VideoInfo data;
   IntroductionInfo introductionInfo;
   _VideoPlayPageState(this.currid,this.id);
+  bool autoPlay = true;
   var tableNames = ["简介","目录","图文"];
   var tabNumber = 1;
   VideoPlayerController videoPlayerController;
@@ -43,7 +47,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       aspectRatio: 3 / 2,
-      autoPlay: true,
+      autoPlay: autoPlay,
       looping: true,
     );
 
@@ -55,21 +59,35 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   void initData() {
     // TODO: implement initData
     super.initData();
-    api.getVideoDetail(currid, id, (data){
-      setState(() {
-        this.data = data;
-
-      });
-      if(data != null)
-      initVideo(data.re.address);
-      if(this.data.type != 1){
-        BeComeVipDialog.showLoadingDialog(context,(){
-          NavigatorUtils.push(context, new BecomeVipPage());
+    SharedPreferencesUtil.getString(Constant.ISAUTOPLAY).then((String data){
+      print(data);
+      if(data == "0"){
+        setState((){
+          autoPlay = false;
+        });
+      }else{
+        setState((){
+          autoPlay = true;
         });
       }
-    }, (msg){
-      ToastUtil.makeToast(msg);
+
+      api.getVideoDetail(currid, id, (data){
+        setState(() {
+          this.data = data;
+
+        });
+        if(data != null)
+          initVideo(data.re.address);
+        if(this.data.type != 1){
+          BeComeVipDialog.showLoadingDialog(context,(){
+            NavigatorUtils.push(context, new BecomeVipPage());
+          });
+        }
+      }, (msg){
+        ToastUtil.makeToast(msg);
+      });
     });
+
     api.getVideoIntroduction(currid, (data){
       setState(() {
         this.introductionInfo = data;
@@ -97,6 +115,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
     return (data == null || introductionInfo == null || videoText == null )? LoadingUtils.getRingLoading() : Container(
+      margin: EdgeInsets.only(top: 26.0),
       child: Column(
         children: <Widget>[
           getVideo(),
@@ -108,8 +127,35 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   }
   Widget getVideo(){
 
-    return Container(
-      child: playerWidget,
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: playerWidget,
+        ),
+        Container(
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Text("规范学习",
+                style: TextStyle(
+                  fontSize: DefaultValue.titleTextSize,
+                  color: Colors.white
+                ),),
+              ),
+              GestureDetector(
+                onTap: (){
+                  getShare();
+                },
+                child: Image.asset("images/home01_5kanshipin_fenxiang.png",width: 20.0,height: 20.0,),
+              )
+
+            ],
+          ),
+        )
+      ],
     );
   }
   Widget getBottomBody(){
@@ -159,70 +205,76 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   }
   Widget getRow(BuildContext context,int index){
     Sql sql = data.sql[index];
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(sql.name,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: DefaultValue.titleTextSize
-                        ),),
-                        getLabel(sql.level)
-                      ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.pop(context);
+        NavigatorUtils.push(context, new VideoPlayPage(sql.currid.toString(), sql.id.toString()));
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(sql.name,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: DefaultValue.titleTextSize
+                            ),),
+                          getLabel(sql.level)
+                        ],
+                      ),
                     ),
-                  ),
-                  Text("时长${sql.duration}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),)
-                ],
+                    Text("时长${sql.duration}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.textSize
+                      ),)
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 0,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text("${sql.clicks}人已学习",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.textSize
-                          ),),
-                      ],
+            Expanded(
+              flex: 0,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text("${sql.clicks}人已学习",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text("${sql.createTime}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),)
-                ],
+                    Text("${sql.createTime}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.textSize
+                      ),)
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -447,6 +499,77 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
 
     chewieController.dispose();
   }
+  Widget getShare(){
+    showModalBottomSheet(context: context, builder: (BuildContext context){
+      return StatefulBuilder(builder: (context, state) {
+        return Container(
+          height: 207.0,
+          color: ColorsUtil.GreyDialogBg,
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("分享给家长或老师",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: DefaultValue.textSize
+                ),),
+              Container(
+                margin: EdgeInsets.only(top: 25.0,bottom: 25.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
+                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                          ),
+                          Text("微信好友",
+                            style: TextStyle(
+                                color: ColorsUtil.GreyTextColor,
+                                fontSize: DefaultValue.textSize
+                            ),)
+                        ],
+                      ),
+                      margin: EdgeInsets.only(right: 50.0),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 50.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
+                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                          ),
+                          Text("朋友圈",
+                            style: TextStyle(
+                                color: ColorsUtil.GreyTextColor,
+                                fontSize: DefaultValue.textSize
+                            ),)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              LinsUtils.getWidthLins(context),
+              Container(
+                child: Text("取消",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: DefaultValue.textSize
+                  ),),
+                margin: EdgeInsets.only(top: DefaultValue.topMargin),
 
+              )
+            ],
+          ),
+        );
+      });
+    });
+  }
 
 }

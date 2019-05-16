@@ -40,6 +40,18 @@ class SettingPage extends BasefulWidget{
     }, (msg){
       ToastUtil.makeToast(msg);
     });
+    SharedPreferencesUtil.getString(Constant.ISAUTOPLAY).then((String data){
+      print(data);
+      if(data == "1"){
+        setState((){
+          is4G = false;
+        });
+      }else{
+        setState((){
+          is4G = true;
+        });
+      }
+    });
   }
 
   void Clean(){
@@ -91,8 +103,15 @@ class SettingPage extends BasefulWidget{
           ),
           GestureDetector(
             onTap: (){
-              setState((){
-                is4G = !is4G;
+              var aotuplay = "0";
+              if(is4G){
+                aotuplay = "1";
+              }
+              print(aotuplay);
+              SharedPreferencesUtil.saveString(Constant.ISAUTOPLAY,aotuplay,(bool result){
+                setState((){
+                  is4G = !is4G;
+                });
               });
             },
             child: Container(
@@ -110,7 +129,7 @@ class SettingPage extends BasefulWidget{
                       ),
                       Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Image.asset(is4G ? "images/home04_1shezhi_handle.png" : "images/home04_1shezhi_handle.png",width: 51.0,height: 31.0,),
+                      child: Image.asset(is4G ? "images/close.png" : "images/home04_1shezhi_handle.png",width: 51.0,height: 31.0,),
                       ),
                       ],
                       ),
