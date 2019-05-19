@@ -21,14 +21,22 @@ Map<String, dynamic> _$PutCashDataInfoToJson(PutCashDataInfo instance) =>
     <String, dynamic>{'bank': instance.bank, 'mem': instance.mem};
 
 Bank _$BankFromJson(Map<String, dynamic> json) {
-  return Bank(json['bankId'] as int, json['bankName'] as String,
-      json['banknum'] as String);
+  return Bank(
+      json['id'] as int,
+      json['bname'] as String,
+      json['deposit'] as String,
+      json['bankName'] as String,
+      json['banknum'] as String,
+      json['img'] as String);
 }
 
 Map<String, dynamic> _$BankToJson(Bank instance) => <String, dynamic>{
-      'bankId': instance.bankId,
+      'id': instance.id,
+      'bname': instance.bname,
+      'deposit': instance.deposit,
       'bankName': instance.bankName,
-      'banknum': instance.banknum
+      'banknum': instance.banknum,
+      'img': instance.img
     };
 
 Mem _$MemFromJson(Map<String, dynamic> json) {

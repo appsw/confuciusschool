@@ -207,7 +207,9 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
     Sql sql = data.sql[index];
     return GestureDetector(
       onTap: (){
-        Navigator.pop(context);
+//        Navigator.pop(context);
+        videoPlayerController.pause();
+        chewieController.pause();
         NavigatorUtils.push(context, new VideoPlayPage(sql.currid.toString(), sql.id.toString()));
       },
       child: Container(

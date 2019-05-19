@@ -16,7 +16,7 @@ class ChangePayPswdPage extends BasefulWidget{
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
-    return PageUtils.getAppBar(context, "修改密码");
+    return PageUtils.getAppBar(context, "修改提现密码");
   }
   @override
   void initState() {
@@ -139,6 +139,7 @@ class ChangePayPswdPage extends BasefulWidget{
             child: TextField(
               controller: pswdController,
               keyboardType: TextInputType.number,
+              obscureText: true,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,
@@ -167,6 +168,7 @@ class ChangePayPswdPage extends BasefulWidget{
             child: TextField(
               controller: repswdController,
               keyboardType: TextInputType.number,
+
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,

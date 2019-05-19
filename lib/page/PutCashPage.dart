@@ -70,6 +70,8 @@ class _PutCashPageState extends BaseState {
                 setState((){
                   this.bank = bank;
                 });
+              },(){
+                AddBank();
               });
             },
             child: Container(
@@ -77,7 +79,7 @@ class _PutCashPageState extends BaseState {
               color: Colors.white,
               child: Row(
                 children: <Widget>[
-                  Image.asset("images/home04_5_1tixinadaoyinhangka_tubiao.png",width: 30.0,height: 30.0,),
+                  Image.network(bank.img,width: 30.0,height: 30.0,),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -156,6 +158,7 @@ class _PutCashPageState extends BaseState {
                     margin: EdgeInsets.only(left: DefaultValue.leftMargin),
                     child: TextField(
                       controller: pswdController,
+                      obscureText: true,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(2.0),

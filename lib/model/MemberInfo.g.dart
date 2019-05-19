@@ -7,27 +7,38 @@ part of 'MemberInfo.dart';
 // **************************************************************************
 
 MemberInfo _$MemberInfoFromJson(Map<String, dynamic> json) {
-  return MemberInfo(json['list'] == null
-      ? null
-      : Listinfo.fromJson(json['list'] as Map<String, dynamic>));
+  return MemberInfo(
+      json['num'] as String,
+      json['balance'] as String,
+      json['list'] == null
+          ? null
+          : List1.fromJson(json['list'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$MemberInfoToJson(MemberInfo instance) =>
-    <String, dynamic>{'list': instance.listinfo};
+    <String, dynamic>{
+      'num': instance.num,
+      'balance': instance.balance,
+      'list': instance.list
+    };
 
-Listinfo _$ListinfoFromJson(Map<String, dynamic> json) {
-  return Listinfo(
+List1 _$List1FromJson(Map<String, dynamic> json) {
+  return List1(
       json['nickName'] as String,
       json['IsVip'] as int,
       json['profilePhoto'] as String,
       json['invitecode'] as String,
-      json['balance'] as String);
+      json['integral'] as String,
+      json['isAgent'] as int,
+      json['sex'] as int);
 }
 
-Map<String, dynamic> _$ListinfoToJson(Listinfo instance) => <String, dynamic>{
+Map<String, dynamic> _$List1ToJson(List1 instance) => <String, dynamic>{
       'nickName': instance.nickName,
       'IsVip': instance.isVip,
       'profilePhoto': instance.profilePhoto,
       'invitecode': instance.invitecode,
-      'balance': instance.balance
+      'integral': instance.integral,
+      'isAgent': instance.isAgent,
+      'sex': instance.sex
     };

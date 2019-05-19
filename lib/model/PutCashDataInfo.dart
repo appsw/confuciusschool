@@ -24,8 +24,14 @@ class PutCashDataInfo extends Object {
 @JsonSerializable()
 class Bank extends Object {
 
-  @JsonKey(name: 'bankId')
-  int bankId;
+  @JsonKey(name: 'id')
+  int id;
+
+  @JsonKey(name: 'bname')
+  String bname;
+
+  @JsonKey(name: 'deposit')
+  String deposit;
 
   @JsonKey(name: 'bankName')
   String bankName;
@@ -33,7 +39,10 @@ class Bank extends Object {
   @JsonKey(name: 'banknum')
   String banknum;
 
-  Bank(this.bankId,this.bankName,this.banknum,);
+  @JsonKey(name: 'img')
+  String img;
+
+  Bank(this.id,this.bname,this.deposit,this.bankName,this.banknum,this.img,);
 
   factory Bank.fromJson(Map<String, dynamic> srcJson) => _$BankFromJson(srcJson);
 

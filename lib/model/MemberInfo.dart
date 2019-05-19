@@ -6,10 +6,16 @@ part 'MemberInfo.g.dart';
 @JsonSerializable()
 class MemberInfo extends Object {
 
-  @JsonKey(name: 'list')
-  Listinfo listinfo;
+  @JsonKey(name: 'num')
+  String num;
 
-  MemberInfo(this.listinfo,);
+  @JsonKey(name: 'balance')
+  String balance;
+
+  @JsonKey(name: 'list')
+  List1 list;
+
+  MemberInfo(this.num,this.balance,this.list,);
 
   factory MemberInfo.fromJson(Map<String, dynamic> srcJson) => _$MemberInfoFromJson(srcJson);
 
@@ -19,7 +25,7 @@ class MemberInfo extends Object {
 
 
 @JsonSerializable()
-class Listinfo extends Object {
+class List1 extends Object {
 
   @JsonKey(name: 'nickName')
   String nickName;
@@ -33,13 +39,19 @@ class Listinfo extends Object {
   @JsonKey(name: 'invitecode')
   String invitecode;
 
-  @JsonKey(name: 'balance')
-  String balance;
+  @JsonKey(name: 'integral')
+  String integral;
 
-  Listinfo(this.nickName,this.isVip,this.profilePhoto,this.invitecode,this.balance,);
+  @JsonKey(name: 'isAgent')
+  int isAgent;
 
-  factory Listinfo.fromJson(Map<String, dynamic> srcJson) => _$ListinfoFromJson(srcJson);
+  @JsonKey(name: 'sex')
+  int sex;
 
-  Map<String, dynamic> toJson() => _$ListinfoToJson(this);
+  List1(this.nickName,this.isVip,this.profilePhoto,this.invitecode,this.integral,this.isAgent,this.sex,);
+
+  factory List1.fromJson(Map<String, dynamic> srcJson) => _$List1FromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$List1ToJson(this);
 
 }

@@ -39,7 +39,8 @@ class _PersonalPageState extends BaseState {
 
   List Names  = ["朋友圈必发素材","朋友圈必发课程","智慧超市","我的积分","我的收藏","建议反馈","活动中心"];
   var Icons = ["images/home04_sucai.png","images/home04_kecheng.png","images/home04_chaoshi.png","images/home04_wodejifen.png","images/home04_wodeshoucang.png","images/home04_fankui.png","images/home04_huodongzhongxin.png"];
-  Listinfo data;
+  List1 data;
+  MemberInfo memberInfo;
   var points = "0";
   Widget getBG(){
     return Container(
@@ -107,7 +108,7 @@ class _PersonalPageState extends BaseState {
                                     color: Colors.black,
                                     fontSize: DefaultValue.textSize
                                 ),),
-                              Text("立得10积分",
+                              Text("立得${memberInfo.num}积分",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: DefaultValue.smallTextSize
@@ -142,7 +143,7 @@ class _PersonalPageState extends BaseState {
                                     color: Colors.black,
                                     fontSize: DefaultValue.textSize
                                 ),),
-                              Text("立得50元",
+                              Text("立得${memberInfo.balance}元",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: DefaultValue.smallTextSize
@@ -229,6 +230,16 @@ class _PersonalPageState extends BaseState {
   }
 
   Widget getHead(){
+    var name = "";
+    if(data.isAgent == 1){
+      name = "代理";
+    }else{
+      if(data.isVip == 1){
+        name = "推广大使";
+      }else{
+        name = "VIP会员";
+      }
+    }
     return Container(
       height: 100.0,
       color: Colors.white,
@@ -275,7 +286,7 @@ class _PersonalPageState extends BaseState {
                         ),
 //                  alignment: Alignment.center,
                         //身份1、普通会员 2.VIP3.代理
-                        child: Text(data.isVip == 1 ? "普通会员" : data.isVip == 2 ? "VIP3" : "代理",
+                        child: Text(name,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: DefaultValue.smallTextSize
@@ -558,7 +569,8 @@ class _PersonalPageState extends BaseState {
   void getData(){
     api.getMember((MemberInfo data){
       setState(() {
-        this.data = data.listinfo;
+        this.memberInfo = data;
+        this.data = data.list;
       });
     }, (msg){
       ToastUtil.makeToast(msg);

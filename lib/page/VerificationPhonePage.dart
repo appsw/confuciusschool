@@ -138,12 +138,13 @@ class VerificationPhonePage extends BasefulWidget{
       alignment: Alignment.center,
       child: FlatButton(
         onPressed: (){
-//          var phone = phoneController.text;
-//          if(phone.isEmpty){
-//            ToastUtil.makeToast("请先输入手机号");
-//            return;
-//          }
-          api.changePhoneGetSMS(phonrNumber,
+          var phone = phoneController.text;
+          if(phone.isEmpty){
+            ToastUtil.makeToast("请先输入手机号");
+            return;
+          }
+
+          api.changePhoneGetSMS(phone,
                   (msg){
                 ToastUtil.makeToast(msg);
               },

@@ -43,7 +43,7 @@ class _MyTeamMemberPageState extends BaseState {
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,

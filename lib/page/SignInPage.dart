@@ -494,7 +494,7 @@ class SignInPage extends BasefulWidget{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("上传完成二维码或LOGO",
+              Text("上传推广二维码或LOGO",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: DefaultValue.textSize
