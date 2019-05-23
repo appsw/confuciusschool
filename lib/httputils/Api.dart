@@ -121,10 +121,11 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void getSeachByName(String type,String name,Function callback,Function errorCallBack){
+  void getSeachByName(String type,String name,String stype,Function callback,Function errorCallBack){
     params.clear();
     params["type"] = type;
     params["name"] = name;
+    params["stype"] = stype;
     request(ApiUrl.getSeachByName,(BaseResponse response){
       List<Classification> data = getClassificationList(response.data);
       callback(data);
@@ -232,6 +233,23 @@ class Api extends CommonService{
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void putEntrepreneurshipGood(String id,String type,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    params["type"] = type;
+    params["status"] = status;
+    request(ApiUrl.putEntrepreneurshipGood,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void weixinLogin(String openid,Function callback,Function errorCallBack){
+    params.clear();
+    params["openid"] = openid;
+    request(ApiUrl.weixinLogin,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+
   void changePswd(String code,String password,String password1,Function callback,Function errorCallBack){
     params.clear();
     params["code"] = code;
@@ -252,7 +270,7 @@ class Api extends CommonService{
     params.clear();
     params["code"] = code;
     params["account"] = account;
-    request(ApiUrl.changePswd,(BaseResponse response){
+    request(ApiUrl.changePhone,(BaseResponse response){
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
@@ -464,7 +482,7 @@ class Api extends CommonService{
   void getBankList(Function callback,Function errorCallBack){
     params.clear();
     request(ApiUrl.getBankInfoList,(BaseResponse response){
-      List<BankInfo>  data = getBankInfoList(response.msg);
+      List<BankInfo>  data = getBankInfoList(response.data);
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
@@ -478,10 +496,11 @@ class Api extends CommonService{
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void putCash(String number,String password,Function callback,Function errorCallBack){
+  void putCash(String number,String password,String bcid,Function callback,Function errorCallBack){
     params.clear();
     params["number"] = number;
     params["password"] = password;
+    params["bcid"] = bcid;
     request(ApiUrl.putCash,(BaseResponse response){
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
@@ -602,6 +621,21 @@ class Api extends CommonService{
     params["content"] = content;
     request(ApiUrl.getEntrepreneurCommentReplay,(BaseResponse response){
       callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void weixinBind(String openid,String phone,String code,Function callback,Function errorCallBack){
+    params.clear();
+    params["openid"] = openid;
+    params["phone"] = phone;
+    params["code"] = code;
+    request(ApiUrl.weixinBind,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getRegistAgreement(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getRegistAgreement,(BaseResponse response){
+      callback(response.data["explain"]);
     },method: POST,errorCallBack: errorCallBack);
   }
 }

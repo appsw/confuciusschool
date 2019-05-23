@@ -14,6 +14,7 @@ import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class IndexPage extends StatefulWidget {
   @override
@@ -162,5 +163,6 @@ class _IndexPageState extends BaseState {
     // TODO: implement initState
     super.initState();
     checkIsLogin(context);
+    fluwx.register(appId:"wxcb2c326bb55e8abe");
   }
 }

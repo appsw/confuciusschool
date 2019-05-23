@@ -22,6 +22,7 @@ class _PutCashPageState extends BaseState {
   var pswdController = TextEditingController();
   PutCashDataInfo data;
   Bank bank;
+  var bcid = 0;
   @override
   void initData() {
     // TODO: implement initData
@@ -38,6 +39,7 @@ class _PutCashPageState extends BaseState {
         this.data = data;
         if(data.bank.length != 0){
           bank = data.bank[0];
+          bcid = bank.id;
         }
       });
     }, (msg){
@@ -69,6 +71,7 @@ class _PutCashPageState extends BaseState {
               ChosePutCashBankDialog.showBottomDialog(context, data.bank, (bank){
                 setState((){
                   this.bank = bank;
+                  bcid = this.bank.id;
                 });
               },(){
                 AddBank();
@@ -201,7 +204,7 @@ class _PutCashPageState extends BaseState {
           getBtn(),
           Container(
             margin: EdgeInsets.only(top: DefaultValue.topMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-            child: Text("默认提现密码为123456,如果忘记提现密码请到 设置 - 更改提现密码 页面更改.",
+            child: Text("默认提现密码为123456,如果忘记提现密码请到 设置 - 修改提现密码 页面更改.",
             style: TextStyle(
               color: Colors.grey
             ),),
@@ -222,7 +225,11 @@ class _PutCashPageState extends BaseState {
             ToastUtil.makeToast("请完善信息！");
             return;
           }
-          api.putCash(cash, pswd, (msg){
+          if(bcid == null || bcid == 0){
+            ToastUtil.makeToast("请选择银行卡！");
+            return;
+          }
+          api.putCash(cash, pswd,bcid.toString(), (msg){
             ToastUtil.makeToast(msg);
             Navigator.pop(context);
           }, (msg){

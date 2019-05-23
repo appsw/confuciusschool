@@ -100,7 +100,7 @@ class _SearchResultListPageState extends BaseState {
                             hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
                           ),
                           onSubmitted: (text){
-                            getSeachData(text);
+                            getSeachData(text,tabNumber);
                           },
                         ),
                       ),
@@ -195,9 +195,14 @@ class _SearchResultListPageState extends BaseState {
       ToastUtil.makeToast(msg);
     });
   }
-  void getSeachData(String name){
+  void getSeachData(String name,int status){
     LoadingDialog.showLoadingDialog(context);
-    api.getSeachByName(_selectedValue, name, (data){
+    var type;
+    if(status == 0)
+      type = "";
+    else
+      type = status.toString();
+    api.getSeachByName(_selectedValue, name,type, (data){
       setState((){
         this.data = data;
       });
@@ -365,7 +370,7 @@ class _SearchResultListPageState extends BaseState {
     if(controller.text == null)
       getData(tabNumber);
     else
-      getSeachData(controller.text);
+      getSeachData(controller.text,tabNumber);
   }
 
   _showMenu(BuildContext context) {

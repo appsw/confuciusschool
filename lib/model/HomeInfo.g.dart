@@ -97,22 +97,25 @@ Map<String, dynamic> _$ReToJson(Re instance) => <String, dynamic>{
     };
 
 Jr _$JrFromJson(Map<String, dynamic> json) {
-  return Jr(
-      json['id'] as int, json['hcover'] as String, json['address'] as String);
+  return Jr(json['id'] as int, json['hcover'] as String,
+      json['address'] as String, json['currid'] as int);
 }
 
 Map<String, dynamic> _$JrToJson(Jr instance) => <String, dynamic>{
       'id': instance.id,
       'hcover': instance.hcover,
-      'address': instance.address
+      'address': instance.address,
+      'currid': instance.currid
     };
 
 Lb _$LbFromJson(Map<String, dynamic> json) {
-  return Lb(json['img'] as String, json['id'] as int, json['currid'] as int);
+  return Lb(json['img'] as String, json['id'] as int, json['currid'] as int,
+      json['pid'] as int);
 }
 
 Map<String, dynamic> _$LbToJson(Lb instance) => <String, dynamic>{
       'img': instance.img,
       'id': instance.id,
-      'currid': instance.currid
+      'currid': instance.currid,
+      'pid': instance.pid
     };

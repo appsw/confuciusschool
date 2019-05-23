@@ -51,7 +51,7 @@ class _ActivityDetailsPageState extends BaseState {
                   color: Colors.red,
                   fontSize: DefaultValue.titleTextSize
               ),),
-            Text("${data.explain}",
+            Text("${data.uedtext}",
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: DefaultValue.textSize

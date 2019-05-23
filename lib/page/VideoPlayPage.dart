@@ -78,10 +78,13 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
         });
         if(data != null)
           initVideo(data.re.address);
-        if(this.data.type != 1){
+        if(this.data.type == 3){
           BeComeVipDialog.showLoadingDialog(context,(){
             NavigatorUtils.push(context, new BecomeVipPage());
           });
+        }else if(this.data.type == 2){
+          ToastUtil.makeToast("请升级为代理");
+          Navigator.pop(context);
         }
       }, (msg){
         ToastUtil.makeToast(msg);

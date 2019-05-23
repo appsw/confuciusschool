@@ -12,10 +12,13 @@ class MemberInfo extends Object {
   @JsonKey(name: 'balance')
   String balance;
 
+  @JsonKey(name: 'overTime')
+  String overTime;
+
   @JsonKey(name: 'list')
   List1 list;
 
-  MemberInfo(this.num,this.balance,this.list,);
+  MemberInfo(this.num,this.balance,this.overTime,this.list,);
 
   factory MemberInfo.fromJson(Map<String, dynamic> srcJson) => _$MemberInfoFromJson(srcJson);
 

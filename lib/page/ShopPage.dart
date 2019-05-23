@@ -2,7 +2,9 @@ import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/dialog/ShopPayDialog.dart';
 import 'package:confuciusschool/model/MyPointsInfo.dart';
 import 'package:confuciusschool/model/ShopInfo.dart';
+import 'package:confuciusschool/page/AudioPlayPage.dart';
 import 'package:confuciusschool/page/MyBuyPage.dart';
+import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
@@ -111,7 +113,11 @@ class _ShopPageState extends BaseState{
     Res res = data.res[index];
     return GestureDetector(
       onTap: (){
-
+        if(res.ctype == 1)
+        NavigatorUtils.push(context, new VideoPlayPage(res.currid.toString(),res.id.toString()));
+        else{
+          NavigatorUtils.push(context, new AudioPlayPage(res.currid.toString(),res.id.toString()));
+        }
       },
       child: Image.network(res.img,
         width: 180.0,
@@ -148,10 +154,11 @@ class _ShopPageState extends BaseState{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network(ress.lcon,width: 350.0,height: 140.0,fit: BoxFit.fill,),
+              Image.network(ress.icon,width: 350.0,height: 140.0,fit: BoxFit.fill,),
               Container(
                 margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                 child: Text(ress.name,
+                  maxLines: 1,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.titleTextSize

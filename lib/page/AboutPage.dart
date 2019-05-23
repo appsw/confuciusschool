@@ -45,13 +45,13 @@ class AboutPage extends BasefulWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Image.asset("images/home04_1_1guanyuwomen_logo.png",width: 100.0,height: 100.0,),
-                  Text("APP",
+                  Image.asset("${data.re.img}",width: 100.0,height: 100.0,),
+                  Text("${data.re.title}",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: DefaultValue.titleTextSize
                   ),),
-                  Text("APP是深受赚客一族喜爱的手机赚钱平台，这里汇聚了全网最多最全的赚钱任务，让你足不出户轻松赚钱。跟着APP一起享受高品质赚钱生活。",
+                  Text("${data.re.explain}",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: DefaultValue.titleTextSize

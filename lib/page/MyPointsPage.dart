@@ -90,18 +90,31 @@ class _MyPointsPageState extends BaseState {
     Sql sql = data.sql[index];
 //    1.注册会员返积分2.购买Vip3.购买独立课程4.每日签到
     String type;
+    String jia = "+";
     switch(sql.type){
       case 1:
         type = "注册会员返积分";
         break;
       case 2:
         type = "购买Vip";
+        jia = "-";
         break;
       case 3:
         type = "购买独立课程";
+        jia = "-";
         break;
       case 4:
         type = "每日签到";
+        break;
+      case 5:
+        type = "被推荐人购买vip返利";
+        break;
+      case 6:
+        type = "抽奖";
+        jia = "-";
+        break;
+      case 7:
+        type = "购买独立课程返积分";
         break;
       default:
         type = "每日签到";
@@ -130,7 +143,7 @@ class _MyPointsPageState extends BaseState {
               ],
             ),
 
-            Text("+${sql.pointsum}",
+            Text("${jia}${sql.pointsum}",
               style: TextStyle(
                   color: Colors.red,
                   fontSize: DefaultValue.titleTextSize

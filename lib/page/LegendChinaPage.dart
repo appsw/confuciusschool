@@ -104,7 +104,7 @@ class _LegendChinaPageState extends BaseState {
                     ),
                     Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Text("请输入关键字、视频名称",
+                      child: Text("请输入关键字、音频名称",
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: DefaultValue.textSize
@@ -343,7 +343,7 @@ class _LegendChinaPageState extends BaseState {
           ),
           GestureDetector(
             onTap: (){
-//              NavigatorUtils.push(context, new VideoPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
+                NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
             },
             child: Image.network(homeInfo.jr[0].hcover,height: 150.0,width: MediaQuery.of(context).size.width,fit: BoxFit.fill,),
           )

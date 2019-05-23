@@ -1,34 +1,30 @@
-import 'package:confuciusschool/base/BasefulWidget.dart';
+import 'package:confuciusschool/base/BaseState.dart';
+import 'package:confuciusschool/page/IndexPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
+import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
+import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 
-class ChangePayPswdPage extends BasefulWidget{
+class BindWeChatPage extends StatefulWidget {
+  var wechatCode;
+  BindWeChatPage(this.wechatCode);
+  @override
+  _BindWeChatPageState createState() => _BindWeChatPageState(wechatCode);
+}
 
+class _BindWeChatPageState extends BaseState {
   var codeController = TextEditingController();
-  var pswdController = TextEditingController();
-  var repswdController = TextEditingController();
-  var phone = "";
+  var phoneController = TextEditingController();
+  var wechatCode;
+  _BindWeChatPageState(this.wechatCode);
   @override
   Widget getAppBar(BuildContext context) {
     // TODO: implement getAppBar
-    return PageUtils.getAppBar(context, "修改提现密码");
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    api.getPhone((phone){
-      setState((){
-        this.phone = phone;
-      });
-    }, (msg){
-      ToastUtil.makeToast(msg);
-    });
+    return PageUtils.getAppBar(context, "绑定手机号");
   }
 
   @override
@@ -37,26 +33,8 @@ class ChangePayPswdPage extends BasefulWidget{
     return Container(
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 20.0,bottom: 20.0),
-            child: Row(
-              children: <Widget>[
-                Text("您的绑定手机为：",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.loginBtnSize
-                  ),),
-                Text("$phone",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.loginBtnSize
-                  ),),
-              ],
-            ),
-          ),
+          getPhone(),
           getCode(),
-          getPswd(),
-          getRePswd(),
           getBtn()
         ],
       ),
@@ -64,19 +42,23 @@ class ChangePayPswdPage extends BasefulWidget{
   }
   Widget getBtn(){
     return Container(
-      margin: EdgeInsets.only(top: 200.0),
+      margin: EdgeInsets.only(top: 244.0),
       child: FlatButton(
         onPressed: (){
           String code = codeController.text;
-          String pswd = pswdController.text;
-          String repswd = repswdController.text;
-          if(code.isEmpty || pswd.isEmpty || repswd.isEmpty){
+          String phone = phoneController.text;
+          if(code.isEmpty || phone.isEmpty){
             ToastUtil.makeToast("请完善内容！");
             return;
           }
-          api.changePayPswd(code,pswd,repswd,
+          api.weixinBind(wechatCode,phone,code,
                   (msg){
                 ToastUtil.makeToast(msg);
+                SharedPreferencesUtil.saveString(Constant.ISLOGIN,"1",(bool result){
+                  if(result){
+                    NavigatorUtils.pushAndRemoveUntil(context, new IndexPage());
+                  }
+                });
               },
                   (msg){
                 ToastUtil.makeToast(msg);
@@ -86,7 +68,7 @@ class ChangePayPswdPage extends BasefulWidget{
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
-        child: new Text('确定修改',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
+        child: new Text('确定绑定',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题
         shape: RoundedRectangleBorder(
@@ -100,7 +82,7 @@ class ChangePayPswdPage extends BasefulWidget{
       height: 54.0,
       color: Colors.white,
       width: MediaQuery.of(context).size.width,
-//      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: 11.0),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -111,7 +93,7 @@ class ChangePayPswdPage extends BasefulWidget{
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,
-                hintText: '请输入验证码',
+                hintText: '填写验证码',
                 prefixStyle: new TextStyle(height: 20.0),
                 hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
               ),
@@ -126,53 +108,22 @@ class ChangePayPswdPage extends BasefulWidget{
       padding:const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 10.0) ,
     );
   }
-  Widget getPswd(){
+  Widget getPhone(){
     return Container(
       height: 54.0,
       color: Colors.white,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(top: 11.0),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 1,
             child: TextField(
-              controller: pswdController,
+              controller: phoneController,
               keyboardType: TextInputType.number,
-              obscureText: true,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,
-                hintText: '请输入新密码',
-                prefixStyle: new TextStyle(height: 20.0),
-                hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
-              ),
-            ),
-          ),
-
-        ],
-      ),
-      padding:const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 10.0) ,
-    );
-  }
-  Widget getRePswd(){
-    return Container(
-      height: 54.0,
-      color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(top: 11.0),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: TextField(
-              controller: repswdController,
-              keyboardType: TextInputType.number,
-              obscureText: true,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(2.0),
-                border: InputBorder.none,
-                hintText: '请再次输入新密码',
+                hintText: '请输入新手机号',
                 prefixStyle: new TextStyle(height: 20.0),
                 hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
               ),
@@ -190,7 +141,13 @@ class ChangePayPswdPage extends BasefulWidget{
       alignment: Alignment.center,
       child: FlatButton(
         onPressed: (){
-          api.changePayPswdGetSMS(phone,
+          var phone = phoneController.text;
+          if(phone.isEmpty){
+            ToastUtil.makeToast("请先输入手机号");
+            return;
+          }
+
+          api.SendSms(phone,"5",
                   (msg){
                 ToastUtil.makeToast(msg);
               },
@@ -211,5 +168,4 @@ class ChangePayPswdPage extends BasefulWidget{
       ),
     );
   }
-
 }

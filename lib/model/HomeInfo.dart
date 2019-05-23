@@ -156,7 +156,10 @@ class Jr extends Object {
   @JsonKey(name: 'address')
   String address;
 
-  Jr(this.id,this.hcover,this.address,);
+  @JsonKey(name: 'currid')
+  int currid;
+
+  Jr(this.id,this.hcover,this.address,this.currid,);
 
   factory Jr.fromJson(Map<String, dynamic> srcJson) => _$JrFromJson(srcJson);
 
@@ -177,7 +180,10 @@ class Lb extends Object {
   @JsonKey(name: 'currid')
   int currid;
 
-  Lb(this.img,this.id,this.currid,);
+  @JsonKey(name: 'pid')
+  int pid;
+
+  Lb(this.img,this.id,this.currid,this.pid,);
 
   factory Lb.fromJson(Map<String, dynamic> srcJson) => _$LbFromJson(srcJson);
 

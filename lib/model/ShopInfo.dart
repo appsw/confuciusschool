@@ -24,22 +24,22 @@ class ShopInfo extends Object {
 @JsonSerializable()
 class Res extends Object {
 
-  @JsonKey(name: 'id')
-  int id;
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'url')
-  String url;
-
   @JsonKey(name: 'img')
   String img;
 
-  @JsonKey(name: 'status')
-  int status;
+  @JsonKey(name: 'id')
+  int id;
 
-  Res(this.id,this.title,this.url,this.img,this.status,);
+  @JsonKey(name: 'currid')
+  int currid;
+
+  @JsonKey(name: 'pid')
+  int pid;
+
+  @JsonKey(name: 'ctype')
+  int ctype;
+
+  Res(this.img,this.id,this.currid,this.pid,this.ctype,);
 
   factory Res.fromJson(Map<String, dynamic> srcJson) => _$ResFromJson(srcJson);
 
@@ -57,8 +57,8 @@ class Ress extends Object {
   @JsonKey(name: 'name')
   String name;
 
-  @JsonKey(name: 'lcon')
-  String lcon;
+  @JsonKey(name: 'icon')
+  String icon;
 
   @JsonKey(name: 'master')
   String master;
@@ -75,16 +75,13 @@ class Ress extends Object {
   @JsonKey(name: 'integral')
   int integral;
 
-  @JsonKey(name: 'lev')
-  int lev;
-
   @JsonKey(name: 'num')
   int num;
 
   @JsonKey(name: 'type')
   int type;
 
-  Ress(this.id,this.name,this.lcon,this.master,this.brief,this.introduce,this.money,this.integral,this.lev,this.num,this.type,);
+  Ress(this.id,this.name,this.icon,this.master,this.brief,this.introduce,this.money,this.integral,this.num,this.type,);
 
   factory Ress.fromJson(Map<String, dynamic> srcJson) => _$RessFromJson(srcJson);
 

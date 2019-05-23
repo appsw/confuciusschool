@@ -212,7 +212,7 @@ class _CommentPageState extends BaseState {
                       Text("${replay.nickName}",
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: DefaultValue.titleTextSize
+                            fontSize: DefaultValue.textSize
                         ),),
                       Container(
                         margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),

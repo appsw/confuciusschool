@@ -10,6 +10,7 @@ MemberInfo _$MemberInfoFromJson(Map<String, dynamic> json) {
   return MemberInfo(
       json['num'] as String,
       json['balance'] as String,
+      json['overTime'] as String,
       json['list'] == null
           ? null
           : List1.fromJson(json['list'] as Map<String, dynamic>));
@@ -19,6 +20,7 @@ Map<String, dynamic> _$MemberInfoToJson(MemberInfo instance) =>
     <String, dynamic>{
       'num': instance.num,
       'balance': instance.balance,
+      'overTime': instance.overTime,
       'list': instance.list
     };
 

@@ -1,3 +1,4 @@
+import 'package:confuciusschool/page/RegistAgreementPage.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -264,8 +265,7 @@ class RegisterPage extends BasefulWidget{
         ),
       ),
       onTap: (){
-//        NavigatorUtils.push(context, new RegisterPage());
-
+        NavigatorUtils.push(context, new RegistAgreementPage());
       },
     );
   }

@@ -23,6 +23,7 @@ class _EntrepreneurshipPageState extends BaseState {
   ChewieController chewieController;
   var playerWidget;
   EntrepreneurshipInfo data;
+  int typea;
   EntrepreneurialTitleInfo entrepreneurialTitleInfo;
   ScrollController scrollController = new ScrollController();
   void initVideo(String url){
@@ -73,7 +74,7 @@ class _EntrepreneurshipPageState extends BaseState {
     api.getEntrepreneurInfo(id,(data){
       setState(() {
         this.data = data;
-
+        typea = this.data.status;
       });
       if(data != null)
         initVideo(data.re.address);
@@ -172,7 +173,7 @@ class _EntrepreneurshipPageState extends BaseState {
                       ],
                     ),
                   ),
-                  Text("时长${sql.duration}",
+                  Text("时长：${sql.duration}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: DefaultValue.textSize
@@ -267,6 +268,7 @@ class _EntrepreneurshipPageState extends BaseState {
 //    }
   }
   Widget getComment(){
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 120.0,
@@ -281,9 +283,26 @@ class _EntrepreneurshipPageState extends BaseState {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             GestureDetector(
-              child: Image.asset("images/home03_dianzan.png",width: 18.0,height: 20.0,),
+              child: typea == 1 ? Image.asset("images/home03_dianzan.png",width: 18.0,height: 20.0,color: Colors.red,) : Image.asset("images/home03_dianzan.png",width: 18.0,height: 20.0,color: Colors.grey,),
               onTap: (){
-
+                var type = "1";
+                if(typea == 1)
+                  type = "2";
+                api.putEntrepreneurshipGood(data.re.id.toString(), "3", type, (msg){
+                  ToastUtil.makeToast(msg);
+                  if(typea == 1){
+                    setState(() {
+                      typea = 2;
+                    });
+                  }else{
+                    setState(() {
+                      typea = 1;
+                    });
+                  }
+                  print(typea);
+                }, (msg){
+                  ToastUtil.makeToast(msg);
+                });
               },
             ),
             Text("点赞"),

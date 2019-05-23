@@ -1,8 +1,10 @@
 import 'package:confuciusschool/httputils/Api.dart';
+import 'package:confuciusschool/page/BindWeChatPage.dart';
 import 'package:confuciusschool/page/ChangePswdPage.dart';
 import 'package:confuciusschool/page/CodeLoginPage.dart';
 import 'package:confuciusschool/page/ForgetPswdPage.dart';
 import 'package:confuciusschool/page/IndexPage.dart';
+import 'package:confuciusschool/page/RegistAgreementPage.dart';
 import 'package:confuciusschool/utils/Constant.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/SharedPreferencesUtil.dart';
@@ -15,6 +17,8 @@ import 'package:confuciusschool/page/RegisterPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx/fluwx.dart';
 
 class LoginPage extends BasefulWidget{
   var username;
@@ -26,6 +30,16 @@ class LoginPage extends BasefulWidget{
     // TODO: implement initState
     super.initState();
     getToken();
+    fluwx.register(appId:"wxcb2c326bb55e8abe");
+    fluwx.responseFromAuth.listen((WeChatAuthResponse data) {
+      print(data.code);
+      api.weixinLogin(data.code, (msg){
+        ToastUtil.makeToast(msg);
+      }, (msg){
+        ToastUtil.makeToast(msg);
+        NavigatorUtils.push(context, new BindWeChatPage(data.code));
+      });
+    });
   }
   @override
   Widget getBody(BuildContext context){
@@ -235,7 +249,7 @@ class LoginPage extends BasefulWidget{
         ),
       ),
       onTap: (){
-//        NavigatorUtils.push(context, new RegisterPage());
+        NavigatorUtils.push(context, new RegistAgreementPage());
       },
     );
   }
@@ -260,11 +274,21 @@ class LoginPage extends BasefulWidget{
     );
   }
   Widget getThreeImg(){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.center,
-      margin: EdgeInsets.only(top: 28.0,bottom: 28.0),
-      child: Image.asset("images/01_1denglu_weixin.png"),
+    return GestureDetector(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(top: 28.0,bottom: 28.0),
+        child: Image.asset("images/01_1denglu_weixin.png"),
+      ),
+      onTap: (){
+        fluwx
+            .sendAuth(
+            scope: "snsapi_userinfo", state: "wechat_sdk_demo_test")
+            .then((data) {
+              print(data);
+        });
+      },
     );
   }
   void getToken(){

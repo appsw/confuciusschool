@@ -22,29 +22,28 @@ Map<String, dynamic> _$ShopInfoToJson(ShopInfo instance) =>
     <String, dynamic>{'res': instance.res, 'ress': instance.ress};
 
 Res _$ResFromJson(Map<String, dynamic> json) {
-  return Res(json['id'] as int, json['title'] as String, json['url'] as String,
-      json['img'] as String, json['status'] as int);
+  return Res(json['img'] as String, json['id'] as int, json['currid'] as int,
+      json['pid'] as int, json['ctype'] as int);
 }
 
 Map<String, dynamic> _$ResToJson(Res instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'url': instance.url,
       'img': instance.img,
-      'status': instance.status
+      'id': instance.id,
+      'currid': instance.currid,
+      'pid': instance.pid,
+      'ctype': instance.ctype
     };
 
 Ress _$RessFromJson(Map<String, dynamic> json) {
   return Ress(
       json['id'] as int,
       json['name'] as String,
-      json['lcon'] as String,
+      json['icon'] as String,
       json['master'] as String,
       json['brief'] as String,
       json['introduce'] as String,
       json['money'] as int,
       json['integral'] as int,
-      json['lev'] as int,
       json['num'] as int,
       json['type'] as int);
 }
@@ -52,13 +51,12 @@ Ress _$RessFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$RessToJson(Ress instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'lcon': instance.lcon,
+      'icon': instance.icon,
       'master': instance.master,
       'brief': instance.brief,
       'introduce': instance.introduce,
       'money': instance.money,
       'integral': instance.integral,
-      'lev': instance.lev,
       'num': instance.num,
       'type': instance.type
     };

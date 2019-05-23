@@ -75,5 +75,11 @@ class ApiUrl{
   static final String getEntrepreneurCommentZan= "/index/plate/zan";
   static final String putEntrepreneurComment= "/index/plate/addcomment";
   static final String getEntrepreneurCommentReplay= "/index/plate/replay";
+  static final String putEntrepreneurshipGood= "/index/plate/gcreate";
+  static final String weixinLogin= "/index/login/wechatOauthLogin";
+  static final String weixinBind= "/index/login/bindUserToApp";
+  static final String getRegistAgreement= "/index/hopen/zhu";
+
+
 
 }

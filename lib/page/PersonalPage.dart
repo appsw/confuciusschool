@@ -158,8 +158,59 @@ class _PersonalPageState extends BaseState {
               ],
             ),
 //          getBecomeVip()
-            data.isVip == 2 ? Container() : getBecomeVip()
+            data.isVip == 2 ? getVipDate() : getBecomeVip()
           ],
+        ),
+      ),
+    );
+  }
+  Widget getVipDate(){
+    return GestureDetector(
+      onTap: (){
+        NavigatorUtils.push(context, new BecomeVipPage());
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+        decoration: new BoxDecoration(
+            border: new Border.all(width: 1.0,color:Colors.red ),
+            color: Colors.white,
+            borderRadius:  new BorderRadius.all(Radius.circular(23.0))
+        ),
+        child: Container(
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset("images/home04_vip.png",width: 27.0,height: 27.0,),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                  child: Row(
+                    children: <Widget>[
+                      Text("到期时间：",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                      Text("${memberInfo.overTime}",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                    ],
+                  ),
+                ),
+              ),
+
+              Text("立即开通",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: DefaultValue.smallTextSize
+                ),),
+
+            ],
+          ),
         ),
       ),
     );
