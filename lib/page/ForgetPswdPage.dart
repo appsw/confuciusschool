@@ -54,7 +54,7 @@ class _ForgetPswdPageState extends BaseState {
             ToastUtil.makeToast("两次密码不一致！");
             return;
           }
-          api.ForgetPswd(phone,code,pswd,
+          api.ForgetPswd(phone,pswd,repswd,code,
                   (msg){
                 ToastUtil.makeToast(msg);
                 Navigator.pop(context);

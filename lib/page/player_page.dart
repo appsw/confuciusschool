@@ -159,6 +159,13 @@ class PlayerState extends State<Player> {
         height: 32.0,
       ),
       new Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        child: _timer(context),
+      ),
+      new Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,13 +217,7 @@ class PlayerState extends State<Player> {
         ),
       ),
 
-      new Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
-        ),
-        child: _timer(context),
-      ),
+
     ];
   }
 }

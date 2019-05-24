@@ -6,6 +6,7 @@ import 'package:confuciusschool/page/AudioPlayPage.dart';
 import 'package:confuciusschool/page/SearchPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,7 @@ class _SearchResultAudioListPageState extends BaseState {
   }
   Widget getHead(){
     return Container(
+      height: 50.0,
       margin: EdgeInsets.only(top: 20.0),
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
@@ -72,7 +74,8 @@ class _SearchResultAudioListPageState extends BaseState {
             flex: 1,
             child: GestureDetector(
               child: Container(
-                height: 28.0,
+                height: 38.0,
+                padding: EdgeInsets.only(top: 4.0,bottom: 4.0,left: 4.0,right: 4.0),
                 margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
                 decoration: new BoxDecoration(
                     border: new Border.all(width: 1.0,color:ColorsUtil.HomeAppBarBg ),
@@ -152,17 +155,22 @@ class _SearchResultAudioListPageState extends BaseState {
     });
   }
   Widget getTables(BuildContext context){
-    return Container(
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[
-          Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(3),onTap: (){onClickTable(3);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(4),onTap: (){onClickTable(4);},),),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(3),onTap: (){onClickTable(3);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(4),onTap: (){onClickTable(4);},),),
+            ],
+          ),
+        ),
+        LinsUtils.getWidthLins(context)
+      ],
     );
   }
   Widget getTab(var tabNo){
@@ -225,88 +233,94 @@ class _SearchResultAudioListPageState extends BaseState {
   }
   Widget getRow(BuildContext context,int index){
     return GestureDetector(
-      onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data[index].currid.toString(),data[index].id.toString()));
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        onTap: (){
+          NavigatorUtils.push(context, new AudioPlayPage(data[index].currid.toString(),data[index].id.toString()));
+        },
+        child: Column(
           children: <Widget>[
-            Image.network(data[index].fcover,width: 120.0,height: 105.0,fit: BoxFit.fill,),
             Container(
-              height: 145.0,
-              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-              child: Column(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.white,
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      getLabel(data[index].level),
-                      Text(data[index].name.length > 8 ? data[index].name.substring(0,8): data[index].name,
-                        maxLines: 1,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: DefaultValue.titleTextSize
-                        ),)
-                    ],
-                  ),
+                  Image.network(data[index].fcover,width: 120.0,height: 105.0,fit: BoxFit.fill,),
                   Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text(data[index].words == null? "" : data[index].words,
-                      maxLines: 1,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    child: Text("课程：${data[index].lecturer}",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: DefaultValue.textSize
-                      ),),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                    width: 200.0,
-                    child: Row(
+                    height: 105.0,
+                    margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                            child: Text("${data[index].clicks}人在学习",
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            getLabel(data[index].level),
+                            Text(data[index].name.length > 8 ? data[index].name.substring(0,8): data[index].name,
+                              maxLines: 1,
                               style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: DefaultValue.smallTextSize
-                              ),),
-                          ),
+                                  color: Colors.black,
+                                  fontSize: 15.0
+                              ),)
+                          ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: DefaultValue.rightMargin),
-                          child: Text(data[index].createTime,
+                          margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                          child: Text(data[index].words == null? "" : data[index].words,
+                            maxLines: 1,
                             style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: DefaultValue.smallTextSize
+                                fontSize: DefaultValue.textSize
                             ),),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: DefaultValue.topMargin),
+                          child: Text("课程：${data[index].lecturer}",
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 20.0),
+                          width: 200.0,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                                  child: Text("${data[index].clicks}人在学习",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: DefaultValue.smallTextSize
+                                    ),),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: DefaultValue.rightMargin),
+                                child: Text(data[index].createTime,
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: DefaultValue.smallTextSize
+                                  ),),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
-            )
+            ),
+            LinsUtils.getWidthLins(context)
           ],
-        ),
-      ),
+        )
     );
   }
   Widget getLabel(int type){

@@ -73,7 +73,7 @@ class _ChangePhonePageState extends BaseState {
   }
   Widget getBtn(){
     return Container(
-      margin: EdgeInsets.only(top: 140.0),
+      margin: EdgeInsets.only(top: 120.0),
       child: FlatButton(
         onPressed: (){
           NavigatorUtils.push(context, VerificationPhonePage());

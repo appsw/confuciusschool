@@ -1,7 +1,9 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/base/BasefulWidget.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
+import 'package:confuciusschool/page/AudioPlayPage.dart';
 import 'package:confuciusschool/page/NewsDetailPage.dart';
+import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
 import 'package:confuciusschool/utils/LinsUtils.dart';
@@ -69,7 +71,7 @@ class _NewsPageState extends BaseState {
             Text("${newsInfo.ititle}",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: DefaultValue.titleTextSize
+                  fontSize: 15.0
               ),),
             LinsUtils.getWidthLins(context),
             Container(
@@ -92,7 +94,14 @@ class _NewsPageState extends BaseState {
         ),
       ),
       onTap: (){
-        NavigatorUtils.push(context, new NewsDetailPage(newsInfo));
+        if(newsInfo.type == 1){
+          NavigatorUtils.push(context, new VideoPlayPage(newsInfo.currid.toString(),newsInfo.id.toString()));
+        }else if(newsInfo.type == 2){
+          NavigatorUtils.push(context, new AudioPlayPage(newsInfo.currid.toString(),newsInfo.id.toString()));
+        }else{
+          NavigatorUtils.push(context, new NewsDetailPage(newsInfo));
+        }
+
       },
     );
   }

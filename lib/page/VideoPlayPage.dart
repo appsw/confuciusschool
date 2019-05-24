@@ -236,7 +236,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
                           Text(sql.name,
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: DefaultValue.titleTextSize
+                                fontSize: 15.0
                             ),),
                           getLabel(sql.level)
                         ],
@@ -324,6 +324,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset("images/all_back.png",width: 10.0,height: 20.0,),
                     Container(
@@ -349,6 +350,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset("images/home01_5kanshipin_pinglun.png",width: 20.0,height: 20.0,),
                     Container(
@@ -374,6 +376,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,),
                     Container(
@@ -399,6 +402,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,),
                     Container(
@@ -436,7 +440,8 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
       alignment: Alignment.center,
       child: Column(
         children: <Widget>[
-          Text(tableNames[tabNo],style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black),),
+          Text(tableNames[tabNo],style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black,
+          fontSize: DefaultValue.titleTextSize),),
           getLins(context, tabNo,40.0)
         ],
       ),

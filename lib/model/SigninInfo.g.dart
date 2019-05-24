@@ -16,6 +16,7 @@ SigninInfo _$SigninInfoFromJson(Map<String, dynamic> json) {
       json['six'] as String,
       json['seven'] as String,
       json['weekday'] as int,
+      json['isday'] as int,
       json['sign'] as String,
       json['rule'] == null
           ? null
@@ -32,6 +33,7 @@ Map<String, dynamic> _$SigninInfoToJson(SigninInfo instance) =>
       'six': instance.six,
       'seven': instance.seven,
       'weekday': instance.weekday,
+      'isday': instance.isday,
       'sign': instance.sign,
       'rule': instance.rule
     };

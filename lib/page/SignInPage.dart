@@ -98,16 +98,19 @@ class SignInPage extends BasefulWidget{
         this.signinInfo = data;
         num = signinInfo.weekday;
       });
-      SignInDialog.showLoadingDialog(context,(){
-        print("签到");
-        api.signIn((msg){
-          SignInDialog.dismissLoadingDialog(context);
-          ToastUtil.makeToast(msg);
-          getData();
-        }, (msg){
-          ToastUtil.makeToast(msg);
-        });
-      },signinInfo);
+      if(signinInfo.isday == 1){
+        SignInDialog.showLoadingDialog(context,(){
+          print("签到");
+          api.signIn((msg){
+            SignInDialog.dismissLoadingDialog(context);
+            ToastUtil.makeToast(msg);
+            getData();
+          }, (msg){
+            ToastUtil.makeToast(msg);
+          });
+        },signinInfo);
+      }
+
     }, (msg){
       ToastUtil.makeToast(msg);
     });
@@ -132,6 +135,7 @@ class SignInPage extends BasefulWidget{
                         Expanded(
                           flex: 7,
                           child: Container(
+                            margin: EdgeInsets.all(20.0),
                             child: Image.network(data.sql.img,width: 284.0,height: 284.0,fit: BoxFit.fill,),
                           ),
                         ),
@@ -232,11 +236,15 @@ class SignInPage extends BasefulWidget{
           Image.network(data.sql.rimg,height: 49.0,width: 49.0,),
           Container(
             margin: EdgeInsets.only(top: DefaultValue.topMargin),
-            child: Text(data.sql.brand,
-              style: TextStyle(
-                  color: ColorsUtil.GreyTextColor,
-                  fontSize: DefaultValue.smallTextSize
-              ),),
+            child: Container(
+              width: 50.0,
+              alignment: Alignment.center,
+              child: Text(data.sql.brand,
+                style: TextStyle(
+                    color: ColorsUtil.GreyTextColor,
+                    fontSize: DefaultValue.smallTextSize
+                ),),
+            ),
           )
         ],
       ),

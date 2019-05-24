@@ -2,6 +2,7 @@ import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/ActivityInfo.dart';
 import 'package:confuciusschool/page/ActivityDetailsPage.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
@@ -58,23 +59,28 @@ class _ActivityCenterPageState extends BaseState {
       onTap: (){
         NavigatorUtils.push(context, ActivityDetailsPage(sql.id));
       },
-      child: Container(
-          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Image.network("${sql.img}",width: 350.0,height: 140.0,fit: BoxFit.fill,),
-              Container(
-                margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                child: Text(sql.title,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.titleTextSize
-                  ),),
-              ),
-            ],
-          )
-      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Image.network("${sql.img}",width: 350.0,height: 140.0,fit: BoxFit.fill,),
+                  Container(
+                    margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                    child: Text(sql.title,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: DefaultValue.titleTextSize
+                      ),),
+                  ),
+                ],
+              )
+          ),
+          LinsUtils.getWidthLins(context)
+        ],
+      )
     );
   }
 }

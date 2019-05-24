@@ -10,6 +10,7 @@ import 'package:confuciusschool/page/CommentPage.dart';
 import 'package:confuciusschool/page/player_page.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -62,9 +63,9 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
 
   }
   void getData(var id,var currid){
-    api.getVideoDetail(currid, id, (VideoInfo data){
+    api.getAudioDetail(currid, id, (VideoInfo data){
       setState(() {
-//        mp3Url = data.re.address;
+        mp3Url = data.re.address;
         this.data = data;
 
       });
@@ -177,71 +178,76 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
         Navigator.pop(context);
         NavigatorUtils.push(context, new AudioPlayPage(sql.currid.toString(), sql.id.toString()));
       },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(sql.name,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: DefaultValue.titleTextSize
-                            ),),
-                          getLabel(sql.level)
-                        ],
-                      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text(sql.name,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: DefaultValue.titleTextSize
+                                ),),
+                              getLabel(sql.level)
+                            ],
+                          ),
+                        ),
+                        Text("时长${sql.duration}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: DefaultValue.textSize
+                          ),)
+                      ],
                     ),
-                    Text("时长${sql.duration}",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: DefaultValue.textSize
-                      ),)
-                  ],
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 0,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text("${sql.clicks}人已学习",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: DefaultValue.textSize
+                                ),),
+                            ],
+                          ),
+                        ),
+                        Text("${sql.createTime}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: DefaultValue.textSize
+                          ),)
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              flex: 0,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text("${sql.clicks}人已学习",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: DefaultValue.textSize
-                            ),),
-                        ],
-                      ),
-                    ),
-                    Text("${sql.createTime}",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: DefaultValue.textSize
-                      ),)
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+          ),
+          LinsUtils.getWidthLins(context)
+        ],
       ),
     );
   }
@@ -249,6 +255,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
 
     return Container(
       height: MediaQuery.of(context).size.height - 370.0,
+      color: Colors.white,
       child: ListView(
         children: <Widget>[
           Container(
@@ -276,6 +283,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
     return data == null ? Container() : Container(
       height: 50.0,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 1,
@@ -286,6 +294,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset("images/all_back.png",width: 10.0,height: 20.0,),
                     Container(
@@ -311,6 +320,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset("images/home01_5kanshipin_pinglun.png",width: 20.0,height: 20.0,),
                     Container(
@@ -331,13 +341,32 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
             flex: 1,
             child: GestureDetector(
               onTap: (){
-                Navigator.pop(context);
+                var type = "1";
+                if(data.state == 1){
+                  type = "2";
+                }
+//                api.getVideoZan(id, type, (msg){
+//                  ToastUtil.makeToast(msg);
+//
+//                }, (msg){
+//                  ToastUtil.makeToast(msg);
+//                });
+                if(data.state == 1){
+                  setState(() {
+                    data.state = 2;
+                  });
+                }else{
+                  setState(() {
+                    data.state = 1;
+                  });
+                }
               },
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,),
+                    data.state == 1 ? Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.grey,),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
                       child: Text(data.re.collection.toString(),
@@ -356,13 +385,32 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
             flex: 1,
             child: GestureDetector(
               onTap: (){
-                Navigator.pop(context);
+
+                var type = "1";
+                if(data.status == 1){
+                  type = "2";
+                }
+                api.getVideoZan(id, type, (msg){
+                  ToastUtil.makeToast(msg);
+                  if(data.status == 1){
+                    setState(() {
+                      data.status = 2;
+                    });
+                  }else{
+                    setState(() {
+                      data.status = 1;
+                    });
+                  }
+                }, (msg){
+                  ToastUtil.makeToast(msg);
+                });
               },
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,),
+                    data.status == 1 ? Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.grey,),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
                       child: Text(data.re.fabulous.toString(),
@@ -459,55 +507,154 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
     );
   }
   Widget getAudioPlay(){
-    return Container(
-      color: Colors.white,
-      child: new Stack(
-        alignment: const FractionalOffset(0.5, 0.0),
-        children: <Widget>[
-          new Stack(
-            alignment: const FractionalOffset(0.7, 0.1),
+    return Stack(
+      children: <Widget>[
+        Container(
+          color: Colors.white,
+          child: new Stack(
+            alignment: const FractionalOffset(0.5, 0.0),
             children: <Widget>[
-              new Container(
-                child: RotateRecord(
-                    animation: _commonTween.animate(controller_record)),
-                margin: EdgeInsets.only(top: 50.0),
+              new Stack(
+                alignment: const FractionalOffset(0.7, 0.1),
+                children: <Widget>[
+                  new Container(
+                    child: RotateRecord(
+                        animation: _commonTween.animate(controller_record)),
+                    margin: EdgeInsets.only(top: 50.0),
+                  ),
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 300.0),
+                child: new Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: new Player(
+                    onError: (e) {
+                      Scaffold.of(context).showSnackBar(
+                        new SnackBar(
+                          content: new Text(e),
+                        ),
+                      );
+                    },
+                    onPrevious: () {},
+                    onNext: () {},
+                    onCompleted: () {},
+                    onPlaying: (isPlaying) {
+
+                      if (isPlaying) {
+                        controller_record.forward();
+                      } else {
+                        controller_record.stop(canceled: false);
+
+                      }
+                    },
+                    key: musicPlayerKey,
+                    color: Colors.red,
+                    audioUrl: mp3Url,
+
+                  ),
+                ),
               ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.only(top: 300.0),
-            child: new Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: new Player(
-                onError: (e) {
-                  Scaffold.of(context).showSnackBar(
-                    new SnackBar(
-                      content: new Text(e),
-                    ),
-                  );
-                },
-                onPrevious: () {},
-                onNext: () {},
-                onCompleted: () {},
-                onPlaying: (isPlaying) {
-
-                  if (isPlaying) {
-                    controller_record.forward();
-                  } else {
-                    controller_record.stop(canceled: false);
-
-                  }
-                },
-                key: musicPlayerKey,
-                color: Colors.red,
-                audioUrl: mp3Url,
-
+        ),
+        Container(
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Text("规范学习",
+                  style: TextStyle(
+                      fontSize: DefaultValue.titleTextSize,
+                      color: Colors.black
+                  ),),
               ),
-            ),
+              GestureDetector(
+                onTap: (){
+                  getShare();
+                },
+                child: Image.asset("images/home01_5kanshipin_fenxiang.png",width: 20.0,height: 20.0,color: Colors.black,),
+              )
+
+            ],
           ),
-        ],
-      ),
+        )
+      ],
     );
+  }
+  Widget getShare(){
+    showModalBottomSheet(context: context, builder: (BuildContext context){
+      return StatefulBuilder(builder: (context, state) {
+        return Container(
+          height: 207.0,
+          color: ColorsUtil.GreyDialogBg,
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("分享给家长或老师",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: DefaultValue.textSize
+                ),),
+              Container(
+                margin: EdgeInsets.only(top: 25.0,bottom: 25.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
+                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                          ),
+                          Text("微信好友",
+                            style: TextStyle(
+                                color: ColorsUtil.GreyTextColor,
+                                fontSize: DefaultValue.textSize
+                            ),)
+                        ],
+                      ),
+                      margin: EdgeInsets.only(right: 50.0),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 50.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
+                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                          ),
+                          Text("朋友圈",
+                            style: TextStyle(
+                                color: ColorsUtil.GreyTextColor,
+                                fontSize: DefaultValue.textSize
+                            ),)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              LinsUtils.getWidthLins(context),
+              Container(
+                child: Text("取消",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: DefaultValue.textSize
+                  ),),
+                margin: EdgeInsets.only(top: DefaultValue.topMargin),
+
+              )
+            ],
+          ),
+        );
+      });
+    });
   }
 
 }

@@ -115,7 +115,8 @@ class _EntrepreneurshipPageState extends BaseState {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("目录",style: TextStyle(color:Colors.red),),
+                  Text("目录",style: TextStyle(color:Colors.red,
+                  fontSize: DefaultValue.titleTextSize),),
                   Container(
                     color: Colors.red,
                     width: 40.0,
@@ -168,7 +169,7 @@ class _EntrepreneurshipPageState extends BaseState {
                         Text(sql.name,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: DefaultValue.titleTextSize
+                              fontSize: 15.0
                           ),),
                       ],
                     ),
@@ -239,8 +240,9 @@ class _EntrepreneurshipPageState extends BaseState {
       alignment: Alignment.center,
       child: Column(
         children: <Widget>[
-          Text(entrepreneurialTitleInfo.sql[tabNo].name,style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black),),
-          getLins(context, tabNo,40.0)
+          Text(entrepreneurialTitleInfo.sql[tabNo].name,style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black,
+          fontSize: DefaultValue.titleTextSize),),
+          getLins(context, tabNo,80.0)
         ],
       ),
       padding: EdgeInsets.only(top: DefaultValue.topMargin),

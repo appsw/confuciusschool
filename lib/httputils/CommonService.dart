@@ -41,7 +41,7 @@ class CommonService{
     int statusCode;
 
     try {
-      Response response;
+      Response<Map<String, dynamic>> response;
       if (method == GET) {
         //组合GET请求的参数
         if (params != null && params.isNotEmpty) {

@@ -1,5 +1,6 @@
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:flutter/material.dart';
 
 class ShopPayDialog extends Dialog{
@@ -19,8 +20,8 @@ class ShopPayDialog extends Dialog{
           type: MaterialType.transparency, //透明类型
           child: new Center( //保证控件居中效果
             child: Container(
-              width: 300.0,
-              height: 400.0,
+              width: 238.0,
+              height: 315.0,
               padding: EdgeInsets.only(left: 20.0,right: 20.0,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               color: Colors.white,
               child: Column(
@@ -51,8 +52,9 @@ class ShopPayDialog extends Dialog{
                       ),
                     ),
                   ),
+                  LinsUtils.getWidthLins(context),
                   Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,6 +68,7 @@ class ShopPayDialog extends Dialog{
                       ),
                     ),
                   ),
+                  LinsUtils.getWidthLins(context),
                   Expanded(
                     flex: 2,
                     child: Container(

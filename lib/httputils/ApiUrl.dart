@@ -18,6 +18,7 @@ class ApiUrl{
   static final String getVideoText= "/index/plate/text";
   static final String getComment= "/index/member/comment";
   static final String getAudioData = "/index/plate/ashow";
+  static final String getAudioDetail = "/index/plate/listen";
   static final String putComment= "/index/member/addcomment";
   static final String getNews= "/index/govern/news";
   static final String getAudioClassification = "/index/plate/yscreen";
@@ -42,7 +43,7 @@ class ApiUrl{
   static final String signIn= "/index/Opera/sign";
   static final String getAccount= "/index/govern/amount";
   static final String getIncomeList= "/index/Opera/into";
-  static final String getPutCashList= "/index/Opera/into";
+  static final String getPutCashList= "/index/Opera/out";
   static final String getBecomeVipInfo= "/index/govern/vip";
   static final String getMaterialInfo= "/index/govern/material";
   static final String getCourseInfo= "/index/govern/course";
@@ -79,7 +80,7 @@ class ApiUrl{
   static final String weixinLogin= "/index/login/wechatOauthLogin";
   static final String weixinBind= "/index/login/bindUserToApp";
   static final String getRegistAgreement= "/index/hopen/zhu";
-
+  static final String getVideoZan= "/index/plate/give";
 
 
 }

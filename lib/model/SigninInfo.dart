@@ -30,13 +30,17 @@ class SigninInfo extends Object {
   @JsonKey(name: 'weekday')
   int weekday;
 
+  @JsonKey(name: 'isday')
+  int isday;
+
+
   @JsonKey(name: 'sign')
   String sign;
 
   @JsonKey(name: 'rule')
   Rule rule;
 
-  SigninInfo(this.one,this.two,this.three,this.four,this.five,this.six,this.seven,this.weekday,this.sign,this.rule,);
+  SigninInfo(this.one,this.two,this.three,this.four,this.five,this.six,this.seven,this.weekday,this.isday,this.sign,this.rule,);
 
   factory SigninInfo.fromJson(Map<String, dynamic> srcJson) => _$SigninInfoFromJson(srcJson);
 

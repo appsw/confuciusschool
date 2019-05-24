@@ -32,6 +32,7 @@ class AboutPage extends BasefulWidget{
     // TODO: implement getBody
     return data == null ? LoadingUtils.getRingLoading() : Container(
       alignment: Alignment.center,
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

@@ -133,7 +133,7 @@ class _MyTeamPageState extends BaseState{
                         fontSize: DefaultValue.textSize
                     ),),
                   ),
-                  Text("10",style:
+                  Text("${data.sum}",style:
                   TextStyle(
                       color: Colors.black,
                       fontSize: DefaultValue.textSize

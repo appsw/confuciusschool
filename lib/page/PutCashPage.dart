@@ -181,7 +181,7 @@ class _PutCashPageState extends BaseState {
             color: Colors.white,
             child: Row(
               children: <Widget>[
-                Text("剩余余额：￥${data.mem.balance}",
+                Text("剩余余额：￥${data.mem.balance},",
                   style: TextStyle(
                       color: Colors.grey,
                       fontSize: DefaultValue.textSize

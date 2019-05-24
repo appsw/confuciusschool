@@ -92,7 +92,7 @@ class _ShopPageState extends BaseState{
   Widget getSwiperBody(){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 200.0,
+      height: 165.0,
       color: Colors.white,
       alignment: Alignment.topCenter,
       child: Swiper(
@@ -120,7 +120,7 @@ class _ShopPageState extends BaseState{
         }
       },
       child: Image.network(res.img,
-        width: 180.0,
+        width: 165.0,
         height: 400.0,
         fit: BoxFit.fill,),
     );
@@ -132,7 +132,8 @@ class _ShopPageState extends BaseState{
 
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 300.0,
+      height: MediaQuery.of(context).size.height - 255.0,
+      margin: EdgeInsets.only(top: DefaultValue.topMargin),
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -161,7 +162,7 @@ class _ShopPageState extends BaseState{
                   maxLines: 1,
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: DefaultValue.titleTextSize
+                      fontSize: 15.0
                   ),),
               ),
               Row(
@@ -175,7 +176,7 @@ class _ShopPageState extends BaseState{
                   Text("${ress.integral}积分 或 ¥${ress.money}",
                     style: TextStyle(
                         color: Colors.red,
-                        fontSize: DefaultValue.titleTextSize
+                        fontSize: 15.0
                     ),),
                 ],
               )

@@ -1,6 +1,7 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/MyPointsInfo.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -120,36 +121,44 @@ class _MyPointsPageState extends BaseState {
         type = "每日签到";
         break;
     }
-    return Container(
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(type,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: DefaultValue.titleTextSize
-                    ),),
-              Text("${sql.createTime}",
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: DefaultValue.textSize
-                ),),
-              ],
-            ),
+    return Column(
+      children: <Widget>[
+        Container(
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(type,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15.0
+                        ),),
+                      Text("${sql.createTime}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                    ],
+                  ),
+                  height: 40.0,
+                ),
 
-            Text("${jia}${sql.pointsum}",
-              style: TextStyle(
-                  color: Colors.red,
-                  fontSize: DefaultValue.titleTextSize
-              ),),
-          ],
-        )
+                Text("${jia}${sql.pointsum}积分",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 15.0
+                  ),),
+              ],
+            )
+        ),
+        LinsUtils.getWidthLins(context)
+      ],
     );
   }
 }

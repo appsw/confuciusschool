@@ -1,5 +1,6 @@
 import 'package:confuciusschool/model/PutCashDataInfo.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:flutter/material.dart';
 
 class ChosePutCashBankDialog{
@@ -24,7 +25,7 @@ class ChosePutCashBankDialog{
                             child: Text("选择到账银行卡",
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: DefaultValue.titleTextSize
+                                  fontSize: 15.0
                               ),),
                           ),
                           Container(
@@ -72,37 +73,42 @@ class ChosePutCashBankDialog{
   }
   static Widget getRow(BuildContext context,Bank bank,Function onChose){
     return GestureDetector(
-      child: Container(
-        height: 77.0,
-        color: Colors.white,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
-        alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.network(bank.img,width: 30.0,height: 30.0,),
-            Container(
-              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(bank.bankName == null ? "${bank.bname}" : "${bank.bankName}",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: DefaultValue.titleTextSize
-                  ),),
-                  Text("尾号${bank.banknum}储蓄卡",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),),
-                ],
-              ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 60.0,
+            color: Colors.white,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image.network(bank.img,width: 30.0,height: 30.0,),
+                Container(
+                  margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(bank.bankName == null ? "${bank.bname}" : "${bank.bankName}",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15.0
+                        ),),
+                      Text("尾号${bank.banknum}储蓄卡",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: DefaultValue.textSize
+                        ),),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          LinsUtils.getWidthLins(context)
+        ],
       ),
       onTap: (){
         onChose(bank);

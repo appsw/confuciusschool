@@ -82,10 +82,11 @@ class Api extends CommonService{
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
-  void ForgetPswd(String account,String password,String code,Function callback,Function errorCallBack){
+  void ForgetPswd(String account,String password,String newpass,String code,Function callback,Function errorCallBack){
     params.clear();
     params["account"] = account;
     params["password"] = password;
+    params["newpass"] = newpass;
     params["code"] = code;
     request(ApiUrl.forgetPasswd,(BaseResponse response){
       callback(response.data);
@@ -154,6 +155,15 @@ class Api extends CommonService{
     params["currid"] = currid;
     params["id"] = id;
     request(ApiUrl.getVideoDetail,(BaseResponse response){
+      VideoInfo data = VideoInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getAudioDetail(String currid,String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["currid"] = currid;
+    params["id"] = id;
+    request(ApiUrl.getAudioDetail,(BaseResponse response){
       VideoInfo data = VideoInfo.fromJson(response.data);
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
@@ -601,7 +611,15 @@ class Api extends CommonService{
     params.clear();
     params["id"] = id;
     params["status"] = status;
-    request(ApiUrl.getCommentZan,(BaseResponse response){
+    request(ApiUrl.getEntrepreneurCommentZan,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getVideoZan(String id,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    params["status"] = status;
+    request(ApiUrl.getVideoZan,(BaseResponse response){
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }

@@ -134,7 +134,7 @@ class _LegendChinaPageState extends BaseState {
   Widget getBtn(){
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.only(top: DefaultValue.topMargin),
+      padding: EdgeInsets.only(top: 20.0),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -295,7 +295,7 @@ class _LegendChinaPageState extends BaseState {
     Lb data = homeInfo.lb[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.pid.toString()));
       },
       child: Image.network(homeInfo.lb[index].img,
         width: 180.0,
@@ -314,7 +314,7 @@ class _LegendChinaPageState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -354,11 +354,12 @@ class _LegendChinaPageState extends BaseState {
   Widget getFree(){
     return Container(
       color: Colors.white,
+      margin: EdgeInsets.only(top: DefaultValue.topMargin),
       child: Column(
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -387,7 +388,7 @@ class _LegendChinaPageState extends BaseState {
           )
           ,
           Container(
-            height: 260.0,
+            height: 220.0,
             child: GridView.builder(
                 itemCount: homeInfo.arr.length,
                 controller: controller,
@@ -427,21 +428,25 @@ class _LegendChinaPageState extends BaseState {
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                  Text("${data.clicks}人在学习",
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.smallTextSize
-                    ),)
+                  Container(
+                    padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                    child: Text("${data.clicks}人在学习",
+                      maxLines: 1,
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.smallTextSize
+                      ),),
+                  )
+
                 ],
               ),
             )
@@ -453,11 +458,12 @@ class _LegendChinaPageState extends BaseState {
   Widget getSleep(){
     return Container(
       color: Colors.white,
+      margin: EdgeInsets.only(top: DefaultValue.topMargin),
       child: Column(
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -526,21 +532,25 @@ class _LegendChinaPageState extends BaseState {
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                  Text("${data.clicks}人在学习",
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.smallTextSize
-                    ),)
+                  Container(
+                    padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                    child: Text("${data.clicks}人在学习",
+                      maxLines: 1,
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.smallTextSize
+                      ),),
+                  )
+
                 ],
               ),
             )
@@ -558,7 +568,7 @@ class _LegendChinaPageState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -623,7 +633,7 @@ class _LegendChinaPageState extends BaseState {
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.0
+                          fontSize: 15.0
                       ),),
                   ),
                   Expanded(
@@ -640,16 +650,20 @@ class _LegendChinaPageState extends BaseState {
                   ),
                   Container(
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                        Text("${data.clicks}人在学习",
-                          maxLines: 1,
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.smallTextSize
-                          ),)
+                        Container(
+                          padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                          child: Text("${data.clicks}人在学习",
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.smallTextSize
+                            ),),
+                        )
+
                       ],
                     ),
                   )
@@ -669,7 +683,7 @@ class _LegendChinaPageState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -720,7 +734,7 @@ class _LegendChinaPageState extends BaseState {
         padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
         child: Row(
           children: <Widget>[
-            Image.network(data.hvcover,width: 102.0,height: 133.0,fit: BoxFit.fill,),
+            Image.network("${data.hvcover}",width: 102.0,height: 133.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(left: DefaultValue.leftMargin),
               child: Column(
@@ -733,7 +747,7 @@ class _LegendChinaPageState extends BaseState {
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.0
+                          fontSize: 15.0
                       ),),
                   ),
                   Expanded(
@@ -750,16 +764,20 @@ class _LegendChinaPageState extends BaseState {
                   ),
                   Container(
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                        Text("${data.id}人在学习",
-                          maxLines: 1,
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.smallTextSize
-                          ),)
+                        Container(
+                          padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                          child: Text("${data.id}人在学习",
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.smallTextSize
+                            ),),
+                        )
+
                       ],
                     ),
                   )
@@ -782,7 +800,7 @@ class _LegendChinaPageState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -852,7 +870,7 @@ class _LegendChinaPageState extends BaseState {
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(
@@ -931,7 +949,7 @@ class _LegendChinaPageState extends BaseState {
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(

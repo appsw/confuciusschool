@@ -202,26 +202,21 @@ class _BecomeVipPageState extends BaseState {
           ListView.builder(
               shrinkWrap: true,
               itemBuilder: getRow,
-              itemCount: data.detail.length,
+              itemCount: data.explain.length,
               scrollDirection: Axis.vertical)
         ],
       ),
     );
   }
   Widget getRow(BuildContext context,int index){
-    Detail re4 = data.detail[index];
     return Container(
       height: 70.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Text("${re4.title}",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: DefaultValue.textSize
-            ),),
-          Text("${re4.explain}",
+
+          Text("${data.explain[index]}",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: DefaultValue.textSize

@@ -25,7 +25,7 @@ class PageUtils{
       brightness: Brightness.light,
       backgroundColor: Colors.white,
       leading: PageUtils.getBackWidge(context),
-      elevation: 0.0,
+      elevation: 1.0,
     );
   }
 }

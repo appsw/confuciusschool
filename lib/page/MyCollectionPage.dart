@@ -4,6 +4,7 @@ import 'package:confuciusschool/model/Classification.dart';
 import 'package:confuciusschool/model/MyCollectionInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -62,15 +63,20 @@ class _MyCollectionPageState extends BaseState {
     );
   }
   Widget getTables(BuildContext context){
-    return Container(
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[
-          Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
+            ],
+          ),
+        ),
+        LinsUtils.getWidthLins(context)
+      ],
     );
   }
   Widget getTab(var tabNo){

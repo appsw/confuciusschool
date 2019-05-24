@@ -1,6 +1,7 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/MyTeamMemberInfo.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -79,19 +80,19 @@ class _MyTeamMemberPageState extends BaseState {
                             child: Text("${res.nickName}",
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: DefaultValue.titleTextSize
+                                  fontSize: 15.0
                               ),),
                           ),
                           Text("${res.account}",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: DefaultValue.titleTextSize
+                                fontSize: 15.0
                             ),),
                         ],
                       ),
                       Container(
                         margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                        child: Text("${res.createTime}",
+                        child: Text("注册时间：${res.createTime}",
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: DefaultValue.textSize
@@ -105,6 +106,7 @@ class _MyTeamMemberPageState extends BaseState {
             ],
           ),
         ),
+        LinsUtils.getWidthLins(context),
       ],
     );
   }

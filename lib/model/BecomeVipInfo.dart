@@ -12,32 +12,14 @@ class BecomeVipInfo extends Object {
   @JsonKey(name: 'vip')
   String vip;
 
-  @JsonKey(name: 'detail')
-  List<Detail> detail;
+  @JsonKey(name: 'explain')
+  List<String> explain;
 
-  BecomeVipInfo(this.account,this.vip,this.detail,);
+  BecomeVipInfo(this.account,this.vip,this.explain,);
 
   factory BecomeVipInfo.fromJson(Map<String, dynamic> srcJson) => _$BecomeVipInfoFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$BecomeVipInfoToJson(this);
-
-}
-
-
-@JsonSerializable()
-class Detail extends Object {
-
-  @JsonKey(name: 'title')
-  String title;
-
-  @JsonKey(name: 'explain')
-  String explain;
-
-  Detail(this.title,this.explain,);
-
-  factory Detail.fromJson(Map<String, dynamic> srcJson) => _$DetailFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$DetailToJson(this);
 
 }
 

@@ -203,7 +203,7 @@ class _PersonalPageState extends BaseState {
                 ),
               ),
 
-              Text("立即开通",
+              Text("立即续费",
                 style: TextStyle(
                     color: Colors.red,
                     fontSize: DefaultValue.smallTextSize

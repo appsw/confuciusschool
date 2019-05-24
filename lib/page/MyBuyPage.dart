@@ -44,7 +44,7 @@ class _MyBuyPageState extends BaseState {
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 300.0,
+      height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,

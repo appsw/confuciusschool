@@ -62,6 +62,7 @@ class _MaterialPageState extends BaseState{
   Widget getList(){
     return Container(
       height: MediaQuery.of(context).size.height - 120.0,
+
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -77,11 +78,19 @@ class _MaterialPageState extends BaseState{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          getPersonal(materialInfo),
-          getWords(materialInfo.mname),
-          getSubscribe(materialInfo.video),
-          getTime(materialInfo.time),
-          getBtn(materialInfo),
+          Container(
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                getPersonal(materialInfo),
+                getWords(materialInfo.mname),
+                getSubscribe(materialInfo.video),
+                getTime(materialInfo.time),
+                getBtn(materialInfo),
+              ],
+            ),
+          ),
           LinsUtils.getWidthLins(context,height: 10.0)
         ],
       ),
@@ -253,14 +262,15 @@ class _MaterialPageState extends BaseState{
           getHeadImg(materialInfo.photo),
           Container(
             margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+            height: 40.0,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(materialInfo.name,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: DefaultValue.titleTextSize
+                  fontSize: 15.0
                 ),),
                 Text(materialInfo.zed,
                   style: TextStyle(
@@ -287,14 +297,13 @@ class _MaterialPageState extends BaseState{
     return Container(
       color: Colors.white,
       height: 40.0,
-      padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+      padding: EdgeInsets.only(top: 4.0,bottom: 4.0,left: 4.0,right: 4.0),
       child: Row(
         children: <Widget>[
-
           Expanded(
             flex: 1,
             child: Container(
-              height: 40.0,
+              height: 50.0,
 //              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,),
               padding: EdgeInsets.all(2.0),
@@ -312,8 +321,8 @@ class _MaterialPageState extends BaseState{
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      height: 30.0,
+//                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                      height: 40.0,
                       child: TextField(
                         controller: controller,
                         decoration: InputDecoration(
@@ -406,7 +415,7 @@ class _MaterialPageState extends BaseState{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(url,width: 164.0,height: 110.0,fit: BoxFit.fill,),
+            Image.network(url,width: 164.0,height: 100.0,fit: BoxFit.fill,),
           ],
         ),
       ),

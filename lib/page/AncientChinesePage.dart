@@ -129,7 +129,7 @@ class _AncientChineseState extends BaseState {
   Widget getBtn(){
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.only(top: DefaultValue.topMargin),
+      padding: EdgeInsets.only(top: 20.0),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -264,7 +264,7 @@ class _AncientChineseState extends BaseState {
     Lb data = homeInfo.lb[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.pid.toString()));
       },
       child: Image.network(homeInfo.lb[index].img,
         width: 180.0,
@@ -279,7 +279,7 @@ class _AncientChineseState extends BaseState {
   Widget getRecommend(){
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+      padding: EdgeInsets.only(top: 20.0,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Column(
         children: <Widget>[
           Text("今日推荐",
@@ -308,8 +308,9 @@ class _AncientChineseState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
                   Expanded(
@@ -337,7 +338,8 @@ class _AncientChineseState extends BaseState {
           )
           ,
           Container(
-            height: 260.0,
+            height: 220.0,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
                 controller: controller,
@@ -370,28 +372,32 @@ class _AncientChineseState extends BaseState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 100.0,height: 130.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 100.0,height: 125.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                  Text("${data.clicks}人在学习",
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.smallTextSize
-                    ),)
+                  Container(
+                    padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                    child: Text("${data.clicks}人在学习",
+                      maxLines: 1,
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: DefaultValue.smallTextSize
+                      ),),
+                  )
+
                 ],
               ),
             )
@@ -408,7 +414,7 @@ class _AncientChineseState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -438,6 +444,7 @@ class _AncientChineseState extends BaseState {
           ,
           Container(
             height: 480.0,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: getRow,
@@ -473,7 +480,7 @@ class _AncientChineseState extends BaseState {
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.0
+                          fontSize: 15.0
                       ),),
                   ),
                   Expanded(
@@ -490,16 +497,20 @@ class _AncientChineseState extends BaseState {
                   ),
                   Container(
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                        Text("${data.clicks}人在学习",
-                          maxLines: 1,
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.smallTextSize
-                          ),)
+                        Container(
+                          padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                          child: Text("${data.clicks}人在学习",
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.smallTextSize
+                            ),),
+                        )
+
                       ],
                     ),
                   )
@@ -519,7 +530,7 @@ class _AncientChineseState extends BaseState {
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
                   LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -549,6 +560,7 @@ class _AncientChineseState extends BaseState {
           ,
           Container(
             height: 410.0,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
                 controller: controller,
@@ -581,14 +593,14 @@ class _AncientChineseState extends BaseState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 164.0,height: 110.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 164.0,height: 105.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
               child: Text(data.name,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(
@@ -612,7 +624,7 @@ class _AncientChineseState extends BaseState {
           children: <Widget>[
             GestureDetector(
               child: Container(
-                padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+                padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
                 child: Row(
                   children: <Widget>[
                     LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
@@ -673,7 +685,7 @@ class _AncientChineseState extends BaseState {
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0
+                    fontSize: 15.0
                 ),),
             ),
             Container(

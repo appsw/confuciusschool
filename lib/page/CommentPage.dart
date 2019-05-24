@@ -130,6 +130,10 @@ class _CommentPageState extends BaseState {
                             GestureDetector(
                               child: Container(
                                 margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                                width: 40.0,
+                                height: 40.0,
+                                color: Colors.white,
+                                padding: EdgeInsets.only(top: 14.0,bottom: 14.0,left: 14.0,right: 14.0),
                                 child: commentInfo.status == "1" ? Image.asset("images/home01_7quanbupinglun_shoucang.png",width: 12.0,height: 12.0,color: Colors.red,) : Image.asset("images/home01_7quanbupinglun_shoucang.png",width: 12.0,height: 12.0,),
                               ),
                               onTap: (){
