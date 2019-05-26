@@ -33,7 +33,7 @@ class _AncientChineseState extends BaseState {
         this.homeInfo = data;
       });
     }, (msg){
-      ToastUtil.makeToast(msg);
+//      ToastUtil.makeToast(msg);
     });
   }
   @override
@@ -87,15 +87,15 @@ class _AncientChineseState extends BaseState {
                 height: 28.0,
                 margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
                 decoration: new BoxDecoration(
-                    border: new Border.all(width: 1.0,color:ColorsUtil.HomeAppBarBg ),
-                    color: ColorsUtil.HomeAppBarBg,
+                    border: new Border.all(width: 1.0,color:ColorsUtil.HerdBg ),
+                    color: ColorsUtil.HerdBg,
                     borderRadius:  new BorderRadius.all(Radius.circular(20.0))
                 ),
                 child: Row(
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Image.asset("images/home01_search.png"),
+                      child: Image.asset("images/home01_search.png",width: 15.0,height: 15.0,),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
@@ -339,7 +339,7 @@ class _AncientChineseState extends BaseState {
           ,
           Container(
             height: 220.0,
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+//            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 0.0),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
                 controller: controller,
@@ -348,9 +348,9 @@ class _AncientChineseState extends BaseState {
                   //横轴元素个数
                     crossAxisCount: 3,
                     //纵轴间距
-                    mainAxisSpacing: 20.0,
+                    mainAxisSpacing: 0.0,
                     //横轴间距
-                    crossAxisSpacing: 10.0,
+                    crossAxisSpacing: 0.0,
 //            //子组件宽高长度比例
                     childAspectRatio: 0.6
                 ),
@@ -371,10 +371,11 @@ class _AncientChineseState extends BaseState {
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Image.network(data.hcover,width: 100.0,height: 125.0,fit: BoxFit.fill,),
             Container(
-              margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+              margin: EdgeInsets.only(top: 4.0,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
                 maxLines: 1,
                 style: TextStyle(
@@ -444,7 +445,7 @@ class _AncientChineseState extends BaseState {
           ,
           Container(
             height: 480.0,
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+//            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: getRow,
@@ -464,12 +465,12 @@ class _AncientChineseState extends BaseState {
       },
       child: Container(
         height: 150.0,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 2.0,bottom: 2.0),
         child: Row(
           children: <Widget>[
             Image.network(data.hcover,width: 102.0,height: 133.0,fit: BoxFit.fill,),
             Container(
-              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+              margin: EdgeInsets.only(left:16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -591,7 +592,7 @@ class _AncientChineseState extends BaseState {
       },
       child: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Image.network(data.hcover,width: 164.0,height: 105.0,fit: BoxFit.fill,),
             Container(
@@ -673,7 +674,7 @@ class _AncientChineseState extends BaseState {
       },
       child: Container(
         height: 190.0,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 2.0,bottom: 2.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,

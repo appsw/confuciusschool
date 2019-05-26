@@ -113,6 +113,17 @@ class _MaterialPageState extends BaseState{
                   state = "1";
                 }
                 api.putGovernGood(materialInfo.id.toString(), materialInfo.type.toString(), state, (msg){
+                  if(materialInfo.status == 1){
+                    setState(() {
+                      materialInfo.status = 2;
+                      materialInfo.fnum -- ;
+                    });
+                  }else{
+                    setState(() {
+                      materialInfo.status = 1;
+                      materialInfo.fnum ++ ;
+                    });
+                  }
                   ToastUtil.makeToast(msg);
                 }, (msg){
                   ToastUtil.makeToast(msg);

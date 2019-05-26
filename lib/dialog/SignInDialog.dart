@@ -1,6 +1,7 @@
 import 'package:confuciusschool/model/SigninInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:flutter/material.dart';
 
 class SignInDialog extends Dialog{
@@ -71,11 +72,17 @@ class SignInDialog extends Dialog{
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       getDay(0),
+                                      LinsUtils.getWidthLins(context,width: 6.0),
                                       getDay(1),
+                                      LinsUtils.getWidthLins(context,width: 6.0),
                                       getDay(2),
+                                      LinsUtils.getWidthLins(context,width: 6.0),
                                       getDay(3),
+                                      LinsUtils.getWidthLins(context,width: 6.0),
                                       getDay(4),
+                                      LinsUtils.getWidthLins(context,width: 6.0),
                                       getDay(5),
+                                      LinsUtils.getWidthLins(context,width: 6.0),
                                       getDay(6),
                                     ],
                                   ),
@@ -112,16 +119,21 @@ class SignInDialog extends Dialog{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("${signinInfo.rule.explain}",
+                                  Text("连续规则",
                                     style: TextStyle(
                                         color: Colors.grey,
-                                        fontSize: 12.0
+                                        fontSize: 15.0
                                     ),),
-//                                  Text("1.连续签到第3天获得10积分，第七天获得20积分，其余每天获得5积分",
-//                                    style: TextStyle(
-//                                        color: Colors.grey,
-//                                        fontSize: 12.0
-//                                    ),),
+                                  Container(
+                                    child: Text("${signinInfo.rule.explain}",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12.0
+                                      ),),
+                                    margin: EdgeInsets.only(top: 4.0),
+                                  )
+
+
 //                                  Text("2.签到中断需要重新计算连签天数",
 //                                    style: TextStyle(
 //                                        color: Colors.grey,

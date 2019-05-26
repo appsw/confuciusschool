@@ -85,7 +85,7 @@ class _CommentPageState extends BaseState {
             color: Colors.white,
             padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 getHeadImg(commentInfo.profilePhoto),
@@ -99,7 +99,7 @@ class _CommentPageState extends BaseState {
                         Text("${commentInfo.nickName}",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: DefaultValue.titleTextSize
+                              fontSize: 15.0
                           ),),
                         Container(
                           margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
@@ -142,10 +142,12 @@ class _CommentPageState extends BaseState {
                                   status = "2";
                                   setState(() {
                                     commentInfo.status = "2";
+                                    commentInfo.zanCount --;
                                   });
                                 }else{
                                   setState(() {
                                     commentInfo.status = "1";
+                                    commentInfo.zanCount ++;
                                   });
                                 }
                                 api.getCommentZan(commentInfo.id.toString(), status, (msg){
@@ -202,7 +204,7 @@ class _CommentPageState extends BaseState {
           color: Colors.white,
           padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               getHeadImg(replay.profilePhoto),
@@ -216,7 +218,7 @@ class _CommentPageState extends BaseState {
                       Text("${replay.nickName}",
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: DefaultValue.textSize
+                            fontSize: 15.0
                         ),),
                       Container(
                         margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),

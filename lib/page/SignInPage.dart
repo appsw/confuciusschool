@@ -121,6 +121,7 @@ class SignInPage extends BasefulWidget{
     // TODO: implement getBody
     return data == null ? LoadingUtils.getRingLoading() : SingleChildScrollView(
       child: Container(
+        color: ColorsUtil.GreyDialogBg,
         child: Column(
           children: <Widget>[
             Container(
@@ -147,11 +148,15 @@ class SignInPage extends BasefulWidget{
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("$text",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: DefaultValue.textSize
-                                  ),),
+                                Container(
+                                  child: Text("$text",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: DefaultValue.textSize
+                                    ),),
+                                  padding: EdgeInsets.only(top: 4.0),
+                                ),
+
                                 Container(
                                   child: Row(
                                     children: <Widget>[
@@ -240,6 +245,7 @@ class SignInPage extends BasefulWidget{
               width: 50.0,
               alignment: Alignment.center,
               child: Text(data.sql.brand,
+                maxLines: 1,
                 style: TextStyle(
                     color: ColorsUtil.GreyTextColor,
                     fontSize: DefaultValue.smallTextSize

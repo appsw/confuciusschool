@@ -97,7 +97,7 @@ class _IndexPageState extends BaseState {
   getBottomTitle(int i) => Text(
     _bottomTitles[i],
     style: TextStyle(
-      color: currentBottomIndex == i ? ColorsUtil.blueTextColor : Colors.grey,
+      color: currentBottomIndex == i ? Colors.red: Colors.grey,
       fontSize: 14.0,),
   );
 

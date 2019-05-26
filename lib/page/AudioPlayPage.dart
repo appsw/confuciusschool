@@ -198,7 +198,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                           margin: EdgeInsets.only(bottom: 5.0),
                           child: Row(
                             children: <Widget>[
-                              Text(sql.name,
+                              Text("${sql.key}.${sql.name}",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: DefaultValue.titleTextSize
@@ -207,7 +207,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                             ],
                           ),
                         ),
-                        Text("时长${sql.duration}",
+                        Text("时长:${sql.duration}",
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: DefaultValue.textSize
@@ -345,21 +345,23 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                 if(data.state == 1){
                   type = "2";
                 }
-//                api.getVideoZan(id, type, (msg){
-//                  ToastUtil.makeToast(msg);
-//
-//                }, (msg){
-//                  ToastUtil.makeToast(msg);
-//                });
-                if(data.state == 1){
-                  setState(() {
-                    data.state = 2;
-                  });
-                }else{
-                  setState(() {
-                    data.state = 1;
-                  });
-                }
+                api.getVideoShou(id, "2",type, (msg){
+                  ToastUtil.makeToast(msg);
+                  if(data.state == 1){
+                    setState(() {
+                      data.state = 2;
+                      data.re.collection --;
+                    });
+                  }else{
+                    setState(() {
+                      data.state = 1;
+                      data.re.collection ++;
+                    });
+                  }
+                }, (msg){
+                  ToastUtil.makeToast(msg);
+                });
+
               },
               child: Container(
                 child: Column(
@@ -395,10 +397,12 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                   if(data.status == 1){
                     setState(() {
                       data.status = 2;
+                      data.re.fabulous --;
                     });
                   }else{
                     setState(() {
                       data.status = 1;
+                      data.re.fabulous ++;
                     });
                   }
                 }, (msg){

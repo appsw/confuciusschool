@@ -57,7 +57,8 @@ Sql _$SqlFromJson(Map<String, dynamic> json) {
       json['duration'] as String,
       json['level'] as int,
       json['id'] as int,
-      json['currid'] as int);
+      json['currid'] as int,
+      json['key'] as int);
 }
 
 Map<String, dynamic> _$SqlToJson(Sql instance) => <String, dynamic>{
@@ -67,5 +68,6 @@ Map<String, dynamic> _$SqlToJson(Sql instance) => <String, dynamic>{
       'duration': instance.duration,
       'level': instance.level,
       'id': instance.id,
-      'currid': instance.currid
+      'currid': instance.currid,
+      'key': instance.key
     };

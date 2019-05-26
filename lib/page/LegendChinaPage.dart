@@ -35,7 +35,7 @@ class _LegendChinaPageState extends BaseState {
         this.homeInfo = data;
       });
     }, (msg){
-      ToastUtil.makeToast(msg);
+//      ToastUtil.makeToast(msg);
     });
   }
   @override
@@ -92,15 +92,15 @@ class _LegendChinaPageState extends BaseState {
                 height: 28.0,
                 margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
                 decoration: new BoxDecoration(
-                    border: new Border.all(width: 1.0,color:ColorsUtil.HomeAppBarBg ),
-                    color: ColorsUtil.HomeAppBarBg,
+                    border: new Border.all(width: 1.0,color:ColorsUtil.HerdBg ),
+                    color: ColorsUtil.HerdBg,
                     borderRadius:  new BorderRadius.all(Radius.circular(20.0))
                 ),
                 child: Row(
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      child: Image.asset("images/home01_search.png"),
+                      child: Image.asset("images/home01_search.png",width: 15.0,height: 15.0,),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),

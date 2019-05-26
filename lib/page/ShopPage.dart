@@ -114,9 +114,9 @@ class _ShopPageState extends BaseState{
     return GestureDetector(
       onTap: (){
         if(res.ctype == 1)
-        NavigatorUtils.push(context, new VideoPlayPage(res.currid.toString(),res.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(res.currid.toString(),res.pid.toString()));
         else{
-          NavigatorUtils.push(context, new AudioPlayPage(res.currid.toString(),res.id.toString()));
+          NavigatorUtils.push(context, new AudioPlayPage(res.currid.toString(),res.pid.toString()));
         }
       },
       child: Image.network(res.img,

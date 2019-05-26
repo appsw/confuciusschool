@@ -29,6 +29,6 @@ class ColorsUtil{
   static const Color LabelYellowBg = Color(0xFFFFA820);
   static const Color LabelRedBg = Color(0xFFD30127);
   static const Color SignInBtnBg = Color(0xFFF57540);
-
-
+  static const Color HerdBg = Color(0xFFdddddd);
+  static const Color HerdText = Color(0x979799);
 }

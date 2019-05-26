@@ -118,12 +118,14 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
     return (data == null || introductionInfo == null || videoText == null )? LoadingUtils.getRingLoading() : Container(
+      color: Colors.white,
       margin: EdgeInsets.only(top: 26.0),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           getVideo(),
           getTables(context),
-          getBottomBody()
+          getBottomBody(),
+          getBottomTitle()
         ],
       ),
     );
@@ -176,7 +178,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   }
   Widget getIntroduction(){
     return Container(
-      height: MediaQuery.of(context).size.height - 370.0,
+      height: MediaQuery.of(context).size.height - 360.0,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -197,7 +199,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   }
   Widget getCatalog(){
     return Container(
-      height: MediaQuery.of(context).size.height - 370.0,
+      height: MediaQuery.of(context).size.height - 360.0,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -215,78 +217,83 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
         chewieController.pause();
         NavigatorUtils.push(context, new VideoPlayPage(sql.currid.toString(), sql.id.toString()));
       },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(sql.name,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0
-                            ),),
-                          getLabel(sql.level)
-                        ],
-                      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text("${sql.key}.${sql.name}",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0
+                                ),),
+                              getLabel(sql.level)
+                            ],
+                          ),
+                        ),
+                        Text("时长:${sql.duration}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: DefaultValue.textSize
+                          ),)
+                      ],
                     ),
-                    Text("时长${sql.duration}",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: DefaultValue.textSize
-                      ),)
-                  ],
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 0,
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text("${sql.clicks}人已学习",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: DefaultValue.textSize
+                                ),),
+                            ],
+                          ),
+                        ),
+                        Text("${sql.createTime}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: DefaultValue.textSize
+                          ),)
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              flex: 0,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text("${sql.clicks}人已学习",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: DefaultValue.textSize
-                            ),),
-                        ],
-                      ),
-                    ),
-                    Text("${sql.createTime}",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: DefaultValue.textSize
-                      ),)
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+          ),
+          LinsUtils.getWidthLins(context)
+        ],
       ),
     );
   }
   Widget getText(){
 
     return Container(
-      height: MediaQuery.of(context).size.height - 370.0,
+      height: MediaQuery.of(context).size.height - 360.0,
       child: ListView(
         children: <Widget>[
           Container(
@@ -371,14 +378,34 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
             flex: 1,
             child: GestureDetector(
               onTap: (){
-                Navigator.pop(context);
+                var type = "1";
+                if(data.state == 1){
+                  type = "2";
+                }
+                api.getVideoShou(id, "2",type, (msg){
+                  ToastUtil.makeToast(msg);
+                  if(data.state == 1){
+                    setState(() {
+                      data.state = 2;
+                      data.re.collection --;
+                    });
+                  }else{
+                    setState(() {
+                      data.state = 1;
+                      data.re.collection ++;
+                    });
+                  }
+                }, (msg){
+                  ToastUtil.makeToast(msg);
+                });
+
               },
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,),
+                    data.state == 1 ? Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.grey,),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
                       child: Text(data.re.collection.toString(),
@@ -397,14 +424,34 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
             flex: 1,
             child: GestureDetector(
               onTap: (){
-                Navigator.pop(context);
+
+                var type = "1";
+                if(data.status == 1){
+                  type = "2";
+                }
+                api.getVideoZan(id, type, (msg){
+                  ToastUtil.makeToast(msg);
+                  if(data.status == 1){
+                    setState(() {
+                      data.status = 2;
+                      data.re.fabulous --;
+                    });
+                  }else{
+                    setState(() {
+                      data.status = 1;
+                      data.re.fabulous ++;
+                    });
+                  }
+                }, (msg){
+                  ToastUtil.makeToast(msg);
+                });
               },
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,),
+                    data.status == 1 ? Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.grey,),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
                       child: Text(data.re.fabulous.toString(),
@@ -424,15 +471,20 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
     );
   }
   Widget getTables(BuildContext context){
-    return Container(
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[
-          Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
-          Expanded(flex: 1,child:  GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(1),onTap: (){onClickTable(1);},),),
+              Expanded(flex: 1,child:  GestureDetector(child: getTab(2),onTap: (){onClickTable(2);},),),
+            ],
+          ),
+        ),
+        LinsUtils.getWidthLins(context)
+      ],
     );
   }
   Widget getTab(var tabNo){
@@ -580,6 +632,17 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
         );
       });
     });
+  }
+  Widget getBottomTitle(){
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Image.asset("images/home02_1_1tinggushi_guanggao.png",width: MediaQuery.of(context).size.width,),
+      ),
+      onTap: (){
+        NavigatorUtils.push(context, new BecomeVipPage());
+      },
+    );
   }
 
 }

@@ -65,10 +65,11 @@ class _ActivityCenterPageState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Image.network("${sql.img}",width: 350.0,height: 140.0,fit: BoxFit.fill,),
                   Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                    margin: EdgeInsets.only(top: DefaultValue.topMargin),
                     child: Text(sql.title,
                       style: TextStyle(
                           color: Colors.black,

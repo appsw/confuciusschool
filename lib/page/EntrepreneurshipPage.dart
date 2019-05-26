@@ -54,7 +54,7 @@ class _EntrepreneurshipPageState extends BaseState {
       });
       getEntreneurInfo(entrepreneurialTitleInfo.sql[tabNumber].id.toString());
     }, (msg){
-      ToastUtil.makeToast(msg);
+//      ToastUtil.makeToast(msg);
     });
   }
 
@@ -79,7 +79,7 @@ class _EntrepreneurshipPageState extends BaseState {
       if(data != null)
         initVideo(data.re.address);
     }, (msg){
-      ToastUtil.makeToast(msg);
+//      ToastUtil.makeToast(msg);
     });
   }
   void getAgent(){

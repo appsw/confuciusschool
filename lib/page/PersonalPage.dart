@@ -613,7 +613,7 @@ class _PersonalPageState extends BaseState {
         points = data.re;
       });
     }, (msg){
-      ToastUtil.makeToast(msg);
+//      ToastUtil.makeToast(msg);
     });
 
   }
@@ -624,7 +624,7 @@ class _PersonalPageState extends BaseState {
         this.data = data.list;
       });
     }, (msg){
-      ToastUtil.makeToast(msg);
+//      ToastUtil.makeToast(msg);
     });
   }
 }

@@ -623,6 +623,15 @@ class Api extends CommonService{
       callback(response.msg);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void getVideoShou(String id,String type,String status,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    params["type"] = type;
+    params["status"] = status;
+    request(ApiUrl.getVideoShou,(BaseResponse response){
+      callback(response.msg);
+    },method: POST,errorCallBack: errorCallBack);
+  }
   void putEntrepreneurComment(String pid,String content,Function callback,Function errorCallBack){
     params.clear();
     params["id"] = pid;

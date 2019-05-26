@@ -17,7 +17,7 @@ class _WebViewPageState extends BaseState {
     // TODO: implement getAppBar
     return PageUtils.getAppBar(context, "抽奖");
   }
-  var url1 = 'http://cedu.qwangluo.net/#/';
+  var url1 = 'http://cedu.qwangluo.net/#/choujiang';
   bool getToken = true;
   @override
   void initState() {

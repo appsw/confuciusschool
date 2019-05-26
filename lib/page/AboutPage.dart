@@ -46,7 +46,7 @@ class AboutPage extends BasefulWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Image.asset("${data.re.img}",width: 100.0,height: 100.0,),
+                  Image.network("${data.re.img}",width: 100.0,height: 100.0,),
                   Text("${data.re.title}",
                   style: TextStyle(
                     color: Colors.black,

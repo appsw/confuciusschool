@@ -49,7 +49,7 @@ class _NewsPageState extends BaseState {
   Widget getList(){
 
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height,
       child: ListView.builder(
           shrinkWrap: true,
           itemBuilder: getRow,

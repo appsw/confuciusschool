@@ -42,6 +42,7 @@ class _ActivityDetailsPageState extends BaseState {
     return data == null ? LoadingUtils.getRingLoading() : SingleChildScrollView(
       child: Container(
         color: Colors.white,
+        height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

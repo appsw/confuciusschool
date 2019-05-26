@@ -85,7 +85,7 @@ class _EntrepreneurCommentPageState extends BaseState {
             color: Colors.white,
             padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 getHeadImg(commentInfo.profilePhoto),
@@ -99,7 +99,7 @@ class _EntrepreneurCommentPageState extends BaseState {
                         Text("${commentInfo.nickName}",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: DefaultValue.titleTextSize
+                              fontSize: 15.0
                           ),),
                         Container(
                           margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
@@ -130,6 +130,10 @@ class _EntrepreneurCommentPageState extends BaseState {
                             GestureDetector(
                               child: Container(
                                 margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                                width: 40.0,
+                                height: 40.0,
+                                color: Colors.white,
+                                padding: EdgeInsets.only(top: 14.0,bottom: 14.0,left: 14.0,right: 14.0),
                                 child: commentInfo.status == "1" ? Image.asset("images/home01_7quanbupinglun_shoucang.png",width: 12.0,height: 12.0,color: Colors.red,) : Image.asset("images/home01_7quanbupinglun_shoucang.png",width: 12.0,height: 12.0,),
                               ),
                               onTap: (){
@@ -198,7 +202,7 @@ class _EntrepreneurCommentPageState extends BaseState {
           color: Colors.white,
           padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               getHeadImg(replay.profilePhoto),
@@ -212,7 +216,7 @@ class _EntrepreneurCommentPageState extends BaseState {
                       Text("${replay.nickName}",
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: DefaultValue.titleTextSize
+                            fontSize: 15.0
                         ),),
                       Container(
                         margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),

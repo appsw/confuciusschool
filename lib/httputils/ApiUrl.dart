@@ -81,6 +81,7 @@ class ApiUrl{
   static final String weixinBind= "/index/login/bindUserToApp";
   static final String getRegistAgreement= "/index/hopen/zhu";
   static final String getVideoZan= "/index/plate/give";
+  static final String getVideoShou= "/index/plate/mplementi";
 
 
 }

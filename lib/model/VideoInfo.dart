@@ -87,7 +87,10 @@ class Sql extends Object {
   @JsonKey(name: 'currid')
   int currid;
 
-  Sql(this.name,this.createTime,this.clicks,this.duration,this.level,this.id,this.currid,);
+  @JsonKey(name: 'key')
+  int key;
+
+  Sql(this.name,this.createTime,this.clicks,this.duration,this.level,this.id,this.currid,this.key);
 
   factory Sql.fromJson(Map<String, dynamic> srcJson) => _$SqlFromJson(srcJson);
 
