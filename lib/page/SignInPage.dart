@@ -16,6 +16,7 @@ import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class SignInPage extends BasefulWidget{
 
@@ -23,9 +24,11 @@ class SignInPage extends BasefulWidget{
   var textController = TextEditingController();
   var textBrandController = TextEditingController();
   SignInShowInfo data;
+  SignInShowInfo signInImageData;
   SigninInfo signinInfo;
   File brandImage;
   var num = 0;
+  fluwx.WeChatScene scene;
   @override
   void initState() {
     // TODO: implement initState
@@ -40,6 +43,22 @@ class SignInPage extends BasefulWidget{
         text = data.sql.words;
 
       });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+  }
+  void getSignInData(){
+    api.getSignInImage((SignInShowInfo data){
+      setState((){
+        this.signInImageData = data;
+      });
+      var model = fluwx.WeChatShareImageModel(
+          image: signInImageData.sql.img,
+          thumbnail: signInImageData.sql.rimg,
+          transaction: signInImageData.sql.img,
+          scene: scene,
+          description: signInImageData.sql.brand);
+      fluwx.share(model);
     }, (msg){
       ToastUtil.makeToast(msg);
     });
@@ -182,7 +201,7 @@ class SignInPage extends BasefulWidget{
               ),
             ),
             getJiang(),
-            getBottom()
+//            getBottom()
           ],
         ),
       ),
@@ -615,38 +634,50 @@ class SignInPage extends BasefulWidget{
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
-                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
-                          ),
-                          Text("微信好友",
-                            style: TextStyle(
-                                color: ColorsUtil.GreyTextColor,
-                                fontSize: DefaultValue.textSize
-                            ),)
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        scene = fluwx.WeChatScene.SESSION;
+                        getSignInData();
+                      },
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("微信好友",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
+                        margin: EdgeInsets.only(right: 50.0),
                       ),
-                      margin: EdgeInsets.only(right: 50.0),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 50.0),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
-                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
-                          ),
-                          Text("朋友圈",
-                            style: TextStyle(
-                                color: ColorsUtil.GreyTextColor,
-                                fontSize: DefaultValue.textSize
-                            ),)
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        scene = fluwx.WeChatScene.TIMELINE;
+                        getSignInData();
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 50.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("朋友圈",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -665,6 +696,14 @@ class SignInPage extends BasefulWidget{
         );
       });
     });
+  }
+  @override
+  Widget getBottomNavigationBar(BuildContext context) {
+    // TODO: implement getBottomNavigationBar
+    return Container(
+      height: 70.0,
+      child: getBottom(),
+    );
   }
 
 }

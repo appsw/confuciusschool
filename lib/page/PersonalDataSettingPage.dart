@@ -48,9 +48,9 @@ class _PersonalDataPageState extends BaseState {
         sex = data.sex;
         birth = data.birth;
         address = data.bname  == null ? "请选择" :  data.bname.toString() + data.dname.toString() + data.ename.toString() ;
-        bname =  data.bname.toString();
-        dname = data.dname.toString();
-        ename = data.ename.toString();
+        bname =  data.bid.toString();
+        dname = data.did.toString();
+        ename = data.eid.toString();
       });
 
     }, (msg){ToastUtil.makeToast(msg);});

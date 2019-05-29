@@ -79,7 +79,7 @@ class _PutCashRecordPageState extends BaseState {
                                   fontSize: DefaultValue.titleTextSize
                               ),),
                           ),
-                          Text("+${incomeInfo.total}",
+                          Text("-${incomeInfo.total}",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: DefaultValue.titleTextSize

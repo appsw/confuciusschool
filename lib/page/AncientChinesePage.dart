@@ -338,7 +338,7 @@ class _AncientChineseState extends BaseState {
           )
           ,
           Container(
-            height: 220.0,
+            height: 242.0,
 //            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 0.0),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
@@ -352,7 +352,7 @@ class _AncientChineseState extends BaseState {
                     //横轴间距
                     crossAxisSpacing: 0.0,
 //            //子组件宽高长度比例
-                    childAspectRatio: 0.6
+                    childAspectRatio: 0.7
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   //Widget Function(BuildContext context, int index)
@@ -369,15 +369,17 @@ class _AncientChineseState extends BaseState {
         NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
       },
       child: Container(
+        margin: EdgeInsets.only(left: 6.0,right: 6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Image.network(data.hcover,width: 100.0,height: 125.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,height: 125.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: 4.0,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 15.0
@@ -478,6 +480,7 @@ class _AncientChineseState extends BaseState {
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                     child: Text(data.name,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
@@ -560,7 +563,7 @@ class _AncientChineseState extends BaseState {
           )
           ,
           Container(
-            height: 410.0,
+            height: 378.0,
             padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
@@ -570,9 +573,9 @@ class _AncientChineseState extends BaseState {
                   //横轴元素个数
                     crossAxisCount: 2,
                     //纵轴间距
-                    mainAxisSpacing: 20.0,
+                    mainAxisSpacing: 0.0,
                     //横轴间距
-                    crossAxisSpacing: 10.0,
+                    crossAxisSpacing: 0.0,
 //            //子组件宽高长度比例
                     childAspectRatio: 1.1
                 ),
@@ -591,13 +594,15 @@ class _AncientChineseState extends BaseState {
         NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
       },
       child: Container(
+        margin: EdgeInsets.only(left: 6.0,right: 6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image.network(data.hcover,width: 164.0,height: 105.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 200.0,height: 105.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
               child: Text(data.name,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
@@ -618,6 +623,7 @@ class _AncientChineseState extends BaseState {
     );
   }
   Widget getMaster(){
+      var height = 205.0 * homeInfo.ds.length;
       return Container(
         color: Colors.white,
         margin: EdgeInsets.only(top: DefaultValue.topMargin),
@@ -654,12 +660,12 @@ class _AncientChineseState extends BaseState {
             )
             ,
             Container(
-              height: 600.0,
+              height: height,
               child: ListView.builder(
                   shrinkWrap: true,
                   itemBuilder: getMasterRow,
                   controller: controller,
-                  itemCount: homeInfo.sql.length,
+                  itemCount: homeInfo.ds.length,
                   scrollDirection: Axis.vertical),
             )
           ],
@@ -667,7 +673,7 @@ class _AncientChineseState extends BaseState {
       );
   }
   Widget getMasterRow(BuildContext context,int index){
-    Sql data = homeInfo.sql[index];
+    Ds data = homeInfo.ds[index];
     return GestureDetector(
       onTap: (){
         NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
@@ -683,6 +689,7 @@ class _AncientChineseState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin),
               child: Text(data.name,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,

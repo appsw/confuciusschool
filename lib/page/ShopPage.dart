@@ -6,6 +6,7 @@ import 'package:confuciusschool/page/AudioPlayPage.dart';
 import 'package:confuciusschool/page/MyBuyPage.dart';
 import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
@@ -81,7 +82,7 @@ class _ShopPageState extends BaseState{
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
     return data == null ? LoadingUtils.getRingLoading() : Container(
-      child: Column(
+      child: ListView(
         children: <Widget>[
           getSwiperBody(),
           getList()
@@ -132,11 +133,11 @@ class _ShopPageState extends BaseState{
 
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 255.0,
       margin: EdgeInsets.only(top: DefaultValue.topMargin),
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: getRow,
           itemCount: data.ress.length,
           scrollDirection: Axis.vertical),
@@ -179,7 +180,8 @@ class _ShopPageState extends BaseState{
                         fontSize: 15.0
                     ),),
                 ],
-              )
+              ),
+              LinsUtils.getWidthLins(context)
             ],
           )
       ),

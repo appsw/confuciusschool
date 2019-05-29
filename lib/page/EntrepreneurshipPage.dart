@@ -5,6 +5,7 @@ import 'package:confuciusschool/model/EntrepreneurialTitleInfo.dart';
 import 'package:confuciusschool/model/EntrepreneurshipInfo.dart';
 import 'package:confuciusschool/page/EntrepreneurCommentPage.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -112,17 +113,19 @@ class _EntrepreneurshipPageState extends BaseState {
             getVideo(),
             Container(
               alignment: Alignment.centerLeft,
+              color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text("目录",style: TextStyle(color:Colors.red,
-                  fontSize: DefaultValue.titleTextSize),),
+                  fontSize: 15.0),),
                   Container(
                     color: Colors.red,
                     width: 40.0,
                     height: 1.0,
                     margin: EdgeInsets.only(top: DefaultValue.topMargin),
-                  )
+                  ),
+                  LinsUtils.getWidthLins(context)
                 ],
               ),
               padding: EdgeInsets.only(top: DefaultValue.topMargin,left: DefaultValue.leftMargin),
@@ -148,70 +151,75 @@ class _EntrepreneurshipPageState extends BaseState {
   }
   Widget getRow(BuildContext context,int index){
     Res sql = data.res[index];
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(sql.name,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15.0
-                          ),),
-                      ],
-                    ),
+    return Column(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5.0),
+                        child: Row(
+                          children: <Widget>[
+                            Text(sql.name,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0
+                              ),),
+                          ],
+                        ),
+                      ),
+                      Text("时长：${sql.duration}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: DefaultValue.textSize
+                        ),)
+                    ],
                   ),
-                  Text("时长：${sql.duration}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),)
-                ],
+                ),
               ),
-            ),
+              Expanded(
+                flex: 0,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5.0),
+                        child: Row(
+                          children: <Widget>[
+                            Text("${sql.clicks}人已学习",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: DefaultValue.textSize
+                              ),),
+                          ],
+                        ),
+                      ),
+                      Text("${sql.createTime}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: DefaultValue.textSize
+                        ),)
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
-          Expanded(
-            flex: 0,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text("${sql.clicks}人已学习",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: DefaultValue.textSize
-                          ),),
-                      ],
-                    ),
-                  ),
-                  Text("${sql.createTime}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: DefaultValue.textSize
-                    ),)
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
+        ),
+        LinsUtils.getWidthLins(context)
+      ],
     );
   }
   Widget getVideo(){
@@ -241,7 +249,7 @@ class _EntrepreneurshipPageState extends BaseState {
       child: Column(
         children: <Widget>[
           Text(entrepreneurialTitleInfo.sql[tabNo].name,style: TextStyle(color: tabNo == tabNumber ? Colors.red : Colors.black,
-          fontSize: DefaultValue.titleTextSize),),
+          fontSize: 15.0),),
           getLins(context, tabNo,80.0)
         ],
       ),

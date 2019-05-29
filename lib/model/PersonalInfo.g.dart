@@ -16,6 +16,9 @@ PersonalInfo _$PersonalInfoFromJson(Map<String, dynamic> json) {
       json['bname'] as String,
       json['dname'] as String,
       json['ename'] as String,
+      json['bid'] as int,
+      json['did'] as int,
+      json['eid'] as int,
       json['invitecode'] as String);
 }
 
@@ -29,5 +32,8 @@ Map<String, dynamic> _$PersonalInfoToJson(PersonalInfo instance) =>
       'bname': instance.bname,
       'dname': instance.dname,
       'ename': instance.ename,
+      'bid': instance.bid,
+      'did': instance.did,
+      'eid': instance.eid,
       'invitecode': instance.invitecode
     };

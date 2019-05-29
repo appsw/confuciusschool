@@ -153,11 +153,6 @@ class PlayerState extends State<Player> {
 
     return [
 
-      const Divider(color: Colors.transparent),
-      const Divider(
-        color: Colors.transparent,
-        height: 32.0,
-      ),
       new Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16.0,
@@ -166,57 +161,56 @@ class PlayerState extends State<Player> {
         child: _timer(context),
       ),
       new Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
-        child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            new IconButton(
-              onPressed: () {
-                widget.onPrevious();
-              },
-              icon: new Icon(
-                Icons.skip_previous,
-                size: 32.0,
-                color: widget.color,
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: new Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new IconButton(
+                onPressed: () {
+                  widget.onPrevious();
+                },
+                icon: new Icon(
+                  Icons.skip_previous,
+                  size: 32.0,
+                  color: widget.color,
+                ),
               ),
-            ),
-            new IconButton(
-              onPressed: () {
-                if (isPlaying)
-                  audioPlayer.pause();
-                else {
-                  audioPlayer.play(
-                    widget.audioUrl,
-                    isLocal: widget.isLocal,
-                    volume: widget.volume,
-                  );
-                }
-                setState(() {
-                  isPlaying = !isPlaying;
-                  widget.onPlaying(isPlaying);
-                });
-              },
-              padding: const EdgeInsets.all(0.0),
-              icon: new Icon(
-                isPlaying ? Icons.pause : Icons.play_arrow,
-                size: 48.0,
-                color: widget.color,
+              new IconButton(
+                onPressed: () {
+                  if (isPlaying)
+                    audioPlayer.pause();
+                  else {
+                    audioPlayer.play(
+                      widget.audioUrl,
+                      isLocal: widget.isLocal,
+                      volume: widget.volume,
+                    );
+                  }
+                  setState(() {
+                    isPlaying = !isPlaying;
+                    widget.onPlaying(isPlaying);
+                  });
+                },
+                padding: const EdgeInsets.all(0.0),
+                icon: new Icon(
+                  isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 48.0,
+                  color: widget.color,
+                ),
               ),
-            ),
-            new IconButton(
-              onPressed: widget.onNext,
-              icon: new Icon(
-                Icons.skip_next,
-                size: 32.0,
-                color: widget.color,
+              new IconButton(
+                onPressed: widget.onNext,
+                icon: new Icon(
+                  Icons.skip_next,
+                  size: 32.0,
+                  color: widget.color,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-
 
     ];
   }

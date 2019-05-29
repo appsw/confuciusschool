@@ -8,6 +8,7 @@ class PageUtils{
         width: 30.0,
         height: 30.0,
         alignment: Alignment.center,
+        color: Colors.transparent,
         child: Image.asset("images/all_back.png",height: 18.0,width: 10.0,fit: BoxFit.fill,),
       ),
       onTap: (){

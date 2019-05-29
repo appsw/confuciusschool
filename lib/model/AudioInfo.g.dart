@@ -50,14 +50,14 @@ Map<String, dynamic> _$AudioInfoToJson(AudioInfo instance) => <String, dynamic>{
 
 Sc _$ScFromJson(Map<String, dynamic> json) {
   return Sc(json['id'] as int, json['currid'] as int, json['name'] as String,
-      json['hvcover'] as String, json['words'] as String);
+      json['hcover'] as String, json['words'] as String);
 }
 
 Map<String, dynamic> _$ScToJson(Sc instance) => <String, dynamic>{
       'id': instance.id,
       'currid': instance.currid,
       'name': instance.name,
-      'hvcover': instance.hvcover,
+      'hcover': instance.hcover,
       'words': instance.words
     };
 

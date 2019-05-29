@@ -1,6 +1,7 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/model/IncomeInfo.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -42,7 +43,7 @@ class _IncomePageState extends BaseState {
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -115,6 +116,7 @@ class _IncomePageState extends BaseState {
             ],
           ),
         ),
+        LinsUtils.getWidthLins(context)
       ],
     );
   }

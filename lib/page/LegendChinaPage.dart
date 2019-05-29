@@ -341,12 +341,55 @@ class _LegendChinaPageState extends BaseState {
               NavigatorUtils.push(context, new SearchResultAudioListPage(0));
             },
           ),
-          GestureDetector(
-            onTap: (){
-                NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
-            },
-            child: Image.network(homeInfo.jr[0].hcover,height: 150.0,width: MediaQuery.of(context).size.width,fit: BoxFit.fill,),
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: (){
+                    NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
+                  },
+                  child: Container(
+                    child: Stack(
+                      children: <Widget>[
+                        Image.network(homeInfo.jr[0].hcover,height: 67.0,width: 200.0,fit: BoxFit.fill,),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.only(right: DefaultValue.rightMargin),
+                          height: 67.0,
+                          child: Image.asset("images/bofang.png",width: 45.0,height: 45.0,),
+                        )
+                      ],
+                    ),
+                    margin: EdgeInsets.only(right: DefaultValue.leftMargin),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: (){
+                    NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[1].currid.toString(),homeInfo.jr[1].id.toString()));
+                  },
+                  child: Container(
+                      child: Stack(
+                        children: <Widget>[
+                          Image.network(homeInfo.jr[1].hcover,height: 67.0,width: 200.0,fit: BoxFit.fill,),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.only(right: DefaultValue.rightMargin),
+                            height: 67.0,
+                            child: Image.asset("images/bofang.png",width: 45.0,height: 45.0,),
+                          )
+                        ],
+                      ),
+                      margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+                    )
+                ),
+              ),
+            ],
           )
+
         ],
       ),
     );
@@ -388,21 +431,22 @@ class _LegendChinaPageState extends BaseState {
           )
           ,
           Container(
-            height: 220.0,
-            child: GridView.builder(
+            height: 170.0,
+            child: ListView.builder(
                 itemCount: homeInfo.arr.length,
                 controller: controller,
+                scrollDirection: Axis.horizontal,
                 //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //横轴元素个数
-                    crossAxisCount: 3,
-                    //纵轴间距
-                    mainAxisSpacing: 20.0,
-                    //横轴间距
-                    crossAxisSpacing: 10.0,
-//            //子组件宽高长度比例
-                    childAspectRatio: 0.6
-                ),
+//                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                  //横轴元素个数
+//                    crossAxisCount: 1,
+//                    //纵轴间距
+//                    mainAxisSpacing: 20.0,
+//                    //横轴间距
+//                    crossAxisSpacing: 10.0,
+////            //子组件宽高长度比例
+//                    childAspectRatio: 0.6
+//                ),
                 itemBuilder: (BuildContext context, int index) {
                   //Widget Function(BuildContext context, int index)
                   return getItemContainer(homeInfo.arr[index]);
@@ -418,13 +462,16 @@ class _LegendChinaPageState extends BaseState {
         NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
       },
       child: Container(
+        margin: EdgeInsets.only(left: 6.0,right: 6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 100.0,height: 130.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 140.0,height: 92.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+              width: 140.0,
               child: Text(data.name,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
@@ -492,7 +539,7 @@ class _LegendChinaPageState extends BaseState {
           )
           ,
           Container(
-            height: 260.0,
+            height: 240.0,
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
                 controller: controller,
@@ -501,11 +548,11 @@ class _LegendChinaPageState extends BaseState {
                   //横轴元素个数
                     crossAxisCount: 3,
                     //纵轴间距
-                    mainAxisSpacing: 20.0,
+                    mainAxisSpacing: 0.0,
                     //横轴间距
-                    crossAxisSpacing: 10.0,
+                    crossAxisSpacing: 2.0,
 //            //子组件宽高长度比例
-                    childAspectRatio: 0.6
+                    childAspectRatio: 0.7
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   //Widget Function(BuildContext context, int index)
@@ -522,13 +569,15 @@ class _LegendChinaPageState extends BaseState {
         NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
       },
       child: Container(
+        margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 100.0,height: 130.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,height: 129.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Text(data.name,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
@@ -630,6 +679,7 @@ class _LegendChinaPageState extends BaseState {
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                     child: Text(data.name,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
@@ -734,7 +784,7 @@ class _LegendChinaPageState extends BaseState {
         padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
         child: Row(
           children: <Widget>[
-            Image.network("${data.hvcover}",width: 102.0,height: 133.0,fit: BoxFit.fill,),
+            Image.network("${data.hcover}",width: 102.0,height: 133.0,fit: BoxFit.fill,),
             Container(
               margin: EdgeInsets.only(left: DefaultValue.leftMargin),
               child: Column(
@@ -744,6 +794,7 @@ class _LegendChinaPageState extends BaseState {
                   Container(
                     margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
                     child: Text(data.name,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
@@ -867,6 +918,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
               child: Text(data.name,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,
@@ -946,6 +998,7 @@ class _LegendChinaPageState extends BaseState {
             Container(
               margin: EdgeInsets.only(top: DefaultValue.topMargin),
               child: Text(data.name,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 style: TextStyle(
                     color: Colors.black,

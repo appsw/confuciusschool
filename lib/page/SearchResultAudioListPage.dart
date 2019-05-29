@@ -112,7 +112,7 @@ class _SearchResultAudioListPageState extends BaseState {
                 ),
               ),
               onTap: (){
-                NavigatorUtils.push(context, new SearchPage());
+//                NavigatorUtils.push(context, new SearchPage());
               },
             ),
           ),
@@ -284,7 +284,7 @@ class _SearchResultAudioListPageState extends BaseState {
                             ),),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 20.0),
+                          margin: EdgeInsets.only(top: DefaultValue.topMargin),
                           width: 200.0,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,

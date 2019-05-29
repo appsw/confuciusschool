@@ -4,6 +4,7 @@ import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/model/CourseInfo.dart';
 import 'package:confuciusschool/model/MaterialInfo.dart';
+import 'package:confuciusschool/model/ShareInfo.dart';
 import 'package:confuciusschool/page/AudioPlayPage.dart';
 import 'package:confuciusschool/page/VideoPlayPage.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' show get;
+import 'package:fluwx/fluwx.dart' as fluwx;
 class ExcellentCoursePage extends StatefulWidget {
   @override
   _ExcellentCoursePageState createState() => _ExcellentCoursePageState();
@@ -28,6 +30,8 @@ class _ExcellentCoursePageState extends BaseState {
   List<CourseInfo> data;
   var controllerScroll = new ScrollController();
   final controller = TextEditingController();
+  fluwx.WeChatScene scene;
+  ShareInfo shareInfo;
   @override
   void initData() {
     // TODO: implement initData
@@ -64,7 +68,7 @@ class _ExcellentCoursePageState extends BaseState {
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height - 130.0,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -83,7 +87,7 @@ class _ExcellentCoursePageState extends BaseState {
           getPersonal(courseInfo),
           getWords(courseInfo.words),
           getCourse(courseInfo),
-          getTime(courseInfo.time),
+          getTime(courseInfo),
           getBtn(courseInfo),
           LinsUtils.getWidthLins(context,height: 10.0)
         ],
@@ -105,22 +109,29 @@ class _ExcellentCoursePageState extends BaseState {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(materialInfo.img,width: 40.0,height: 40.0,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text("${materialInfo.cname}",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.textSize
-                  ),),
-                Text("${materialInfo.cname}",
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: DefaultValue.smallTextSize
-                  ),),
-              ],
+            Image.network(materialInfo.fcover,width: 40.0,height: 40.0,),
+            Container(
+              margin: EdgeInsets.only(left: DefaultValue.leftMargin),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("${materialInfo.pname}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: DefaultValue.textSize,
+                    ),),
+                  Text("${materialInfo.words}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: DefaultValue.smallTextSize
+                    ),),
+                ],
+              ),
             ),
           ],
         ),
@@ -165,7 +176,7 @@ class _ExcellentCoursePageState extends BaseState {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child: Image.asset("images/home04_8jingdiansucai_zan.png",width: 20.0,height: 20.0,),
+                      child: materialInfo.status == 1 ? Image.asset("images/home04_8jingdiansucai_zan.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home04_8jingdiansucai_zan.png",width: 20.0,height: 20.0,color: Colors.black,),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: DefaultValue.topMargin),
@@ -211,7 +222,7 @@ class _ExcellentCoursePageState extends BaseState {
             flex: 1,
             child: GestureDetector(
               onTap: (){
-
+                getShare(materialInfo.pid);
               },
               child:Container(
                 alignment: Alignment.center,
@@ -248,22 +259,31 @@ class _ExcellentCoursePageState extends BaseState {
         ),),
     );
   }
-  Widget getTime(var time){
+  Widget getTime(CourseInfo materialInfo){
     return Container(
       padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(time,
+          Text(materialInfo.time,
             style: TextStyle(
                 color: Colors.grey,
                 fontSize: DefaultValue.textSize
             ),),
-          Text("查看详情",
-            style: TextStyle(
-                color: Colors.red,
-                fontSize: DefaultValue.textSize
-            ),)
+          GestureDetector(
+            onTap: (){
+              if(materialInfo.type == 1){
+                NavigatorUtils.push(context, new VideoPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+              }else{
+                NavigatorUtils.push(context, new AudioPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+              }
+            },
+            child: Text("查看详情",
+              style: TextStyle(
+                  color: Colors.red,
+                  fontSize: DefaultValue.textSize
+              ),),
+          )
         ],
       ),
     );
@@ -271,6 +291,7 @@ class _ExcellentCoursePageState extends BaseState {
 
   Widget getPersonal(CourseInfo materialInfo){
     return Container(
+      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
         children: <Widget>[
           getHeadImg(materialInfo.photo),
@@ -309,7 +330,7 @@ class _ExcellentCoursePageState extends BaseState {
   Widget getHead(){
     return Container(
       color: Colors.white,
-      height: 40.0,
+      height: 50.0,
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
         children: <Widget>[
@@ -317,7 +338,7 @@ class _ExcellentCoursePageState extends BaseState {
           Expanded(
             flex: 1,
             child: Container(
-              height: 40.0,
+              height: 50.0,
 //              padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,),
               padding: EdgeInsets.all(2.0),
@@ -336,14 +357,13 @@ class _ExcellentCoursePageState extends BaseState {
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(left: DefaultValue.leftMargin),
-                      height: 30.0,
+                      height: 40.0,
                       child: TextField(
                         controller: controller,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(2.0),
                           border: InputBorder.none,
                           hintText: '请输入关键字',
-                          prefixStyle: new TextStyle(height: 20.0),
                           hintStyle: new TextStyle(color: Colors.grey,fontSize: DefaultValue.messageTextSize),
                         ),
                         onSubmitted: (text){
@@ -434,5 +454,107 @@ class _ExcellentCoursePageState extends BaseState {
         ),
       ),
     );
+  }
+  Widget getShare(var id){
+    showModalBottomSheet(context: context, builder: (BuildContext context){
+      return StatefulBuilder(builder: (context, state) {
+        return Container(
+          height: 207.0,
+          color: ColorsUtil.GreyDialogBg,
+          padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("分享给家长或老师",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: DefaultValue.textSize
+                ),),
+              Container(
+                margin: EdgeInsets.only(top: 25.0,bottom: 25.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                        scene = fluwx.WeChatScene.SESSION;
+                        getShareData(id);
+                      },
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("微信好友",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
+                        margin: EdgeInsets.only(right: 50.0),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                        scene = fluwx.WeChatScene.TIMELINE;
+                        getShareData(id);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 50.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("朋友圈",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              LinsUtils.getWidthLins(context),
+              Container(
+                child: Text("取消",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: DefaultValue.textSize
+                  ),),
+                margin: EdgeInsets.only(top: DefaultValue.topMargin),
+
+              )
+            ],
+          ),
+        );
+      });
+    });
+  }
+  void getShareData(var id){
+    api.getShearData(id.toString(), (data){
+      setState(() {
+        this.shareInfo = data;
+      });
+      var model = fluwx.WeChatShareWebPageModel(
+        webPage: shareInfo.re.address,
+        title: shareInfo.re.name,
+        thumbnail: shareInfo.re.vcover,
+        scene: scene,
+        description: shareInfo.re.words,);
+      fluwx.share(model);
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
   }
 }

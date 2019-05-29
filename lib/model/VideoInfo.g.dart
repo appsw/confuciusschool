@@ -36,7 +36,8 @@ Re _$ReFromJson(Map<String, dynamic> json) {
       json['id'] as int,
       json['comment'] as int,
       json['vcover'] as String,
-      json['address'] as String);
+      json['address'] as String,
+      json['name'] as String);
 }
 
 Map<String, dynamic> _$ReToJson(Re instance) => <String, dynamic>{
@@ -46,7 +47,8 @@ Map<String, dynamic> _$ReToJson(Re instance) => <String, dynamic>{
       'id': instance.id,
       'comment': instance.comment,
       'vcover': instance.vcover,
-      'address': instance.address
+      'address': instance.address,
+      'name': instance.name
     };
 
 Sql _$SqlFromJson(Map<String, dynamic> json) {

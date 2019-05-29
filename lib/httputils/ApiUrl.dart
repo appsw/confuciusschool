@@ -37,6 +37,7 @@ class ApiUrl{
   static final String getMyTeam= "/index/govern/myteam";
   static final String getMyTeamMember= "/index/govern/team";
   static final String getSignInShow= "/index/Opera/show";
+  static final String getSignInImage= "/index/Opera/wechat";
   static final String changeSigninImg= "/index/Opera/img";
   static final String changeSigninText= "/index/Opera/words";
   static final String changeBrand= "/index/Opera/rimg";
@@ -56,7 +57,7 @@ class ApiUrl{
   static final String getMyCollection= "/index/plate/collection";
   static final String getAbout= "/index/Opera/about";
   static final String getSeachAudioByName = "/index/plate/yseach";
-  static final String getEntrepreneurship = "/index/plate/create";
+  static final String getEntrepreneurship = "/index/plate/dcreate";
   static final String getAgent = "/index/plate/dcreate";
   static final String getPutCashData= "/index/Opera/showcash";
   static final String getBankInfoList= "/index/member/bank";
@@ -82,6 +83,7 @@ class ApiUrl{
   static final String getRegistAgreement= "/index/hopen/zhu";
   static final String getVideoZan= "/index/plate/give";
   static final String getVideoShou= "/index/plate/mplementi";
-
+  static final String getShearData= "/index/plate/yshare";
+  static final String getPayData= "/index/plate/payment";
 
 }

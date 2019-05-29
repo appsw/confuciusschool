@@ -48,13 +48,13 @@ class Sc extends Object {
   @JsonKey(name: 'name')
   String name;
 
-  @JsonKey(name: 'hvcover')
-  String hvcover;
+  @JsonKey(name: 'hcover')
+  String hcover;
 
   @JsonKey(name: 'words')
   String words;
 
-  Sc(this.id,this.currid,this.name,this.hvcover,this.words,);
+  Sc(this.id,this.currid,this.name,this.hcover,this.words,);
 
   factory Sc.fromJson(Map<String, dynamic> srcJson) => _$ScFromJson(srcJson);
 

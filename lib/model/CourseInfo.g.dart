@@ -11,19 +11,18 @@ CourseInfo _$CourseInfoFromJson(Map<String, dynamic> json) {
       json['id'] as int,
       json['name'] as String,
       json['photo'] as String,
-      json['zed'] as String,
-      json['userid'] as int,
-      json['cname'] as String,
-      json['words'] as String,
-      json['type'] as int,
-      json['pid'] as int,
       json['createTime'] as String,
-      json['updateTime'] as String,
+      json['zed'] as String,
+      json['words'] as String,
+      json['pwords'] as String,
+      json['type'] as int,
+      json['pid'] as String,
       json['fnum'] as int,
-      json['img'] as String,
+      json['fcover'] as String,
+      json['currid'] as int,
+      json['pname'] as String,
       json['time'] as String,
-      json['status'] as int,
-      json['currid'] as int);
+      json['status'] as int);
 }
 
 Map<String, dynamic> _$CourseInfoToJson(CourseInfo instance) =>
@@ -31,17 +30,16 @@ Map<String, dynamic> _$CourseInfoToJson(CourseInfo instance) =>
       'id': instance.id,
       'name': instance.name,
       'photo': instance.photo,
+      'createTime': instance.createTime,
       'zed': instance.zed,
-      'userid': instance.userid,
-      'cname': instance.cname,
       'words': instance.words,
+      'pwords': instance.pwords,
       'type': instance.type,
       'pid': instance.pid,
-      'createTime': instance.createTime,
-      'updateTime': instance.updateTime,
       'fnum': instance.fnum,
-      'img': instance.img,
+      'fcover': instance.fcover,
+      'currid': instance.currid,
+      'pname': instance.pname,
       'time': instance.time,
-      'status': instance.status,
-      'currid': instance.currid
+      'status': instance.status
     };

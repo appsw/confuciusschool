@@ -22,35 +22,35 @@ class CourseInfo extends Object {
   @JsonKey(name: 'photo')
   String photo;
 
+  @JsonKey(name: 'createTime')
+  String createTime;
+
   @JsonKey(name: 'zed')
   String zed;
 
-  @JsonKey(name: 'userid')
-  int userid;
-
-  @JsonKey(name: 'cname')
-  String cname;
-
   @JsonKey(name: 'words')
   String words;
+
+  @JsonKey(name: 'pwords')
+  String pwords;
 
   @JsonKey(name: 'type')
   int type;
 
   @JsonKey(name: 'pid')
-  int pid;
-
-  @JsonKey(name: 'createTime')
-  String createTime;
-
-  @JsonKey(name: 'updateTime')
-  String updateTime;
+  String pid;
 
   @JsonKey(name: 'fnum')
   int fnum;
 
-  @JsonKey(name: 'img')
-  String img;
+  @JsonKey(name: 'fcover')
+  String fcover;
+
+  @JsonKey(name: 'currid')
+  int currid;
+
+  @JsonKey(name: 'pname')
+  String pname;
 
   @JsonKey(name: 'time')
   String time;
@@ -58,10 +58,7 @@ class CourseInfo extends Object {
   @JsonKey(name: 'status')
   int status;
 
-  @JsonKey(name: 'currid')
-  int currid;
-
-  CourseInfo(this.id,this.name,this.photo,this.zed,this.userid,this.cname,this.words,this.type,this.pid,this.createTime,this.updateTime,this.fnum,this.img,this.time,this.status,this.currid,);
+  CourseInfo(this.id,this.name,this.photo,this.createTime,this.zed,this.words,this.pwords,this.type,this.pid,this.fnum,this.fcover,this.currid,this.pname,this.time,this.status,);
 
   factory CourseInfo.fromJson(Map<String, dynamic> srcJson) => _$CourseInfoFromJson(srcJson);
 

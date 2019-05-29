@@ -35,9 +35,14 @@ class LoginPage extends BasefulWidget{
       print(data.code);
       api.weixinLogin(data.code, (msg){
         ToastUtil.makeToast(msg);
+        SharedPreferencesUtil.saveString(Constant.ISLOGIN,"1",(bool result){
+          if(result){
+            NavigatorUtils.pushAndRemoveUntil(context, new IndexPage());
+          }
+        });
       }, (msg){
-        ToastUtil.makeToast(msg);
-        NavigatorUtils.push(context, new BindWeChatPage(data.code));
+//        ToastUtil.makeToast(msg);
+        NavigatorUtils.push(context, new BindWeChatPage(msg));
       });
     });
   }

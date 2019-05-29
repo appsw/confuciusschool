@@ -1,6 +1,7 @@
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/dialog/BeComeVipDialog.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
+import 'package:confuciusschool/model/ShareInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/page/BecomeVipPage.dart';
 import 'package:confuciusschool/page/CommentPage.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/widgets.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class VideoPlayPage extends StatefulWidget {
   String currid;
@@ -30,11 +32,14 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   String id;
   VideoInfo data;
   IntroductionInfo introductionInfo;
+
   _VideoPlayPageState(this.currid,this.id);
   bool autoPlay = true;
   var tableNames = ["简介","目录","图文"];
   var tabNumber = 1;
   VideoPlayerController videoPlayerController;
+  fluwx.WeChatScene scene;
+  ShareInfo shareInfo;
 
   ChewieController chewieController;
 
@@ -125,7 +130,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
           getVideo(),
           getTables(context),
           getBottomBody(),
-          getBottomTitle()
+
         ],
       ),
     );
@@ -144,7 +149,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: Text("规范学习",
+                child: Text("${data.re.name}",
                 style: TextStyle(
                   fontSize: DefaultValue.titleTextSize,
                   color: Colors.white
@@ -237,11 +242,15 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
                           margin: EdgeInsets.only(bottom: 5.0),
                           child: Row(
                             children: <Widget>[
-                              Text("${sql.key}.${sql.name}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15.0
-                                ),),
+                              Container(
+                                child: Text("${sql.key}.${sql.name}",
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15.0
+                                  ),),
+                                width: 160.0,
+                              ),
                               getLabel(sql.level)
                             ],
                           ),
@@ -300,7 +309,6 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
             child: Html(
               data: videoText,
               //Optional parameters:
-              padding: EdgeInsets.all(8.0),
               backgroundColor: Colors.white70,
               defaultTextStyle: TextStyle(fontFamily: 'serif'),
               linkStyle: const TextStyle(
@@ -319,155 +327,160 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   Widget getBottomNavigationBar(BuildContext context) {
     // TODO: implement getBottomNavigationBar
     return data == null ? Container() : Container(
-      height: 50.0,
-      child: Row(
+      height: 120.0,
+      child: Column(
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset("images/all_back.png",width: 10.0,height: 20.0,),
-                    Container(
-                      margin: EdgeInsets.only(top: 5.0),
-                      child: Text("返回",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                    )
+          getBottomTitle(),
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset("images/all_back.png",width: 10.0,height: 20.0,),
+                        Container(
+                          margin: EdgeInsets.only(top: 5.0),
+                          child: Text("返回",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        )
 
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: GestureDetector(
-              onTap: (){
-                NavigatorUtils.push(context, new CommentPage(id));
-              },
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset("images/home01_5kanshipin_pinglun.png",width: 20.0,height: 20.0,),
-                    Container(
-                      margin: EdgeInsets.only(top: 5.0),
-                      child: Text(data.re.comment.toString(),
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                    )
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: (){
+                    NavigatorUtils.push(context, new CommentPage(id));
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset("images/home01_5kanshipin_pinglun.png",width: 20.0,height: 20.0,),
+                        Container(
+                          margin: EdgeInsets.only(top: 5.0),
+                          child: Text(data.re.comment.toString(),
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        )
 
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: GestureDetector(
-              onTap: (){
-                var type = "1";
-                if(data.state == 1){
-                  type = "2";
-                }
-                api.getVideoShou(id, "2",type, (msg){
-                  ToastUtil.makeToast(msg);
-                  if(data.state == 1){
-                    setState(() {
-                      data.state = 2;
-                      data.re.collection --;
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: (){
+                    var type = "1";
+                    if(data.state == 1){
+                      type = "2";
+                    }
+                    api.getVideoShou(id, "1",type, (msg){
+                      ToastUtil.makeToast(msg);
+                      if(data.state == 1){
+                        setState(() {
+                          data.state = 2;
+                          data.re.collection --;
+                        });
+                      }else{
+                        setState(() {
+                          data.state = 1;
+                          data.re.collection ++;
+                        });
+                      }
+                    }, (msg){
+                      ToastUtil.makeToast(msg);
                     });
-                  }else{
-                    setState(() {
-                      data.state = 1;
-                      data.re.collection ++;
-                    });
-                  }
-                }, (msg){
-                  ToastUtil.makeToast(msg);
-                });
 
-              },
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    data.state == 1 ? Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.grey,),
-                    Container(
-                      margin: EdgeInsets.only(top: 5.0),
-                      child: Text(data.re.collection.toString(),
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                    )
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        data.state == 1 ? Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_shoucang_xuanzhong.png",width: 20.0,height: 20.0,color: Colors.grey,),
+                        Container(
+                          margin: EdgeInsets.only(top: 5.0),
+                          child: Text(data.re.collection.toString(),
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        )
 
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: GestureDetector(
-              onTap: (){
+              Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  onTap: (){
 
-                var type = "1";
-                if(data.status == 1){
-                  type = "2";
-                }
-                api.getVideoZan(id, type, (msg){
-                  ToastUtil.makeToast(msg);
-                  if(data.status == 1){
-                    setState(() {
-                      data.status = 2;
-                      data.re.fabulous --;
+                    var type = "1";
+                    if(data.status == 1){
+                      type = "2";
+                    }
+                    api.getVideoZan(id, type, (msg){
+                      ToastUtil.makeToast(msg);
+                      if(data.status == 1){
+                        setState(() {
+                          data.status = 2;
+                          data.re.fabulous --;
+                        });
+                      }else{
+                        setState(() {
+                          data.status = 1;
+                          data.re.fabulous ++;
+                        });
+                      }
+                    }, (msg){
+                      ToastUtil.makeToast(msg);
                     });
-                  }else{
-                    setState(() {
-                      data.status = 1;
-                      data.re.fabulous ++;
-                    });
-                  }
-                }, (msg){
-                  ToastUtil.makeToast(msg);
-                });
-              },
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    data.status == 1 ? Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.grey,),
-                    Container(
-                      margin: EdgeInsets.only(top: 5.0),
-                      child: Text(data.re.fabulous.toString(),
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                    )
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        data.status == 1 ? Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home01_5kanshipin_dianzan.png",width: 20.0,height: 20.0,color: Colors.grey,),
+                        Container(
+                          margin: EdgeInsets.only(top: 5.0),
+                          child: Text(data.re.fabulous.toString(),
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                        )
 
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
-      ),
+      )
     );
   }
   Widget getTables(BuildContext context){
@@ -582,38 +595,50 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
-                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
-                          ),
-                          Text("微信好友",
-                            style: TextStyle(
-                                color: ColorsUtil.GreyTextColor,
-                                fontSize: DefaultValue.textSize
-                            ),)
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        scene = fluwx.WeChatScene.SESSION;
+                        getShareData(data.re.id);
+                      },
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("微信好友",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
+                        margin: EdgeInsets.only(right: 50.0),
                       ),
-                      margin: EdgeInsets.only(right: 50.0),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 50.0),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
-                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
-                          ),
-                          Text("朋友圈",
-                            style: TextStyle(
-                                color: ColorsUtil.GreyTextColor,
-                                fontSize: DefaultValue.textSize
-                            ),)
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        scene = fluwx.WeChatScene.TIMELINE;
+                        getShareData(data.re.id);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 50.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("朋友圈",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -631,6 +656,22 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
           ),
         );
       });
+    });
+  }
+  void getShareData(var id){
+    api.getShearData(id.toString(), (data){
+      setState(() {
+        this.shareInfo = data;
+      });
+      var model = fluwx.WeChatShareWebPageModel(
+        webPage: shareInfo.re.address,
+        title: shareInfo.re.name,
+        thumbnail: shareInfo.re.vcover,
+        scene: scene,
+        description: shareInfo.re.words,);
+      fluwx.share(model);
+    }, (msg){
+      ToastUtil.makeToast(msg);
     });
   }
   Widget getBottomTitle(){

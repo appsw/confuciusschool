@@ -44,7 +44,7 @@ class _PutCashPageState extends BaseState {
       });
     }, (msg){
       ToastUtil.makeToast(msg);
-      AddBank();
+//      AddBank();
     });
   }
   @override
@@ -60,12 +60,17 @@ class _PutCashPageState extends BaseState {
       child: Column(
         children: <Widget>[
           data.bank.length == 0 ?
-          Container(
-            height: 60.0,
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.center,
-            child: Text("请先添加银行卡"),
-          ) :
+          GestureDetector(
+          onTap: (){
+              AddBank();
+            },
+            child: Container(
+              height: 60.0,
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: Text("请先添加银行卡"),
+            ),
+      ) :
           GestureDetector(
             onTap: (){
               ChosePutCashBankDialog.showBottomDialog(context, data.bank, (bank){

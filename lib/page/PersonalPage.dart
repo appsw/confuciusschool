@@ -78,17 +78,17 @@ class _PersonalPageState extends BaseState {
         NavigatorUtils.push(context, new ExtensionPage());
       },
       child: Container(
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
-        margin: EdgeInsets.only(top: DefaultValue.topMargin),
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: 20.0),
         color: Colors.white,
         child: Column(
           children: <Widget>[
+            Image.asset("images/hu.png",height: 8.0,width: MediaQuery.of(context).size.width,fit: BoxFit.fill,),
             Row(
               children: <Widget>[
                 Expanded(
                   flex: 1,
                   child: Container(
-                    margin: EdgeInsets.only(right: 5.0),
+                    margin: EdgeInsets.only(right: 5.0,top: 20.0),
                     decoration: new BoxDecoration(
                         border: new Border.all(width: 1.0,color:Colors.red ),
                         color: Colors.white,
@@ -123,7 +123,7 @@ class _PersonalPageState extends BaseState {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    margin: EdgeInsets.only(left: 5.0),
+                    margin: EdgeInsets.only(left: 5.0,top: 20.0),
                     decoration: new BoxDecoration(
                         border: new Border.all(width: 1.0,color:ColorsUtil.PersionalYellow ),
                         color: ColorsUtil.PersionalYellow,
@@ -377,7 +377,7 @@ class _PersonalPageState extends BaseState {
   }
   Widget getTop(){
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: 8.0),
       padding: EdgeInsets.only(left: 11.0,right: 13.0),
 //      decoration: new BoxDecoration(
 //          color:Colors.white,
@@ -401,7 +401,7 @@ class _PersonalPageState extends BaseState {
   }
   Widget getBottom(){
     return Container(
-      margin: EdgeInsets.only(top: 15.0),
+      margin: EdgeInsets.only(top: 8.0),
       padding: EdgeInsets.only(left: 11.0,right: 13.0),
 //      decoration: new BoxDecoration(
 //          color:Colors.white,
@@ -503,7 +503,6 @@ class _PersonalPageState extends BaseState {
   }
   Widget getBtn(){
     return Container(
-      margin: EdgeInsets.only(top: DefaultValue.topMargin),
       color: Colors.white,
       child: Row(
         children: <Widget>[

@@ -3,6 +3,7 @@ import 'package:confuciusschool/dialog/LoadingDialog.dart';
 import 'package:confuciusschool/model/CommentInfo.dart';
 import 'package:confuciusschool/utils/ColorsUtil.dart';
 import 'package:confuciusschool/utils/DefaultValue.dart';
+import 'package:confuciusschool/utils/LinsUtils.dart';
 import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
@@ -173,7 +174,8 @@ class _EntrepreneurCommentPageState extends BaseState {
           ),
           commentInfo.replay.length == 0 ? Container() : Container(
             child: getReplayList(commentInfo),
-          )
+          ),
+          LinsUtils.getWidthLins(context)
         ],
       ),
     );
@@ -181,10 +183,11 @@ class _EntrepreneurCommentPageState extends BaseState {
   Widget getReplayList(CommentInfo commentInfo){
 
     return Container(
-      height: 70.0 * commentInfo.replay.length,
+      height: 75.0 * commentInfo.replay.length,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context,int index){
             return getReplayRow(context, index,commentInfo);
           },

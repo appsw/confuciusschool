@@ -64,7 +64,7 @@ class _ExtensionPageState extends BaseState {
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-            child: Image.network(url,width: MediaQuery.of(context).size.width,),
+            child: Image.network(url,width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,fit: BoxFit.fill,),
           ),
           Container(
             alignment: Alignment.bottomCenter,

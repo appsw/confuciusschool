@@ -4,6 +4,7 @@ import 'package:confuciusschool/anims/record_anim.dart';
 import 'package:confuciusschool/base/BaseState.dart';
 import 'package:confuciusschool/dialog/BeComeVipDialog.dart';
 import 'package:confuciusschool/model/IntroductionInfo.dart';
+import 'package:confuciusschool/model/ShareInfo.dart';
 import 'package:confuciusschool/model/VideoInfo.dart';
 import 'package:confuciusschool/page/BecomeVipPage.dart';
 import 'package:confuciusschool/page/CommentPage.dart';
@@ -16,6 +17,7 @@ import 'package:confuciusschool/utils/NavigatorUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class AudioPlayPage extends StatefulWidget {
   String currid;
@@ -40,6 +42,8 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
   final _commonTween = new Tween<double>(begin: 0.0, end: 1.0);
   final GlobalKey<PlayerState> musicPlayerKey = new GlobalKey();
   var mp3Url = 'http://music.163.com/song/media/outer/url?id=451703096.mp3';
+  fluwx.WeChatScene scene;
+  ShareInfo shareInfo;
 
 
 
@@ -198,11 +202,15 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                           margin: EdgeInsets.only(bottom: 5.0),
                           child: Row(
                             children: <Widget>[
-                              Text("${sql.key}.${sql.name}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: DefaultValue.titleTextSize
-                                ),),
+                              Container(
+                                child: Text("${sql.key}.${sql.name}",
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: DefaultValue.titleTextSize
+                                  ),),
+                                width: 160.0,
+                              ),
                               getLabel(sql.level)
                             ],
                           ),
@@ -569,7 +577,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: Text("规范学习",
+                child: Text("${data.re.name}",
                   style: TextStyle(
                       fontSize: DefaultValue.titleTextSize,
                       color: Colors.black
@@ -609,38 +617,50 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
-                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
-                          ),
-                          Text("微信好友",
-                            style: TextStyle(
-                                color: ColorsUtil.GreyTextColor,
-                                fontSize: DefaultValue.textSize
-                            ),)
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        scene = fluwx.WeChatScene.SESSION;
+                        getShareData(data.re.id);
+                      },
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_weixin.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("微信好友",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
+                        margin: EdgeInsets.only(right: 50.0),
                       ),
-                      margin: EdgeInsets.only(right: 50.0),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 50.0),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
-                            margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
-                          ),
-                          Text("朋友圈",
-                            style: TextStyle(
-                                color: ColorsUtil.GreyTextColor,
-                                fontSize: DefaultValue.textSize
-                            ),)
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                        scene = fluwx.WeChatScene.TIMELINE;
+                        getShareData(data.re.id);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 50.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Image.asset("images/home04_4_4jifendakafenxiang_pengyouquan.png"),
+                              margin: EdgeInsets.only(bottom: DefaultValue.bottomMargin),
+                            ),
+                            Text("朋友圈",
+                              style: TextStyle(
+                                  color: ColorsUtil.GreyTextColor,
+                                  fontSize: DefaultValue.textSize
+                              ),)
+                          ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -658,6 +678,22 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
           ),
         );
       });
+    });
+  }
+  void getShareData(var id){
+    api.getShearData(id.toString(), (data){
+      setState(() {
+        this.shareInfo = data;
+      });
+      var model = fluwx.WeChatShareWebPageModel(
+        webPage: shareInfo.re.address,
+        title: shareInfo.re.name,
+        thumbnail: shareInfo.re.vcover,
+        scene: scene,
+        description: shareInfo.re.words,);
+      fluwx.share(model);
+    }, (msg){
+      ToastUtil.makeToast(msg);
     });
   }
 

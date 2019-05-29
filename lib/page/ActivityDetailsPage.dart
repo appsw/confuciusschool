@@ -5,6 +5,7 @@ import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ActivityDetailsPage extends StatefulWidget {
   int id;
@@ -39,27 +40,20 @@ class _ActivityDetailsPageState extends BaseState {
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return data == null ? LoadingUtils.getRingLoading() : SingleChildScrollView(
-      child: Container(
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text("${data.title}",
-              style: TextStyle(
-                  color: Colors.red,
-                  fontSize: DefaultValue.titleTextSize
-              ),),
-            Text("${data.uedtext}",
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: DefaultValue.textSize
-              ),),
-            Image.network("${data.img}",width: MediaQuery.of(context).size.width,)
-          ],
+    return data == null ? LoadingUtils.getRingLoading() : Container(
+      height: MediaQuery.of(context).size.height,
+      color: Colors.white,
+      child: Html(
+        data: data.uedtext,
+        //Optional parameters:
+        backgroundColor: Colors.white70,
+        defaultTextStyle: TextStyle(fontFamily: 'serif'),
+        linkStyle: const TextStyle(
+          color: Colors.redAccent,
         ),
+        onLinkTap: (url) {
+          // open url in a webview
+        },
       ),
     );
   }

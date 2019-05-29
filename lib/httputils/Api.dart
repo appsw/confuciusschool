@@ -28,6 +28,7 @@ import 'package:confuciusschool/model/MyTeamMemberInfo.dart';
 import 'package:confuciusschool/model/NewsInfo.dart';
 import 'package:confuciusschool/model/PersonalInfo.dart';
 import 'package:confuciusschool/model/PutCashDataInfo.dart';
+import 'package:confuciusschool/model/ShareInfo.dart';
 import 'package:confuciusschool/model/ShopInfo.dart';
 import 'package:confuciusschool/model/SignInShowInfo.dart';
 import 'package:confuciusschool/model/SigninInfo.dart';
@@ -331,6 +332,13 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void getSignInImage(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getSignInImage,(BaseResponse response){
+      SignInShowInfo data = SignInShowInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
   void upLoadImg(File file,Function callback,Function errorCallBack){
     params.clear();
     params["img"] = file;
@@ -553,7 +561,7 @@ class Api extends CommonService{
   }
   void putGovernGoods(String mid,String type,String status,Function callback,Function errorCallBack){
     params.clear();
-    params["mid"] = mid;
+    params["cid"] = mid;
     params["type"] = type;
     params["status"] = status;
     request(ApiUrl.putGovernGoods,(BaseResponse response){
@@ -663,6 +671,25 @@ class Api extends CommonService{
     params.clear();
     request(ApiUrl.getRegistAgreement,(BaseResponse response){
       callback(response.data["explain"]);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getShearData(String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["id"] = id;
+    request(ApiUrl.getShearData,(BaseResponse response){
+      ShareInfo data = ShareInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getPayData(String type,String paytype,String id,String integral,String money,Function callback,Function errorCallBack){
+    params.clear();
+    params["type"] = type;
+    params["paytype"] = paytype;
+    params["id"] = id;
+    params["integral"] = integral;
+    params["money"] = money;
+    request(ApiUrl.getPayData,(BaseResponse response){
+      callback(response.data["id"]);
     },method: POST,errorCallBack: errorCallBack);
   }
 }

@@ -134,7 +134,7 @@ class _MaterialPageState extends BaseState{
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child: Image.asset("images/home04_8jingdiansucai_zan.png",width: 20.0,height: 20.0,),
+                      child: materialInfo.status == 1 ? Image.asset("images/home04_8jingdiansucai_zan.png",width: 20.0,height: 20.0,color: Colors.red,) : Image.asset("images/home04_8jingdiansucai_zan.png",width: 20.0,height: 20.0,color: Colors.black,),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: DefaultValue.topMargin),
@@ -208,7 +208,10 @@ class _MaterialPageState extends BaseState{
             flex: 1,
             child: GestureDetector(
               onTap: (){
-
+                for(int i = 0;i< materialInfo.video.length;i++){
+                  saveImg(materialInfo.video[i],i,materialInfo.video.length);
+                }
+                copy(materialInfo.mname);
                },
               child:Container(
                 alignment: Alignment.center,

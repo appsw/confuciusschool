@@ -31,13 +31,15 @@ class _RegistAgreementPageState extends BaseState {
   @override
   Widget getBody(BuildContext context) {
     // TODO: implement getBody
-    return Container(
-      padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-      child: Text("${text}",
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: DefaultValue.textSize
-      ),),
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+        child: Text("${text}",
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: DefaultValue.textSize
+          ),),
+      ),
     );
   }
 }

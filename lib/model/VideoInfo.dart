@@ -54,7 +54,12 @@ class Re extends Object {
   @JsonKey(name: 'address')
   String address;
 
-  Re(this.duration,this.fabulous,this.collection,this.id,this.comment,this.vcover,this.address,);
+  @JsonKey(name: 'name')
+  String name;
+
+
+
+  Re(this.duration,this.fabulous,this.collection,this.id,this.comment,this.vcover,this.address,this.name);
 
   factory Re.fromJson(Map<String, dynamic> srcJson) => _$ReFromJson(srcJson);
 

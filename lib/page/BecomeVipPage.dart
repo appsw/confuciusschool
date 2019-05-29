@@ -168,8 +168,23 @@ class _BecomeVipPageState extends BaseState {
       margin: EdgeInsets.only(top: 20.0),
       child: FlatButton(
         onPressed: (){
-
-          print('点击3333333333333333333333333333333333333333333333333333333333333333333333333333333');
+          var paytype = "1";
+          switch(payType){
+            case 0:
+              paytype = "2";
+              break;
+            case 1:
+              paytype = "3";
+              break;
+            case 2:
+              paytype = "4";
+              break;
+          }
+          api.getPayData("1", paytype, "", "", "${data.vip}", (orderid){
+            print(orderid);
+          }, (msg){
+            ToastUtil.makeToast(msg);
+          });
         },
         color: ColorsUtil.LogBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:10.0,bottom: 10.0,left: 100.0,right: 100.0),//按钮距离里面内容的内边距

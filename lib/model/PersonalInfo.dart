@@ -30,10 +30,19 @@ class PersonalInfo extends Object {
   @JsonKey(name: 'ename')
   String ename;
 
+  @JsonKey(name: 'bid')
+  int bid;
+
+  @JsonKey(name: 'did')
+  int did;
+
+  @JsonKey(name: 'eid')
+  int eid;
+
   @JsonKey(name: 'invitecode')
   String invitecode;
 
-  PersonalInfo(this.nickName,this.profilePhoto,this.account,this.sex,this.birth,this.bname,this.dname,this.ename,this.invitecode,);
+  PersonalInfo(this.nickName,this.profilePhoto,this.account,this.sex,this.birth,this.bname,this.dname,this.ename,this.bid,this.did,this.eid,this.invitecode,);
 
   factory PersonalInfo.fromJson(Map<String, dynamic> srcJson) => _$PersonalInfoFromJson(srcJson);
 

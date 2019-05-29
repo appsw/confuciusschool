@@ -204,7 +204,7 @@ class _AddBankPageState extends BaseState {
   }
   Widget getBtn(){
     return Container(
-      margin: EdgeInsets.only(top: 140.0),
+      margin: EdgeInsets.only(top: 140.0,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: FlatButton(
         onPressed: (){
           addBank();
@@ -212,7 +212,10 @@ class _AddBankPageState extends BaseState {
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
-        child: new Text('确定添加',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.center,
+          child: new Text('确定添加',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题
         shape: RoundedRectangleBorder(
