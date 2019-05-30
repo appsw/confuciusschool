@@ -81,7 +81,8 @@ class _ChangePhonePageState extends BaseState {
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
         padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 100.0,right: 100.0),//按钮距离里面内容的内边距
-        child: new Text('更换绑定手机号',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
+        child: new Text('更换绑定手机号',
+          maxLines: 1,style: TextStyle(fontSize: DefaultValue.loginBtnSize),),
         textColor: Colors.white,//文字的颜色
         textTheme:ButtonTextTheme.normal ,//按钮的主题
         shape: RoundedRectangleBorder(

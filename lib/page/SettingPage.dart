@@ -292,7 +292,9 @@ class SettingPage extends BasefulWidget{
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.center,
-                  child: new Text('退出登录',style: TextStyle(fontSize: DefaultValue.loginBtnSize),),),
+                  child: new Text('退出登录',
+                    maxLines: 1,
+                    style: TextStyle(fontSize: DefaultValue.loginBtnSize),),),
                 textColor: Colors.white,//文字的颜色
                 textTheme:ButtonTextTheme.normal ,//按钮的主题
                 shape: RoundedRectangleBorder(
