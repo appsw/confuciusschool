@@ -149,7 +149,7 @@ class SignInPage extends BasefulWidget{
                 children: <Widget>[
                   Image.asset("images/home04_4_1jifendaka_img1.png",),
                   Container(
-                    height: 420,
+                    height: 490,
                     child: Column(
                       children: <Widget>[
                         Expanded(
@@ -265,6 +265,7 @@ class SignInPage extends BasefulWidget{
               alignment: Alignment.center,
               child: Text(data.sql.brand,
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     color: ColorsUtil.GreyTextColor,
                     fontSize: DefaultValue.smallTextSize
@@ -614,10 +615,12 @@ class SignInPage extends BasefulWidget{
     });
   }
   Widget getShare(){
+    var bottomPadding = MediaQuery.of(context).padding.bottom;
     showModalBottomSheet(context: context, builder: (BuildContext context){
       return StatefulBuilder(builder: (context, state) {
         return Container(
-          height: 207.0,
+          margin: EdgeInsets.only(bottom: bottomPadding),
+          height: 210.0,
           color: ColorsUtil.GreyDialogBg,
           padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
           child: Column(

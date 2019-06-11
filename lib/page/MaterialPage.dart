@@ -61,15 +61,14 @@ class _MaterialPageState extends BaseState{
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height - 140.0,
 
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
-          controller: controllerScroll,
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: getRow,
-          itemCount: data.length,
-          scrollDirection: Axis.vertical),
+          itemCount: data.length,),
     );
   }
   Widget getRow(BuildContext context,int index){

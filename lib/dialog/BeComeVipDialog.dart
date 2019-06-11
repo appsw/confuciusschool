@@ -65,11 +65,17 @@ class BeComeVipDialog extends Dialog{
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       GestureDetector(
-                        child: Text("关闭",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: DefaultValue.textSize
-                          ),),
+                        child: Container(
+                          child: Text("关闭",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                          height: 40.0,
+                          width: 100.0,
+                          alignment: Alignment.center,
+                          color: Colors.white,
+                        ),
                         onTap: (){
                           dismissLoadingDialog(context);
                           dismissLoadingDialog(context);
@@ -77,11 +83,17 @@ class BeComeVipDialog extends Dialog{
                       ),
                       LinsUtils.getHeightLins(context,height: 40.0),
                       GestureDetector(
-                        child: Text("开通VIP",
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontSize: DefaultValue.textSize
-                          ),),
+                        child: Container(
+                          child: Text("开通VIP",
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: DefaultValue.textSize
+                            ),),
+                          height: 40.0,
+                          width: 100.0,
+                          alignment: Alignment.center,
+                          color: Colors.white,
+                        ),
                         onTap: (){
                           dismissLoadingDialog(context);
                           dismissLoadingDialog(context);

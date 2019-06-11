@@ -95,9 +95,9 @@ class _NewsPageState extends BaseState {
       ),
       onTap: (){
         if(newsInfo.type == 1){
-          NavigatorUtils.push(context, new VideoPlayPage(newsInfo.currid.toString(),newsInfo.id.toString()));
+          NavigatorUtils.push(context, new VideoPlayPage(newsInfo.currid.toString(),newsInfo.pid.toString(),1));
         }else if(newsInfo.type == 2){
-          NavigatorUtils.push(context, new AudioPlayPage(newsInfo.currid.toString(),newsInfo.id.toString()));
+          NavigatorUtils.push(context, new AudioPlayPage(newsInfo.currid.toString(),newsInfo.pid.toString(),1));
         }else{
           NavigatorUtils.push(context, new NewsDetailPage(newsInfo));
         }

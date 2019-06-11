@@ -23,17 +23,19 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 class VideoPlayPage extends StatefulWidget {
   String currid;
   String id;
-  VideoPlayPage(this.currid,this.id);
+  int VideoType;
+  VideoPlayPage(this.currid,this.id,this.VideoType);
   @override
-  _VideoPlayPageState createState() => _VideoPlayPageState(this.currid,this.id);
+  _VideoPlayPageState createState() => _VideoPlayPageState(this.currid,this.id,this.VideoType);
 }
 class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   String currid;
   String id;
+  int VideoType;
   VideoInfo data;
   IntroductionInfo introductionInfo;
 
-  _VideoPlayPageState(this.currid,this.id);
+  _VideoPlayPageState(this.currid,this.id,this.VideoType);
   bool autoPlay = true;
   var tableNames = ["简介","目录","图文"];
   var tabNumber = 1;
@@ -75,25 +77,47 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
           autoPlay = true;
         });
       }
+      if(VideoType ==1){
+        api.getVideoDetail(currid, id, (data){
+          setState(() {
+            this.data = data;
 
-      api.getVideoDetail(currid, id, (data){
-        setState(() {
-          this.data = data;
-
-        });
-        if(data != null)
-          initVideo(data.re.address);
-        if(this.data.type == 3){
-          BeComeVipDialog.showLoadingDialog(context,(){
-            NavigatorUtils.push(context, new BecomeVipPage());
           });
-        }else if(this.data.type == 2){
-          ToastUtil.makeToast("请升级为代理");
-          Navigator.pop(context);
-        }
-      }, (msg){
-        ToastUtil.makeToast(msg);
-      });
+          if(data != null)
+            initVideo(data.re.address);
+          if(this.data.type == 3){
+            BeComeVipDialog.showLoadingDialog(context,(){
+              NavigatorUtils.push(context, new BecomeVipPage());
+            });
+          }else if(this.data.type == 2){
+            ToastUtil.makeToast("请升级为代理");
+            Navigator.pop(context);
+          }
+        }, (msg){
+          ToastUtil.makeToast(msg);
+        });
+      }else if(VideoType == 2){
+        api.getShopVideoDetail(currid, id, (data){
+          setState(() {
+            this.data = data;
+
+          });
+          if(data != null)
+            initVideo(data.re.address);
+          if(this.data.type == 3){
+            BeComeVipDialog.showLoadingDialog(context,(){
+              NavigatorUtils.push(context, new BecomeVipPage());
+            });
+          }else if(this.data.type == 2){
+            ToastUtil.makeToast("请升级为代理");
+            Navigator.pop(context);
+          }
+        }, (msg){
+          ToastUtil.makeToast(msg);
+        });
+      }
+
+
     });
 
     api.getVideoIntroduction(currid, (data){
@@ -220,7 +244,7 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
 //        Navigator.pop(context);
         videoPlayerController.pause();
         chewieController.pause();
-        NavigatorUtils.push(context, new VideoPlayPage(sql.currid.toString(), sql.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(sql.currid.toString(), sql.id.toString(),VideoType));
       },
       child: Column(
         children: <Widget>[
@@ -326,7 +350,9 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
   @override
   Widget getBottomNavigationBar(BuildContext context) {
     // TODO: implement getBottomNavigationBar
+    var bottomPadding = MediaQuery.of(context).padding.bottom;
     return data == null ? Container() : Container(
+      margin: EdgeInsets.only(bottom: bottomPadding),
       height: 120.0,
       child: Column(
         children: <Widget>[
@@ -575,10 +601,12 @@ class _VideoPlayPageState extends BaseState<VideoPlayPage> {
     chewieController.dispose();
   }
   Widget getShare(){
+    var bottomPadding = MediaQuery.of(context).padding.bottom;
     showModalBottomSheet(context: context, builder: (BuildContext context){
       return StatefulBuilder(builder: (context, state) {
         return Container(
-          height: 207.0,
+          height: 210.0,
+          margin: EdgeInsets.only(bottom: bottomPadding),
           color: ColorsUtil.GreyDialogBg,
           padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
           child: Column(

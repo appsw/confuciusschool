@@ -65,16 +65,17 @@ class _AncientChineseState extends BaseState {
   }
 
   Widget getHead(){
+    double topPadding = MediaQuery.of(context).padding.top;
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
       color: Colors.white,
+      margin: EdgeInsets.only(top: topPadding),
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 0,
             child: GestureDetector(
-              child: Image.asset("images/home01_qiandao.png"),
+              child: Image.asset("images/home01_qiandao.png",width: 25.0,height: 20.0,),
               onTap: (){
                 NavigatorUtils.push(context, SignInPage());
               },
@@ -116,7 +117,7 @@ class _AncientChineseState extends BaseState {
           Expanded(
             flex: 0,
             child: GestureDetector(
-              child: Image.asset("images/home01_xiaoxi.png"),
+              child: Image.asset("images/home01_xiaoxi.png",width: 25.0,height: 20.0,),
               onTap: (){
                 NavigatorUtils.push(context, new NewsPage());
               },
@@ -243,13 +244,13 @@ class _AncientChineseState extends BaseState {
   Widget getSwiperBody(){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 200.0,
+      height: 160.0,
       color: Colors.white,
       alignment: Alignment.topCenter,
       child: Swiper(
         itemBuilder: _swiperBuilder,
         itemCount: homeInfo.lb.length,
-        pagination: null,
+        pagination: new SwiperPagination(),
         control: null,
         scrollDirection: Axis.horizontal,
         autoplay: true,
@@ -264,7 +265,7 @@ class _AncientChineseState extends BaseState {
     Lb data = homeInfo.lb[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.pid.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.pid.toString(),1));
       },
       child: Image.network(homeInfo.lb[index].img,
         width: 180.0,
@@ -293,7 +294,7 @@ class _AncientChineseState extends BaseState {
           ),
           GestureDetector(
             onTap: (){
-              NavigatorUtils.push(context, new VideoPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
+              NavigatorUtils.push(context, new VideoPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString(),1));
             },
             child: Image.network(homeInfo.jr[0].hcover,height: 150.0,width: MediaQuery.of(context).size.width,fit: BoxFit.fill,),
           )
@@ -312,7 +313,7 @@ class _AncientChineseState extends BaseState {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -338,11 +339,13 @@ class _AncientChineseState extends BaseState {
           )
           ,
           Container(
-            height: 242.0,
-//            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 0.0),
+            height: 200.0,
+            padding: EdgeInsets.only(left: 6.0,right: 6.0,top: DefaultValue.topMargin),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
                 controller: controller,
+                padding: EdgeInsets.only(top: 0),
+                physics: NeverScrollableScrollPhysics(),
                 //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   //横轴元素个数
@@ -366,7 +369,7 @@ class _AncientChineseState extends BaseState {
   Widget getItemContainer(Re data){
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         margin: EdgeInsets.only(left: 6.0,right: 6.0),
@@ -420,7 +423,7 @@ class _AncientChineseState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -443,17 +446,15 @@ class _AncientChineseState extends BaseState {
             onTap: (){
               NavigatorUtils.push(context, new SearchResultListPage(0));
             },
-          )
-          ,
+          ),
           Container(
-            height: 480.0,
-//            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: getRow,
-                controller: controller,
-                itemCount: homeInfo.sql.length,
-                scrollDirection: Axis.vertical),
+//                controller: controller,
+                itemCount: homeInfo.sql.length,),
           )
         ],
       ),
@@ -463,67 +464,72 @@ class _AncientChineseState extends BaseState {
     Sql data = homeInfo.sql[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString(),1));
       },
-      child: Container(
-        height: 150.0,
-        padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 2.0,bottom: 2.0),
-        child: Row(
-          children: <Widget>[
-            Image.network(data.hcover,width: 102.0,height: 133.0,fit: BoxFit.fill,),
-            Container(
-              margin: EdgeInsets.only(left:16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                    child: Text(data.name,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.0
-                      ),),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
-                      child: Text(data.words,
-                        maxLines: 1,
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 11.0
-                        ),),
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
-                        Container(
-                          padding: EdgeInsets.only(left: DefaultValue.leftMargin),
-                          child: Text("${data.clicks}人在学习",
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 130.0,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: 2.0,bottom: 2.0),
+            child: Row(
+              children: <Widget>[
+                Image.network(data.hcover,width: 102.0,height: 133.0,fit: BoxFit.fill,),
+                Container(
+                  margin: EdgeInsets.only(left:16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                        child: Text(data.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15.0
+                          ),),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
+                          child: Text(data.words,
                             maxLines: 1,
                             style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: DefaultValue.smallTextSize
+                                fontSize: 11.0
                             ),),
-                        )
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Image.asset("images/home01_mianfeitiyan_huo.png",width: 13.0,height: 15.0,),
+                            Container(
+                              padding: EdgeInsets.only(left: DefaultValue.leftMargin),
+                              child: Text("${data.clicks}人在学习",
+                                maxLines: 1,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: DefaultValue.smallTextSize
+                                ),),
+                            )
 
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          LinsUtils.getWidthLins(context)
+        ],
+      ) ,
     );
   }
   Widget getSubscribe(){
@@ -537,7 +543,7 @@ class _AncientChineseState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -563,10 +569,12 @@ class _AncientChineseState extends BaseState {
           )
           ,
           Container(
-            height: 378.0,
-            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
+            height: 350.0,
+            padding: EdgeInsets.only(left: 6,right: 6),
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 controller: controller,
                 //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -591,7 +599,7 @@ class _AncientChineseState extends BaseState {
   Widget getSubscribeItem(Res data){
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         margin: EdgeInsets.only(left: 6.0,right: 6.0),
@@ -623,7 +631,7 @@ class _AncientChineseState extends BaseState {
     );
   }
   Widget getMaster(){
-      var height = 205.0 * homeInfo.ds.length;
+      var height = 190.0 * homeInfo.ds.length;
       return Container(
         color: Colors.white,
         margin: EdgeInsets.only(top: DefaultValue.topMargin),
@@ -634,7 +642,7 @@ class _AncientChineseState extends BaseState {
                 padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
                 child: Row(
                   children: <Widget>[
-                    LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                    LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                     Expanded(
                       flex: 1,
                       child: Container(
@@ -663,6 +671,8 @@ class _AncientChineseState extends BaseState {
               height: height,
               child: ListView.builder(
                   shrinkWrap: true,
+                  padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: getMasterRow,
                   controller: controller,
                   itemCount: homeInfo.ds.length,
@@ -676,7 +686,7 @@ class _AncientChineseState extends BaseState {
     Ds data = homeInfo.ds[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         height: 190.0,

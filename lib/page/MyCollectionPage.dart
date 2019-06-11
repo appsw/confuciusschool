@@ -110,7 +110,7 @@ class _MyCollectionPageState extends BaseState {
   Widget getList(){
 
     return Container(
-      height: MediaQuery.of(context).size.height - 130.0,
+      height: MediaQuery.of(context).size.height - 145.0,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,

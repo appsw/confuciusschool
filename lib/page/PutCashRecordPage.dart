@@ -41,7 +41,7 @@ class _PutCashRecordPageState extends BaseState {
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -73,7 +73,7 @@ class _PutCashRecordPageState extends BaseState {
                         children: <Widget>[
                           Expanded(
                             flex: 1,
-                            child: Text("从银行卡转出",
+                            child: Text("转入银行卡",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: DefaultValue.titleTextSize

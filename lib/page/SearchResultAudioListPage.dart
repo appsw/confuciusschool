@@ -55,9 +55,10 @@ class _SearchResultAudioListPageState extends BaseState {
     );
   }
   Widget getHead(){
+    double topPadding = MediaQuery.of(context).padding.top;
     return Container(
       height: 50.0,
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: topPadding),
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
         children: <Widget>[
@@ -222,9 +223,10 @@ class _SearchResultAudioListPageState extends BaseState {
   Widget getList(){
 
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height - 140.0,
       color: Colors.white,
       child: ListView.builder(
+          padding: EdgeInsets.only(top: 0),
           shrinkWrap: true,
           itemBuilder: getRow,
           itemCount: data.length,
@@ -234,7 +236,7 @@ class _SearchResultAudioListPageState extends BaseState {
   Widget getRow(BuildContext context,int index){
     return GestureDetector(
         onTap: (){
-          NavigatorUtils.push(context, new AudioPlayPage(data[index].currid.toString(),data[index].id.toString()));
+          NavigatorUtils.push(context, new AudioPlayPage(data[index].currid.toString(),data[index].id.toString(),1));
         },
         child: Column(
           children: <Widget>[

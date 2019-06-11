@@ -160,6 +160,15 @@ class Api extends CommonService{
       callback(data);
     },method: POST,errorCallBack: errorCallBack);
   }
+  void getShopVideoDetail(String currid,String id,Function callback,Function errorCallBack){
+    params.clear();
+    params["currid"] = currid;
+    params["id"] = id;
+    request(ApiUrl.getShopVideoDetail,(BaseResponse response){
+      VideoInfo data = VideoInfo.fromJson(response.data);
+      callback(data);
+    },method: POST,errorCallBack: errorCallBack);
+  }
   void getAudioDetail(String currid,String id,Function callback,Function errorCallBack){
     params.clear();
     params["currid"] = currid;
@@ -572,6 +581,12 @@ class Api extends CommonService{
     params.clear();
     request(ApiUrl.getExtension,(BaseResponse response){
       callback(response.data["one"]);
+    },method: POST,errorCallBack: errorCallBack);
+  }
+  void getGuide(Function callback,Function errorCallBack){
+    params.clear();
+    request(ApiUrl.getGuide,(BaseResponse response){
+      callback(response.data["explain"]);
     },method: POST,errorCallBack: errorCallBack);
   }
   void getEntrepreneurialTitle(Function callback,Function errorCallBack){

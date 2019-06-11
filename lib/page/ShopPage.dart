@@ -115,9 +115,9 @@ class _ShopPageState extends BaseState{
     return GestureDetector(
       onTap: (){
         if(res.ctype == 1)
-        NavigatorUtils.push(context, new VideoPlayPage(res.currid.toString(),res.pid.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(res.currid.toString(),res.pid.toString(),2));
         else{
-          NavigatorUtils.push(context, new AudioPlayPage(res.currid.toString(),res.pid.toString()));
+          NavigatorUtils.push(context, new AudioPlayPage(res.currid.toString(),res.pid.toString(),2));
         }
       },
       child: Image.network(res.img,
@@ -150,6 +150,11 @@ class _ShopPageState extends BaseState{
         ShopPayDialog.showLoadingDialog(context, ress.name, "${ress.integral}积分 或 ¥${ress.money}", points, (int type){
           print(type);
         });
+//        if(ress.type == 1)
+//          NavigatorUtils.push(context, new VideoPlayPage(ress.currid.toString(),ress.pid.toString(),2));
+//        else{
+//          NavigatorUtils.push(context, new AudioPlayPage(ress.currid.toString(),ress.pid.toString(),2));
+//        }
       },
       child: Container(
           padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),

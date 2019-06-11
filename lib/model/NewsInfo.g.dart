@@ -7,8 +7,13 @@ part of 'NewsInfo.dart';
 // **************************************************************************
 
 NewsInfo _$NewsInfoFromJson(Map<String, dynamic> json) {
-  return NewsInfo(json['id'] as int, json['type'] as int,
-      json['ititle'] as String, json['about'] as String, json['currid'] as int);
+  return NewsInfo(
+      json['id'] as int,
+      json['type'] as int,
+      json['ititle'] as String,
+      json['about'] as String,
+      json['currid'] as int,
+      json['pid'] as int);
 }
 
 Map<String, dynamic> _$NewsInfoToJson(NewsInfo instance) => <String, dynamic>{
@@ -16,5 +21,6 @@ Map<String, dynamic> _$NewsInfoToJson(NewsInfo instance) => <String, dynamic>{
       'type': instance.type,
       'ititle': instance.ititle,
       'about': instance.about,
-      'currid': instance.currid
+      'currid': instance.currid,
+      'pid': instance.pid
     };

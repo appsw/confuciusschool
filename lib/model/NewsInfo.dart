@@ -28,7 +28,11 @@ class NewsInfo extends Object {
   @JsonKey(name: 'currid')
   int currid;
 
-  NewsInfo(this.id,this.type,this.ititle,this.about,this.currid,);
+  @JsonKey(name: 'pid')
+  int pid;
+
+
+  NewsInfo(this.id,this.type,this.ititle,this.about,this.currid,this.pid);
 
   factory NewsInfo.fromJson(Map<String, dynamic> srcJson) => _$NewsInfoFromJson(srcJson);
 

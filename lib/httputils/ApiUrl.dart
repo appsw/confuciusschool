@@ -14,6 +14,7 @@ class ApiUrl{
   static final String getHomeData = "/index/plate/show";
   static final String getClassification = "/index/plate/screen";
   static final String getVideoDetail = "/index/plate/see";
+  static final String getShopVideoDetail = "/index/plate/play";
   static final String getVideoIntroduction= "/index/plate/brief";
   static final String getVideoText= "/index/plate/text";
   static final String getComment= "/index/member/comment";
@@ -85,5 +86,6 @@ class ApiUrl{
   static final String getVideoShou= "/index/plate/mplementi";
   static final String getShearData= "/index/plate/yshare";
   static final String getPayData= "/index/plate/payment";
+  static final String getGuide= "/index/plate/guide";
 
 }

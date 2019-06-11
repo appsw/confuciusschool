@@ -68,7 +68,7 @@ class _ExcellentCoursePageState extends BaseState {
   }
   Widget getList(){
     return Container(
-      height: MediaQuery.of(context).size.height - 130.0,
+      height: MediaQuery.of(context).size.height - 150.0,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
@@ -98,12 +98,13 @@ class _ExcellentCoursePageState extends BaseState {
     return GestureDetector(
       onTap: (){
         if(materialInfo.type == 1){
-          NavigatorUtils.push(context, new VideoPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+          NavigatorUtils.push(context, new VideoPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString(),1));
         }else{
-          NavigatorUtils.push(context, new AudioPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+          NavigatorUtils.push(context, new AudioPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString(),1));
         }
       },
       child: Container(
+        margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
         padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
         color: ColorsUtil.GreyDialogBg,
         child: Row(
@@ -273,9 +274,9 @@ class _ExcellentCoursePageState extends BaseState {
           GestureDetector(
             onTap: (){
               if(materialInfo.type == 1){
-                NavigatorUtils.push(context, new VideoPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+                NavigatorUtils.push(context, new VideoPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString(),1));
               }else{
-                NavigatorUtils.push(context, new AudioPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString()));
+                NavigatorUtils.push(context, new AudioPlayPage(materialInfo.currid.toString(),materialInfo.pid.toString(),1));
               }
             },
             child: Text("查看详情",

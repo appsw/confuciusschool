@@ -44,11 +44,11 @@ class SettingPage extends BasefulWidget{
       print(data);
       if(data == "1"){
         setState((){
-          is4G = false;
+          is4G = true;
         });
       }else{
         setState((){
-          is4G = true;
+          is4G = false;
         });
       }
     });

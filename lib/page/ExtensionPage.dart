@@ -4,6 +4,7 @@ import 'package:confuciusschool/utils/LoadingUtils.dart';
 import 'package:confuciusschool/utils/PageUtils.dart';
 import 'package:confuciusschool/utils/ToastUtil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ExtensionPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _ExtensionPageState extends BaseState {
 
   String url;
   bool isShow = false;
+  String html;
   @override
   void initData() {
     // TODO: implement initData
@@ -21,6 +23,13 @@ class _ExtensionPageState extends BaseState {
     api.getExtension((data){
       setState(() {
         this.url = data;
+      });
+    }, (msg){
+      ToastUtil.makeToast(msg);
+    });
+    api.getGuide((data){
+      setState(() {
+        this.html = data;
       });
     }, (msg){
       ToastUtil.makeToast(msg);
@@ -106,50 +115,29 @@ class _ExtensionPageState extends BaseState {
                     ),
                   ),
                 ),
-                isShow ? Container(
-                  color: Colors.white,
-                  height: 384.0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("奖金如何赚得",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: DefaultValue.titleTextSize
-                      ),),
-                      Text("一.奖金获得",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: DefaultValue.titleTextSize
-                        ),),
-                      Text("注：分享二维码链接或任意课程链接至微信、微博、QQ，给好友，注册微课传奇APP，成为您的下级学员。",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                      Text("二.奖金计算",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: DefaultValue.titleTextSize
-                        ),),
-                      Text("(1) 推广奖学金：您推荐学员A注册APP平台并开通年度VIP365元，您可以得到50元的现金奖励。",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                      Text("推广奖学金：您推荐学员A注册APP平台并开通年度VIP365元，您可以得到50元的现金奖励。推广奖学金您推荐学员A注册APP平台并开通年度VIP365元，您可得到50元的现金奖励。",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: DefaultValue.textSize
-                        ),),
-                    ],
-                  ),
-                ) : Container()
+                isShow ? getWebView(html) : Container()
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+  Widget getWebView(var html){
+    return Container(
+      height: 384,
+      color: Colors.white,
+      child: Html(
+        data: html,
+        //Optional parameters:
+        backgroundColor: Colors.white70,
+        defaultTextStyle: TextStyle(fontFamily: 'serif'),
+        linkStyle: const TextStyle(
+          color: Colors.redAccent,
+        ),
+        onLinkTap: (url) {
+          // open url in a webview
+        },
       ),
     );
   }

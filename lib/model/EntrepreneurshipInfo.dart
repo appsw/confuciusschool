@@ -81,7 +81,10 @@ class Res extends Object {
   @JsonKey(name: 'clicks')
   int clicks;
 
-  Res(this.id,this.createTime,this.name,this.duration,this.clicks,);
+  @JsonKey(name: 'key')
+  int key;
+
+  Res(this.id,this.createTime,this.name,this.duration,this.clicks,this.key);
 
   factory Res.fromJson(Map<String, dynamic> srcJson) => _$ResFromJson(srcJson);
 

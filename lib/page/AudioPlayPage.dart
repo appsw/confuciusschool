@@ -22,18 +22,20 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 class AudioPlayPage extends StatefulWidget {
   String currid;
   String id;
-  AudioPlayPage(this.currid,this.id);
+  int VideoType;
+  AudioPlayPage(this.currid,this.id,this.VideoType);
   @override
-  _AudioPlayPageState createState() => _AudioPlayPageState(currid,id);
+  _AudioPlayPageState createState() => _AudioPlayPageState(currid,id,VideoType);
 }
 
 class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
 
   String currid;
   String id;
+  int VideoType;
   VideoInfo data;
   IntroductionInfo introductionInfo;
-  _AudioPlayPageState(this.currid,this.id);
+  _AudioPlayPageState(this.currid,this.id,this.VideoType);
   var tableNames = ["简介","目录","图文"];
   var tabNumber = 1;
   var videoText;
@@ -67,21 +69,40 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
 
   }
   void getData(var id,var currid){
-    api.getAudioDetail(currid, id, (VideoInfo data){
-      setState(() {
-        mp3Url = data.re.address;
-        this.data = data;
+    if(VideoType == 1){
+      api.getAudioDetail(currid, id, (VideoInfo data){
+        setState(() {
+          mp3Url = data.re.address;
+          this.data = data;
 
-      });
-      if(this.data.type != 1){
-        BeComeVipDialog.showLoadingDialog(context,(){
-          NavigatorUtils.push(context, new BecomeVipPage());
         });
-      }
+        if(this.data.type != 1){
+          BeComeVipDialog.showLoadingDialog(context,(){
+            NavigatorUtils.push(context, new BecomeVipPage());
+          });
+        }
 
-    }, (msg){
-      ToastUtil.makeToast(msg);
-    });
+      }, (msg){
+        ToastUtil.makeToast(msg);
+      });
+    }else if(VideoType == 2){
+      api.getShopVideoDetail(currid, id, (VideoInfo data){
+        setState(() {
+          mp3Url = data.re.address;
+          this.data = data;
+
+        });
+        if(this.data.type != 1){
+          BeComeVipDialog.showLoadingDialog(context,(){
+            NavigatorUtils.push(context, new BecomeVipPage());
+          });
+        }
+
+      }, (msg){
+        ToastUtil.makeToast(msg);
+      });
+    }
+
     api.getVideoIntroduction(currid, (data){
       setState(() {
         this.introductionInfo = data;
@@ -180,7 +201,7 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
     return GestureDetector(
       onTap: (){
         Navigator.pop(context);
-        NavigatorUtils.push(context, new AudioPlayPage(sql.currid.toString(), sql.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(sql.currid.toString(), sql.id.toString(),1));
       },
       child: Column(
         children: <Widget>[
@@ -288,8 +309,10 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
   @override
   Widget getBottomNavigationBar(BuildContext context) {
     // TODO: implement getBottomNavigationBar
+    var bottomPadding = MediaQuery.of(context).padding.bottom;
     return data == null ? Container() : Container(
       height: 50.0,
+      margin: EdgeInsets.only(bottom: bottomPadding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -597,10 +620,12 @@ class _AudioPlayPageState extends BaseState with TickerProviderStateMixin{
     );
   }
   Widget getShare(){
+    var bottomPadding = MediaQuery.of(context).padding.bottom;
     showModalBottomSheet(context: context, builder: (BuildContext context){
       return StatefulBuilder(builder: (context, state) {
         return Container(
-          height: 207.0,
+          height: 210.0,
+          margin: EdgeInsets.only(bottom: bottomPadding),
           color: ColorsUtil.GreyDialogBg,
           padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
           child: Column(

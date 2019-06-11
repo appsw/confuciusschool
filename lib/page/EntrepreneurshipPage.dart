@@ -171,7 +171,7 @@ class _EntrepreneurshipPageState extends BaseState {
                         margin: EdgeInsets.only(bottom: 5.0),
                         child: Row(
                           children: <Widget>[
-                            Text(sql.name,
+                            Text("${sql.key}.${sql.name}",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 15.0
@@ -229,9 +229,10 @@ class _EntrepreneurshipPageState extends BaseState {
     );
   }
   Widget getTables(BuildContext context){
+    double topPadding = MediaQuery.of(context).padding.top;
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: topPadding),
       child: Row(
         children: <Widget>[
           Expanded(flex: 1,child: GestureDetector(child: getTab(0),onTap: (){onClickTable(0);},),),

@@ -17,10 +17,10 @@ abstract class BaseState<T> extends State<StatefulWidget>{
     // TODO: implement build
     onCreate(context);
     return Scaffold(
-      appBar: getAppBar(context),
-      body: getBody(context),
-      bottomNavigationBar: getBottomNavigationBar(context),
-      resizeToAvoidBottomPadding: false,
+        appBar: getAppBar(context),
+        body: getBody(context),
+        bottomNavigationBar: getBottomNavigationBar(context),
+        resizeToAvoidBottomPadding: false,
     );
   }
   @protected

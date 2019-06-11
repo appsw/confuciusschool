@@ -55,8 +55,9 @@ class _SearchResultListPageState extends BaseState {
     );
   }
   Widget getHead(){
+    double topPadding = MediaQuery.of(context).padding.top;
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: topPadding),
       height: 50.0,
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
@@ -222,10 +223,11 @@ class _SearchResultListPageState extends BaseState {
   Widget getList(){
 
     return Container(
-      height: MediaQuery.of(context).size.height - 120.0,
+      height: MediaQuery.of(context).size.height - 140.0,
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
+          padding: EdgeInsets.only(top: 0),
           itemBuilder: getRow,
           itemCount: data.length,
           scrollDirection: Axis.vertical),
@@ -234,7 +236,7 @@ class _SearchResultListPageState extends BaseState {
   Widget getRow(BuildContext context,int index){
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data[index].currid.toString(),data[index].id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data[index].currid.toString(),data[index].id.toString(),1));
       },
       child: Column(
         children: <Widget>[

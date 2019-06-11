@@ -70,8 +70,9 @@ class _LegendChinaPageState extends BaseState {
   }
 
   Widget getHead(){
+    double topPadding = MediaQuery.of(context).padding.top;
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: topPadding),
       color: Colors.white,
       padding: EdgeInsets.only(top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin,left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
       child: Row(
@@ -79,7 +80,7 @@ class _LegendChinaPageState extends BaseState {
           Expanded(
             flex: 0,
             child: GestureDetector(
-              child: Image.asset("images/home01_qiandao.png"),
+              child: Image.asset("images/home01_qiandao.png",width: 25.0,height: 20.0,),
               onTap: (){
                 NavigatorUtils.push(context, SignInPage());
               },
@@ -121,7 +122,7 @@ class _LegendChinaPageState extends BaseState {
           Expanded(
             flex: 0,
             child: GestureDetector(
-              child: Image.asset("images/home01_xiaoxi.png"),
+              child: Image.asset("images/home01_xiaoxi.png",width: 25.0,height: 20.0,),
               onTap: (){
                 NavigatorUtils.push(context, new NewsPage());
               },
@@ -274,13 +275,13 @@ class _LegendChinaPageState extends BaseState {
   Widget getSwiperBody(){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 200.0,
+      height: 160.0,
       color: Colors.white,
       alignment: Alignment.topCenter,
       child: Swiper(
         itemBuilder: _swiperBuilder,
         itemCount: homeInfo.lb.length,
-        pagination: null,
+        pagination: new SwiperPagination(),
         control: null,
         scrollDirection: Axis.horizontal,
         autoplay: true,
@@ -295,7 +296,7 @@ class _LegendChinaPageState extends BaseState {
     Lb data = homeInfo.lb[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.pid.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.pid.toString(),1));
       },
       child: Image.network(homeInfo.lb[index].img,
         width: 180.0,
@@ -317,7 +318,7 @@ class _LegendChinaPageState extends BaseState {
               padding: EdgeInsets.only(right: DefaultValue.rightMargin,top: DefaultValue.topMargin,bottom: DefaultValue.bottomMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -347,7 +348,7 @@ class _LegendChinaPageState extends BaseState {
                 flex: 1,
                 child: GestureDetector(
                   onTap: (){
-                    NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString()));
+                    NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[0].currid.toString(),homeInfo.jr[0].id.toString(),1));
                   },
                   child: Container(
                     child: Stack(
@@ -369,7 +370,7 @@ class _LegendChinaPageState extends BaseState {
                 flex: 1,
                 child: GestureDetector(
                   onTap: (){
-                    NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[1].currid.toString(),homeInfo.jr[1].id.toString()));
+                    NavigatorUtils.push(context, new AudioPlayPage(homeInfo.jr[1].currid.toString(),homeInfo.jr[1].id.toString(),1));
                   },
                   child: Container(
                       child: Stack(
@@ -405,7 +406,7 @@ class _LegendChinaPageState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -432,9 +433,12 @@ class _LegendChinaPageState extends BaseState {
           ,
           Container(
             height: 170.0,
+            padding: EdgeInsets.only(left: 6,right: 6),
             child: ListView.builder(
                 itemCount: homeInfo.arr.length,
                 controller: controller,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
 //                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -459,7 +463,7 @@ class _LegendChinaPageState extends BaseState {
   Widget getItemContainer(Arr data){
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         margin: EdgeInsets.only(left: 6.0,right: 6.0),
@@ -513,7 +517,7 @@ class _LegendChinaPageState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -539,9 +543,11 @@ class _LegendChinaPageState extends BaseState {
           )
           ,
           Container(
-            height: 240.0,
+            height: 200.0,
             child: GridView.builder(
                 itemCount: homeInfo.re.length,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 controller: controller,
                 //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -566,7 +572,7 @@ class _LegendChinaPageState extends BaseState {
   Widget getSleepItemContainer(Re data){
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         margin: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
@@ -620,7 +626,7 @@ class _LegendChinaPageState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -646,9 +652,11 @@ class _LegendChinaPageState extends BaseState {
           )
           ,
           Container(
-            height: 480.0,
+            height: 460.0,
             child: ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: getRow,
                 controller: controller,
                 itemCount: homeInfo.sql.length,
@@ -662,7 +670,7 @@ class _LegendChinaPageState extends BaseState {
     Sql data = homeInfo.sql[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         height: 150.0,
@@ -736,7 +744,7 @@ class _LegendChinaPageState extends BaseState {
               padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin,top: DefaultValue.topMargin),
               child: Row(
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -761,9 +769,11 @@ class _LegendChinaPageState extends BaseState {
             },
           ),
           Container(
-            height: 480.0,
+            height: 460.0,
             child: ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: getPoetryRow,
                 controller: controller,
                 itemCount: homeInfo.sc.length,
@@ -777,7 +787,7 @@ class _LegendChinaPageState extends BaseState {
     Sc data = homeInfo.sc[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         height: 150.0,
@@ -856,7 +866,7 @@ class _LegendChinaPageState extends BaseState {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0),
+                  LinsUtils.getHeightLins(context,color: Colors.red,height: 20.0,width: 2.0),
                   Expanded(
                     flex: 1,
                     child: Container(
@@ -881,16 +891,19 @@ class _LegendChinaPageState extends BaseState {
             },
           ),
           Container(
-            height: 410.0,
+            height: 350.0,
+            padding: EdgeInsets.only(left: DefaultValue.leftMargin,right: DefaultValue.rightMargin),
             child: GridView.builder(
                 itemCount: homeInfo.res.length,
+                padding: EdgeInsets.only(top: DefaultValue.topMargin),
+                physics: NeverScrollableScrollPhysics(),
                 controller: controller,
                 //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   //横轴元素个数
                     crossAxisCount: 2,
                     //纵轴间距
-                    mainAxisSpacing: 20.0,
+                    mainAxisSpacing: 0.0,
                     //横轴间距
                     crossAxisSpacing: 10.0,
 //            //子组件宽高长度比例
@@ -908,15 +921,14 @@ class _LegendChinaPageState extends BaseState {
   Widget getIdiomItem(Res data){
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new AudioPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(data.hcover,width: 164.0,height: 110.0,fit: BoxFit.fill,),
+            Image.network(data.hcover,width: 300.0,height: 110.0,fit: BoxFit.fill,),
             Container(
-              margin: EdgeInsets.only(top: DefaultValue.topMargin,bottom: 4.0),
               child: Text(data.name,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -985,7 +997,7 @@ class _LegendChinaPageState extends BaseState {
     Sql data = homeInfo.sql[index];
     return GestureDetector(
       onTap: (){
-        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString()));
+        NavigatorUtils.push(context, new VideoPlayPage(data.currid.toString(),data.id.toString(),1));
       },
       child: Container(
         height: 190.0,

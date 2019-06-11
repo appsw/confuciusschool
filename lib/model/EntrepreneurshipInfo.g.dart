@@ -57,7 +57,8 @@ Res _$ResFromJson(Map<String, dynamic> json) {
       json['createTime'] as String,
       json['name'] as String,
       json['duration'] as String,
-      json['clicks'] as int);
+      json['clicks'] as int,
+      json['key'] as int);
 }
 
 Map<String, dynamic> _$ResToJson(Res instance) => <String, dynamic>{
@@ -65,5 +66,6 @@ Map<String, dynamic> _$ResToJson(Res instance) => <String, dynamic>{
       'createTime': instance.createTime,
       'name': instance.name,
       'duration': instance.duration,
-      'clicks': instance.clicks
+      'clicks': instance.clicks,
+      'key': instance.key
     };

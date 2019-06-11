@@ -225,7 +225,7 @@ class _BecomeVipPageState extends BaseState {
   }
   Widget getRow(BuildContext context,int index){
     return Container(
-      height: 70.0,
+      height: 20.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -84,7 +84,7 @@ class RegisterPage extends BasefulWidget{
       margin: EdgeInsets.only(top: 93.0),
       child: TextField(
         controller: phoneController,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(2.0),
           border: InputBorder.none,
@@ -185,7 +185,7 @@ class RegisterPage extends BasefulWidget{
             flex: 1,
             child: TextField(
               controller: codeController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(2.0),
                 border: InputBorder.none,

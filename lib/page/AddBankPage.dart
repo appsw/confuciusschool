@@ -211,7 +211,7 @@ class _AddBankPageState extends BaseState {
 //            NavigatorUtils.push(context, VerificationPhoneAddBankPage());
         },
         color: ColorsUtil.LogoutBtnBg,//按钮的背景颜色
-        padding: EdgeInsets.only(top:13.0,bottom: 14.0,left: 146.0,right: 146.0),//按钮距离里面内容的内边距
+        padding: EdgeInsets.only(top:13.0,bottom: 14.0,),//按钮距离里面内容的内边距
         child: Container(
           width: MediaQuery.of(context).size.width,
           alignment: Alignment.center,

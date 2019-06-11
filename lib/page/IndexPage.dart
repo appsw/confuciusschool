@@ -49,9 +49,12 @@ class _IndexPageState extends BaseState {
   // 页面
   var _body;
 
+
   Widget getBottomBar(){
+//    double bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      height: 60.0,
+      height: 90.0,
+//      margin: EdgeInsets.only(bottom: bottomPadding),
       child: Stack(
         children: <Widget>[
           Align(
@@ -140,10 +143,13 @@ class _IndexPageState extends BaseState {
   @override
   void onCreate(BuildContext context) {
     // TODO: implement onCreate
+
     super.onCreate(context);
-    _body = IndexedStack(
-      children: <Widget>[AncientChinese(),LegendChinaPage(), PersonalPage(),EntrepreneurshipPage(), PersonalPage()],
-      index: currentBottomIndex,
+    _body = Container(
+      child: IndexedStack(
+        children: <Widget>[AncientChinese(),LegendChinaPage(), PersonalPage(),EntrepreneurshipPage(), PersonalPage()],
+        index: currentBottomIndex,
+      ),
     );
   }
 
